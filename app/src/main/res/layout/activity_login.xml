@@ -41,7 +41,7 @@
         android:layout_margin="10dp">
 
         <EditText
-            android:id="@+id/Login_user_name"
+            android:id="@+id/Login_user_name_EditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="用户名"/>
@@ -59,7 +59,7 @@
         android:layout_margin="10dp">
 
         <EditText
-            android:id="@+id/Login_password"
+            android:id="@+id/Login_password_EditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textPassword"
