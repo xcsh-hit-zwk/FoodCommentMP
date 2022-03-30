@@ -9,7 +9,8 @@ buildscript {
         maven { url 'https://plugins.gradle.org/m2/' } //复制这行
         maven { url 'https://maven.aliyun.com/nexus/content/repositories/google' } //复制这行
         maven { url 'https://maven.aliyun.com/nexus/content/groups/public' } //复制这行
-        maven { url 'https://maven.aliyun.com/nexus/content/repositories/jcenter'} //复制这行
+        maven { url 'https://maven.aliyun.com/nexus/content/repositories/jcenter'}
+        google() //复制这行
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:4.1.0'
@@ -27,6 +28,7 @@ allprojects {
         maven { url 'https://plugins.gradle.org/m2/' } //复制这行
         maven { url 'https://maven.aliyun.com/nexus/content/repositories/google' } //复制这行
         maven { url 'https://maven.aliyun.com/nexus/content/groups/public' } //复制这行
-        maven { url 'https://maven.aliyun.com/nexus/content/repositories/jcenter'} //复制这行
+        maven { url 'https://maven.aliyun.com/nexus/content/repositories/jcenter'}
+        google() //复制这行
     }
 }
