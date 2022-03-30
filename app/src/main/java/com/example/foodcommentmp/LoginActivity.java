@@ -25,6 +25,12 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Log.i("登录转注册按钮处理", "点击去往注册");
+                EditText userNameEditText = (EditText) findViewById(R.id.Login_user_name_EditText);
+                EditText passwordEditText = (EditText) findViewById(R.id.Login_password_EditText);
+                userNameEditText.setText("");
+                passwordEditText.setText("");
+                Log.i("登录转注册按钮处理", "清空输入信息完成");
+
                 Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
                 startActivity(intent);
             }
