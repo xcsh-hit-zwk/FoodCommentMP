@@ -1,3 +1,16 @@
 <resources>
     <string name="app_name">FoodCommentMp</string>
+    <string name="login_main_signup_button">注册</string>
+    <string name="login_main_login_button">登录</string>
+    <string name="login_username_EditText">请输入用户名</string>
+    <string name="login_password_EditText">请输入密码</string>
+    <string name="login_login_TextView">登录</string>
+    <string name="login_signup_button">注册</string>
+    <string name="login_confirm_button">确认</string>
+    <string name="register_signup_TextView">注册</string>
+    <string name="register_username_EditText">请输入用户名</string>
+    <string name="register_password_EditText">请输入密码</string>
+    <string name="register_nickname_EditText">请输入昵称</string>
+    <string name="register_login_button">登录</string>
+    <string name="register_confirm_button">确认</string>
 </resources>
