@@ -44,7 +44,7 @@ public class RegisterViewModel extends ViewModel {
     public void record(String username, String password, String nickname){
         usernameLiveData.setValue(username);
         passwordLiveData.setValue(password);
-        if(nickname == ""){
+        if(nickname.equals("")){
             nickname = username;
         }
         nicknameLiveData.setValue(nickname);
