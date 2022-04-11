@@ -1,23 +1,24 @@
 package com.example.foodcommentmp;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.example.foodcommentmp.databinding.ActivityLogInMainBinding;
+
 public class LogInMain extends AppCompatActivity {
+    ActivityLogInMainBinding activityLogInMainBinding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_log_in_main);
+        activityLogInMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_log_in_main);
 
-        Button toRegisterButton = (Button) findViewById(R.id.toRegisterButton);
-        Button toLoginButton = (Button) findViewById(R.id.toLoginButton);
-
-        toRegisterButton.setOnClickListener(new View.OnClickListener() {
+        activityLogInMainBinding.toRegisterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(LogInMain.this, RegisterActivity.class);
@@ -25,7 +26,7 @@ public class LogInMain extends AppCompatActivity {
             }
         });
 
-        toLoginButton.setOnClickListener(new View.OnClickListener() {
+        activityLogInMainBinding.toLoginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(LogInMain.this, LoginActivity.class);
