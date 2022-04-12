@@ -2,6 +2,8 @@ package com.example.foodcommentmp;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 
@@ -17,6 +19,7 @@ import com.example.foodcommentmp.viewmodel.LoginViewModel;
 public class LoginActivity extends AppCompatActivity {
     LoginViewModel loginViewModel;
     ActivityLoginBinding loginBinding;
+    MutableLiveData<Boolean> isLoginLivaData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +41,18 @@ public class LoginActivity extends AppCompatActivity {
 
                 Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
                 startActivity(intent);
+            }
+        });
+        isLoginLivaData = loginViewModel.getIsLoginLivaData();
+        isLoginLivaData.observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean aBoolean) {
+                if(aBoolean.booleanValue() == true){
+                    Toast.makeText(LoginActivity.this, "登陆成功", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    Toast.makeText(LoginActivity.this, "账号错误", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
