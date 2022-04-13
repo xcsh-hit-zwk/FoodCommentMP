@@ -6,12 +6,9 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.example.foodcommentmp.pojo.Account;
-import com.example.foodcommentmp.pojo.User;
 import com.example.foodcommentmp.retrofit.UserService;
-import com.google.gson.JsonArray;
 
 import java.io.IOException;
 
@@ -25,15 +22,15 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class LoginViewModel extends ViewModel {
     private MutableLiveData<String> usernameLiveData;
     private MutableLiveData<String> passwordLiveData;
-    private MutableLiveData<Boolean> isLoginLivaData;
+    private MutableLiveData<Boolean> hasLoginLivaData;
 
     public LoginViewModel(){
         usernameLiveData = new MutableLiveData<>();
         usernameLiveData.setValue("");
         passwordLiveData = new MutableLiveData<>();
         passwordLiveData.setValue("");
-        isLoginLivaData = new MutableLiveData<>();
-        isLoginLivaData.setValue(false);
+        hasLoginLivaData = new MutableLiveData<>();
+        hasLoginLivaData.setValue(false);
     }
 
     public MutableLiveData<String> getUsernameLiveData() {
@@ -43,8 +40,8 @@ public class LoginViewModel extends ViewModel {
     public MutableLiveData<String> getPasswordLiveData() {
         return passwordLiveData;
     }
-    public MutableLiveData<Boolean> getIsLoginLivaData() {
-        return isLoginLivaData;
+    public MutableLiveData<Boolean> getHasLoginLivaData() {
+        return hasLoginLivaData;
     }
 
 
@@ -84,8 +81,8 @@ public class LoginViewModel extends ViewModel {
                 try {
                     JSONObject jsonObject = JSON.parseObject(response.body().string());
                     boolean answer = jsonObject.getBooleanValue("success");
-                    Log.i("json结果", String.valueOf(answer));
-                    isLoginLivaData.setValue(answer);
+                    Log.i("json结果", "登录结果为: " + String.valueOf(answer));
+                    hasLoginLivaData.setValue(answer);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

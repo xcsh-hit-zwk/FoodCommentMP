@@ -1,6 +1,7 @@
 package com.example.foodcommentmp.retrofit;
 
 import com.example.foodcommentmp.pojo.Account;
+import com.example.foodcommentmp.pojo.User;
 
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
@@ -17,5 +18,8 @@ public interface UserService {
 
     @POST("user/Login")
     Call<ResponseBody> checkLoginAccount(@Body Account account);
+
+    @POST("user/SignUp")
+    Call<ResponseBody> checkSignup(@Body User user);
 
 }

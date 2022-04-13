@@ -2,6 +2,8 @@ package com.example.foodcommentmp;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
@@ -19,6 +21,7 @@ import com.example.foodcommentmp.viewmodel.RegisterViewModel;
 public class RegisterActivity extends AppCompatActivity {
     RegisterViewModel registerViewModel;
     ActivityRegisterBinding registerBinding;
+    MutableLiveData<Boolean> hasRegisterLiveData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,37 +48,17 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
 
-//        registerBinding.RegisterConfirmTextButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Log.i("获取注册信息按钮", "开始抓取输入注册信息");
-//
-//                String userName = registerBinding.RegisterUserNameEditText.getText().toString();
-//                String password = registerBinding.RegisterPasswordEditText.getText().toString();
-//                String nickName = registerBinding.RegisterNicknameEditText.getText().toString();
-//
-//                if(userName.isEmpty() && password.isEmpty()){
-//                    Toast.makeText(RegisterActivity.this, "用户名和密码不能为空", Toast.LENGTH_SHORT)
-//                            .show();
-//                }else if(userName.isEmpty() || password.isEmpty()){
-//
-//                    if(userName.isEmpty()){
-//                        Toast.makeText(RegisterActivity.this, "用户名不能为空", Toast.LENGTH_SHORT)
-//                                .show();
-//                    }else if(password.isEmpty()){
-//                        Toast.makeText(RegisterActivity.this, "密码不能为空", Toast.LENGTH_SHORT)
-//                                .show();
-//                    }
-//
-//                }else {
-//                    if (nickName.isEmpty()){
-//                        nickName = userName;
-//                    }
-//                    Log.i("获取注册信息按钮", "用户名为:" + userName);
-//                    Log.i("获取注册信息按钮", "密码为:" + password);
-//                    Log.i("获取注册信息按钮", "昵称为:" + nickName);
-//                }
-//            }
-//        });
+        hasRegisterLiveData = registerViewModel.getHasRegisterLiveData();
+        hasRegisterLiveData.observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean aBoolean) {
+                if(aBoolean.booleanValue() == true){
+                    Toast.makeText(RegisterActivity.this, "注册成功", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    Toast.makeText(RegisterActivity.this, "账户已存在", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 }

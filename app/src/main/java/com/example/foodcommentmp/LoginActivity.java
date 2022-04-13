@@ -5,7 +5,6 @@ import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelProviders;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -19,7 +18,7 @@ import com.example.foodcommentmp.viewmodel.LoginViewModel;
 public class LoginActivity extends AppCompatActivity {
     LoginViewModel loginViewModel;
     ActivityLoginBinding loginBinding;
-    MutableLiveData<Boolean> isLoginLivaData;
+    MutableLiveData<Boolean> hasLoginLivaData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,8 +42,8 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        isLoginLivaData = loginViewModel.getIsLoginLivaData();
-        isLoginLivaData.observe(this, new Observer<Boolean>() {
+        hasLoginLivaData = loginViewModel.getHasLoginLivaData();
+        hasLoginLivaData.observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean aBoolean) {
                 if(aBoolean.booleanValue() == true){

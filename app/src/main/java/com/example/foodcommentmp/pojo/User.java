@@ -1,5 +1,7 @@
 package com.example.foodcommentmp.pojo;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -25,10 +27,12 @@ public class User {
 
     public User(String userId, String password, String nickname){
         Date date = new Date();
+        DateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        this.id = "";
         this.userId = userId;
         this.password = password;
         this.nickname = nickname;
-        createTime = date.toString();
+        createTime = simpleDateFormat.format(date);
         modTime = createTime;
         hasLogin = false;
         hasDelete = false;
