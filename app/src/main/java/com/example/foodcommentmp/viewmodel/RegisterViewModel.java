@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.example.foodcommentmp.pojo.User;
 import com.example.foodcommentmp.retrofit.UserService;
@@ -101,7 +102,7 @@ public class RegisterViewModel extends ViewModel {
                         }
                         JSONObject jsonObject = JSON.parseObject(response.body().string());
                         boolean answer = jsonObject.getBooleanValue("success");
-                        Log.i("注册", "注册结果为: "+String.valueOf(answer));
+                        Log.i("注册", "注册结果为: "+ String.valueOf(answer));
                         hasRegisterLiveData.setValue(answer);
                     } catch (IOException e) {
                         e.printStackTrace();

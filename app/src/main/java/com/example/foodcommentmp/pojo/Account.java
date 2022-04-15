@@ -9,14 +9,16 @@ public class Account {
 
     private String userId;
     private String password;
+    private Boolean hasDelete;
 
     public Account(){
 
     }
 
-    public Account(String userId, String password){
+    public Account(String userId, String password, Boolean hasDelete){
         this.userId = userId;
         this.password = password;
+        this.hasDelete = hasDelete;
     }
 
     public String getUserId() {

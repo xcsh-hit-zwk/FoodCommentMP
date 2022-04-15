@@ -65,7 +65,7 @@ public class LoginViewModel extends ViewModel {
 
     private void checkLogin(){
         Account account = new Account(this.usernameLiveData.getValue(),
-                this.passwordLiveData.getValue());
+                this.passwordLiveData.getValue(), false);
         // Retrofit 网络传输
         Retrofit retrofit = new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())
