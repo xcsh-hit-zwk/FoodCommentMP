@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.example.foodcommentmp.common.MD5;
 import com.example.foodcommentmp.pojo.Account;
 import com.example.foodcommentmp.retrofit.UserService;
 
@@ -65,7 +66,7 @@ public class LoginViewModel extends ViewModel {
 
     private void checkLogin(){
         Account account = new Account(this.usernameLiveData.getValue(),
-                this.passwordLiveData.getValue(), false);
+                MD5.string2MD5(this.passwordLiveData.getValue()), false);
         // Retrofit 网络传输
         Retrofit retrofit = new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())

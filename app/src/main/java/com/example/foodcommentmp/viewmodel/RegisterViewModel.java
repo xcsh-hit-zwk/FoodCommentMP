@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModel;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.example.foodcommentmp.common.MD5;
 import com.example.foodcommentmp.pojo.User;
 import com.example.foodcommentmp.retrofit.UserService;
 
@@ -80,7 +81,7 @@ public class RegisterViewModel extends ViewModel {
 
     private void checkSignUp(){
         User user = new User(this.usernameLiveData.getValue(),
-                this.passwordLiveData.getValue(), this.nicknameLiveData.getValue());
+                MD5.string2MD5(this.passwordLiveData.getValue()), this.nicknameLiveData.getValue());
         // Retrofit 网络传输
         Retrofit retrofit = new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())
