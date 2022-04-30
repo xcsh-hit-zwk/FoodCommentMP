@@ -16,10 +16,10 @@ import retrofit2.http.POST;
  **/
 public interface UserService {
 
-    @POST("user/Login")
+    @POST("User/Login")
     Call<ResponseBody> checkLoginAccount(@Body Account account);
 
-    @POST("user/SignUp")
+    @POST("User/SignUp")
     Call<ResponseBody> checkSignup(@Body User user);
 
 }

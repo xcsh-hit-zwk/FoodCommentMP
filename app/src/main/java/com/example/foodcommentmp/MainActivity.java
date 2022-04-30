@@ -8,19 +8,31 @@ import android.view.View;
 import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
+    Button toUserButton;
+    Button toAdminButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Button button = (Button) findViewById(R.id.toLoginMainButton);
-        button.setOnClickListener(new View.OnClickListener() {
+        toUserButton = (Button) findViewById(R.id.toLoginMainButton);
+        toUserButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, LogInMain.class);
                 startActivity(intent);
             }
         });
+
+        toAdminButton = (Button) findViewById(R.id.toAdminLoginButton);
+        toAdminButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, AdminLoginActivity.class);
+                startActivity(intent);
+            }
+        });
+
     }
 }

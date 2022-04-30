@@ -10,5 +10,11 @@
         android:layout_height="wrap_content"
         android:text="前往注册界面"/>
 
+    <Button
+        android:id="@+id/toAdminLoginButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="管理员登录界面"/>
+
 </LinearLayout>
 
