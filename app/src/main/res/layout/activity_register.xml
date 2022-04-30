@@ -1,132 +1,124 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    android:orientation="vertical">
 
-    <data>
-        <import type="android.text.TextUtils" alias="textUtlis" />
-
-        <variable
-            name="data"
-            type="com.example.foodcommentmp.viewmodel.RegisterViewModel" />
-
-        <!-- 临时变量，记录EditText输入的值-->
-        <variable
-            name="username"
-            type="String" />
-        <variable
-            name="password"
-            type="String" />
-        <variable
-            name="nickname"
-            type="String" />
-    </data>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/linearLayout3"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:layout_weight="1">
 
         <TextView
-            android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="107dp"
-            android:gravity="center"
-            android:text="@string/register_signup_TextView"
-            android:textSize="64dp"
-            app:layout_constraintBottom_toTopOf="@+id/Register_hint_up_user_name"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_weight="1"/>
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/Register_hint_up_user_name"
-            android:layout_width="357dp"
-            android:layout_height="0dp"
-            android:layout_marginBottom="43dp"
-            app:layout_constraintBottom_toTopOf="@+id/Register_hint_up_password"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView">
+        <TextView
+            android:layout_width="26dp"
+            android:layout_height="140dp"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:background="@drawable/ic_register"
+            android:textSize="60dp" />
 
-            <EditText
-                android:id="@+id/Register_user_name_EditText"
-                android:layout_width="353dp"
-                android:layout_height="68dp"
-                android:hint="@string/register_username_EditText"
-                tools:layout_editor_absoluteX="-132dp"
-                tools:layout_editor_absoluteY="20dp"
-                android:text="@={username}"/>
-        </com.google.android.material.textfield.TextInputLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/Register_hint_up_nickname"
-            android:layout_width="357dp"
-            android:layout_height="0dp"
-            android:layout_marginBottom="51dp"
-            app:layout_constraintBottom_toTopOf="@+id/Register_toLogin_button"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/Register_hint_up_password">
+    </LinearLayout>
 
-            <EditText
-                android:id="@+id/Register_nickname_EditText"
-                android:layout_width="353dp"
-                android:layout_height="68dp"
-                android:hint="@string/register_nickname_EditText"
-                android:text="@={nickname}"/>
-        </com.google.android.material.textfield.TextInputLayout>
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/register_hint_up_username"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/Register_hint_up_password"
-            android:layout_width="357dp"
-            android:layout_height="0dp"
-            android:layout_marginBottom="48dp"
-            android:focusable="false"
-            android:focusableInTouchMode="false"
-            app:layout_constraintBottom_toTopOf="@+id/Register_hint_up_nickname"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/Register_hint_up_user_name"
-            app:passwordToggleEnabled="true">
+        <EditText
+            android:id="@+id/register_username"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/login_username_EditText"/>
 
-            <EditText
-                android:id="@+id/Register_password_EditText"
-                android:layout_width="353dp"
-                android:layout_height="68dp"
-                android:hint="@string/register_password_EditText"
-                android:inputType="textPassword"
-                android:text="@={password}"/>
-        </com.google.android.material.textfield.TextInputLayout>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/register_hint_up_password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:focusable="true"
+        android:focusableInTouchMode="false"
+        app:passwordToggleEnabled="true"
+        android:layout_margin="20dp">
+
+        <EditText
+            android:id="@+id/register_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:hint="@string/login_password_EditText"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/register_hint_up_nickname"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp">
+
+        <EditText
+            android:id="@+id/register_nickname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/register_nickname_EditText"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1">
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
 
 
-        <Button
-            android:id="@+id/Register_toLogin_button"
-            android:layout_width="131dp"
-            android:layout_height="52dp"
-            android:layout_marginBottom="33dp"
-            android:text="@string/register_login_button"
-            app:layout_constraintBottom_toTopOf="@+id/Register_confirm_text_button"
-            app:layout_constraintStart_toStartOf="@+id/Register_confirm_text_button"
-            app:layout_constraintTop_toBottomOf="@+id/Register_hint_up_nickname" />
+        <ImageButton
+            android:id="@+id/register_confirm_button"
+            android:layout_width="20dp"
+            android:layout_height="98dp"
+            android:layout_weight="1"
+            android:background="@drawable/ic_confirm" />
 
-        <Button
-            android:id="@+id/Register_confirm_text_button"
-            android:layout_width="131dp"
-            android:layout_height="52dp"
-            android:layout_marginBottom="57dp"
-            android:text="@string/register_confirm_button"
-            android:enabled="@{!textUtlis.isEmpty(username)?!textUtlis.isEmpty(password)?true:false:false}"
-            android:onClick='@{()->data.record(username ?? "", password ?? "", nickname ?? "")}'
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/Register_toLogin_button" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</layout>
+        <ImageButton
+            android:id="@+id/to_login_button"
+            android:layout_width="20dp"
+            android:layout_height="98dp"
+            android:layout_weight="1"
+            android:background="@drawable/ic_user" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
+
+    </LinearLayout>
+
+</LinearLayout>

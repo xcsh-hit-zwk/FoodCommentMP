@@ -65,7 +65,8 @@ public class AdminLoginActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                         try {
-                            Boolean success = (Boolean) JSON.parseObject(response.body().string()).get("success");
+                            Boolean success = (Boolean) JSON.parseObject(response.body().string())
+                                    .get("success");
                             if(success == true){
                                 Toast.makeText(AdminLoginActivity.this, "登录成功", Toast.LENGTH_SHORT)
                                         .show();

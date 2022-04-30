@@ -1,64 +1,115 @@
 package com.example.foodcommentmp;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.databinding.DataBindingUtil;
-import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
-import com.example.foodcommentmp.databinding.ActivityRegisterBinding;
-import com.example.foodcommentmp.viewmodel.LoginViewModel;
-import com.example.foodcommentmp.viewmodel.RegisterViewModel;
+import com.alibaba.fastjson.JSON;
+import com.example.foodcommentmp.Config.ServerConfig;
+import com.example.foodcommentmp.common.MD5;
+import com.example.foodcommentmp.common.TextInputHelper;
+import com.example.foodcommentmp.pojo.RegisterAccount;
+import com.example.foodcommentmp.retrofit.AdminService;
+import com.example.foodcommentmp.retrofit.UserService;
+
+import java.io.IOException;
+
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RegisterActivity extends AppCompatActivity {
-    RegisterViewModel registerViewModel;
-    ActivityRegisterBinding registerBinding;
-    MutableLiveData<Boolean> hasRegisterLiveData;
+    ImageButton confirmButton, toLoginButton;
+    EditText usernameEditText, passwordEditText, nicknameEditText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        registerBinding = DataBindingUtil.setContentView(this, R.layout.activity_register);
+        // todo 取消databinding，取消约束布局
+        setContentView(R.layout.activity_register);
 
-        registerViewModel = new ViewModelProvider(this).get(RegisterViewModel.class);
+        confirmButton = (ImageButton) findViewById(R.id.register_confirm_button);
+        toLoginButton = (ImageButton) findViewById(R.id.to_login_button);
 
-        registerBinding.setData(registerViewModel);
-        registerBinding.setLifecycleOwner(this);
+        usernameEditText = (EditText) findViewById(R.id.register_username);
+        passwordEditText = (EditText) findViewById(R.id.register_password);
+        nicknameEditText = (EditText) findViewById(R.id.register_nickname);
 
-        registerBinding.RegisterToLoginButton.setOnClickListener(new View.OnClickListener() {
+        // 监听多个输入框
+        TextInputHelper textInputHelper = new TextInputHelper(confirmButton, true);
+        textInputHelper.addViews(usernameEditText, passwordEditText);
+
+        confirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.i("注册前往登录界面按钮", "点击前往登录界面，即将开始清空数据");
-                registerBinding.RegisterUserNameEditText.setText("");
-                registerBinding.RegisterPasswordEditText.setText("");
-                registerBinding.RegisterNicknameEditText.setText("");
-                registerViewModel.reset();
+                String username = usernameEditText.getText().toString();
+                String password = passwordEditText.getText().toString();
+                password = MD5.string2MD5(password);
+                String nickname = nicknameEditText.getText().toString();
 
-                Log.i("注册前往登录界面按钮", "清空数据完成，即将开始界面跳转");
-                Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
-                startActivity(intent);
+                // 如果未输入昵称
+                if(nickname.equals("")){
+                    nickname = username;
+                }
+
+                // 创建网路传输对象RegisterAccount
+                RegisterAccount registerAccount = new RegisterAccount(username, password, nickname);
+
+                // 网络接口
+                Retrofit retrofit = new Retrofit.Builder()
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .baseUrl(ServerConfig.BASE_URL)
+                        .build();
+                UserService userService = retrofit.create(UserService.class);
+                // todo 这里需要一个新的给后端传输的实体类
+                Call<ResponseBody> call = userService.checkSignup(registerAccount);
+
+                call.enqueue(new Callback<ResponseBody>() {
+                    @Override
+                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+
+                        try {
+                            Boolean success = (Boolean) JSON.parseObject(response.body().string())
+                                    .get("success");
+                            if(success == true){
+                                Toast.makeText(RegisterActivity.this, "注册成功", Toast.LENGTH_SHORT)
+                                        .show();
+                            }
+                            else {
+                                Toast.makeText(RegisterActivity.this, "用户已存在", Toast.LENGTH_SHORT)
+                                        .show();
+                            }
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+                    }
+                });
+
             }
         });
 
-        hasRegisterLiveData = registerViewModel.getHasRegisterLiveData();
-        hasRegisterLiveData.observe(this, new Observer<Boolean>() {
+        toLoginButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onChanged(Boolean aBoolean) {
-                if(aBoolean.booleanValue() == true){
-                    Toast.makeText(RegisterActivity.this, "注册成功", Toast.LENGTH_SHORT).show();
-                }
-                else {
-                    Toast.makeText(RegisterActivity.this, "账户已存在", Toast.LENGTH_SHORT).show();
-                }
+            public void onClick(View view) {
+                usernameEditText.setText("");
+                passwordEditText.setText("");
+                nicknameEditText.setText("");
+                startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
             }
         });
+
     }
 }

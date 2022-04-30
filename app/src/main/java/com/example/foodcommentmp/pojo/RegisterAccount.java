@@ -1,23 +1,22 @@
 package com.example.foodcommentmp.pojo;
 
 /**
- * @description: 对应后端Account实体类
  * @author: zhangweikun
- * @create: 2022-04-12 10:23
- **/
-public class Account {
+ * @create: 2022-04-30 19:31
+ */
+public class RegisterAccount {
 
     private String username;
     private String password;
+    private String nickname;
 
-    public Account(){
-
+    public RegisterAccount() {
     }
 
-
-    public Account(String username, String password) {
+    public RegisterAccount(String username, String password, String nickname) {
         this.username = username;
         this.password = password;
+        this.nickname = nickname;
     }
 
     public String getUsername() {
@@ -34,5 +33,13 @@ public class Account {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
     }
 }

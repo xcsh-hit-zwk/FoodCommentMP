@@ -1,125 +1,114 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    android:orientation="vertical">
 
-    <data>
-        <import type="android.text.TextUtils" alias="textUtlis" />
-
-        <variable
-            name="data"
-            type="com.example.foodcommentmp.viewmodel.LoginViewModel" />
-
-        <!-- 临时变量，记录EditText输入的值-->
-        <variable
-            name="username"
-            type="String" />
-        <variable
-            name="password"
-            type="String" />
-
-    </data>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/linearLayout2"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/Login_hint_up_user_name"
-            android:layout_width="295dp"
-            android:layout_height="0dp"
-            android:layout_marginStart="9dp"
-            android:layout_marginEnd="9dp"
-            android:layout_marginBottom="41dp"
-            app:layout_constraintBottom_toTopOf="@+id/Login_hint_up_password"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView2">
-
-            <EditText
-                android:id="@+id/Login_user_name_EditText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/login_username_EditText"
-                android:autofillHints=""
-                android:text="@={username}"/>
-
-        </com.google.android.material.textfield.TextInputLayout>
-
+        android:layout_height="wrap_content"
+        android:layout_weight="1">
 
         <TextView
-            android:id="@+id/textView2"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="141dp"
-            android:layout_marginTop="68dp"
-            android:layout_marginEnd="141dp"
-            android:layout_marginBottom="58dp"
-            android:gravity="center"
-            android:text="@string/login_login_TextView"
-            android:textSize="64dp"
-            app:layout_constraintBottom_toTopOf="@+id/Login_hint_up_user_name"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_weight="1"/>
 
-        <Button
-            android:id="@+id/Login_toRegister_button"
-            android:layout_width="0dp"
+        <TextView
+            android:layout_width="26dp"
+            android:layout_height="140dp"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:background="@drawable/ic_user"
+            android:textSize="60dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="161dp"
-            android:layout_marginEnd="161dp"
-            android:layout_marginBottom="42dp"
-            android:text="@string/login_signup_button"
-            app:layout_constraintBottom_toTopOf="@+id/Login_confirm_text_button"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/Login_hint_up_password" />
+            android:layout_weight="1"/>
 
-        <Button
-            android:id="@+id/Login_confirm_text_button"
-            android:layout_width="0dp"
+    </LinearLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/admin_login_hint_up_username"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp">
+
+        <EditText
+            android:id="@+id/login_username"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="161dp"
-            android:layout_marginEnd="161dp"
-            android:layout_marginBottom="162dp"
-            android:enabled="@{!textUtlis.isEmpty(username)?!textUtlis.isEmpty(password)?true:false:false}"
-            android:onClick='@{()->data.record(username ?? "", password ?? "")}'
-            android:text="@string/login_confirm_button"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/Login_toRegister_button"
-            tools:ignore="OnClick" />
+            android:hint="@string/login_username_EditText"/>
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/Login_hint_up_password"
-            android:layout_width="295dp"
-            android:layout_height="0dp"
-            android:layout_marginStart="9dp"
-            android:layout_marginEnd="9dp"
-            android:layout_marginBottom="73dp"
-            android:focusable="false"
-            android:focusableInTouchMode="false"
-            app:layout_constraintBottom_toTopOf="@+id/Login_toRegister_button"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/Login_hint_up_user_name"
-            app:passwordToggleEnabled="true">
+    </com.google.android.material.textfield.TextInputLayout>
 
-            <EditText
-                android:id="@+id/Login_password_EditText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/login_password_EditText"
-                android:inputType="textPassword"
-                android:text="@={password}"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
 
-        </com.google.android.material.textfield.TextInputLayout>
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/admin_login_hint_up_password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:focusable="true"
+        android:focusableInTouchMode="false"
+        app:passwordToggleEnabled="true"
+        android:layout_margin="20dp">
+
+        <EditText
+            android:id="@+id/login_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:hint="@string/login_password_EditText"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1">
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
 
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</layout>
+        <ImageButton
+            android:id="@+id/login_confirm_button"
+            android:layout_width="20dp"
+            android:layout_height="98dp"
+            android:layout_weight="1"
+            android:background="@drawable/ic_confirm" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
+
+        <ImageButton
+            android:id="@+id/to_register_button"
+            android:layout_width="20dp"
+            android:layout_height="98dp"
+            android:layout_weight="1"
+            android:background="@drawable/ic_to_register" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
+
+    </LinearLayout>
+
+</LinearLayout>
