@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/admin_navigation"
+    app:startDestination="@id/restaurant_info_admin">
+
+    <fragment
+        android:id="@+id/restaurant_info_admin"
+        android:name="com.example.foodcommentmp.fragments.RestaurantInfoAdminFragment"
+        android:label="RestaurantInfoAdminFragment" />
+    <fragment
+        android:id="@+id/food_info_admin"
+        android:name="com.example.foodcommentmp.fragments.FoodInfoAdminFragment"
+        android:label="FoodInfoAdminFragment" />
+    <fragment
+        android:id="@+id/label_info_admin"
+        android:name="com.example.foodcommentmp.fragments.LabelInfoAdminFragment"
+        android:label="LabelInfoAdminFragment" />
+
+</navigation>

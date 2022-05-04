@@ -10,6 +10,7 @@ buildscript {
         maven { url 'https://maven.aliyun.com/nexus/content/repositories/google' } //复制这行
         maven { url 'https://maven.aliyun.com/nexus/content/groups/public' } //复制这行
         maven { url 'https://maven.aliyun.com/nexus/content/repositories/jcenter'}
+        maven { url 'https://jitpack.io' }
         google() //复制这行
     }
     dependencies {
@@ -29,6 +30,7 @@ allprojects {
         maven { url 'https://maven.aliyun.com/nexus/content/repositories/google' } //复制这行
         maven { url 'https://maven.aliyun.com/nexus/content/groups/public' } //复制这行
         maven { url 'https://maven.aliyun.com/nexus/content/repositories/jcenter'}
+        maven { url 'https://jitpack.io' }
         google() //复制这行
     }
 }

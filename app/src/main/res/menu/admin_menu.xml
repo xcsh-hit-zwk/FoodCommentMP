@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/restaurant_info_admin"
+        android:icon="@drawable/ic_restaurant_title_image"
+        android:title="餐厅" />
+    <item
+        android:id="@+id/food_info_admin"
+        android:icon="@drawable/ic_food_title_image"
+        android:title="招牌菜" />
+    <item
+        android:id="@+id/label_info_admin"
+        android:icon="@drawable/ic_label_title_image"
+        android:title="标签" />
+</menu>
