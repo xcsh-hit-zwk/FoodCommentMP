@@ -13,25 +13,22 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FoodCommentMp">
         <activity
-            android:name=".AdminMainActivity"
+            android:name=".Activitys.AdminMainActivity"
             android:exported="false" />
         <activity
-            android:name=".TestImage"
+            android:name=".Activitys.AdminLoginActivity"
             android:exported="false" />
         <activity
-            android:name=".AdminLoginActivity"
+            android:name=".Activitys.RegisterActivity"
             android:exported="false" />
         <activity
-            android:name=".RegisterActivity"
+            android:name=".Activitys.LoginActivity"
             android:exported="false" />
         <activity
-            android:name=".LoginActivity"
-            android:exported="false" />
-        <activity
-            android:name=".LogInMain"
+            android:name=".Activitys.LogInMain"
             android:exported="true" />
         <activity
-            android:name=".MainActivity"
+            android:name=".Activitys.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

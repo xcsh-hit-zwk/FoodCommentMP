@@ -1,4 +1,4 @@
-package com.example.foodcommentmp;
+package com.example.foodcommentmp.Activitys;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
@@ -6,8 +6,8 @@ import androidx.databinding.DataBindingUtil;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 
+import com.example.foodcommentmp.R;
 import com.example.foodcommentmp.databinding.ActivityLogInMainBinding;
 
 public class LogInMain extends AppCompatActivity {
