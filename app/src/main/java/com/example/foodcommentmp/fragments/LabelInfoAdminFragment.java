@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.foodcommentmp.Adapters.AdminFoodInfoAdapter;
 import com.example.foodcommentmp.Adapters.AdminLabelInfoAdapter;
 import com.example.foodcommentmp.R;
 import com.example.foodcommentmp.ViewModel.LabelInfoAdminViewModel;
@@ -25,6 +26,7 @@ import java.util.List;
 public class LabelInfoAdminFragment extends Fragment {
 
     private LabelInfoAdminViewModel labelInfoAdminViewModel;
+
     private RecyclerView recyclerView;
     private AdminLabelInfoAdapter adminLabelInfoAdapter;
     private List<LabelOverView> labelOverViewList = new ArrayList<>();
@@ -55,6 +57,13 @@ public class LabelInfoAdminFragment extends Fragment {
         recyclerView.setAdapter(adminLabelInfoAdapter);
         recyclerView.addItemDecoration(new DividerItemDecoration
                 (getActivity(), DividerItemDecoration.VERTICAL));
+
+        adminLabelInfoAdapter.setOnItemListener(new AdminLabelInfoAdapter.OnItemListener() {
+            @Override
+            public void onClick(View v, int position) {
+                adminLabelInfoAdapter.setDefSelect(position);
+            }
+        });
 
         return view;
     }

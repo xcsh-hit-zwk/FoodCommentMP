@@ -13,6 +13,24 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FoodCommentMp">
         <activity
+            android:name=".Activitys.AdminLabelInfoAddActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activitys.AdminFoodInfoAddActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activitys.AdminRestaurantInfoAddActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activitys.AdminLabelInfoUpdateActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activitys.AdminFoodInfoUpdateActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activitys.AdminRestaurantInfoUpdateActivity"
+            android:exported="false" />
+        <activity
             android:name=".Activitys.AdminMainActivity"
             android:exported="false" />
         <activity

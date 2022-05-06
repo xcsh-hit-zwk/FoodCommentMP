@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="2"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"/>
+
+        <ImageView
+            android:id="@+id/restaurant_info_update_image_view"
+            android:layout_width="40dp"
+            android:layout_height="100dp"
+            android:layout_weight="1"
+            android:background="@drawable/ic_restaurant_title_image" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"/>
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="2"/>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp">
+
+        <EditText
+            android:id="@+id/add_restaurant_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="餐厅名称"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:layout_marginTop="10dp">
+
+        <EditText
+            android:id="@+id/add_restaurant_tag"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="餐厅标签"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:layout_marginTop="10dp">
+
+        <EditText
+            android:id="@+id/add_restaurant_position"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="餐厅位置"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:layout_marginTop="10dp">
+
+        <EditText
+            android:id="@+id/add_restaurant_Image"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="餐厅图片路径"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:layout_marginTop="10dp">
+
+        <EditText
+            android:id="@+id/add_restaurant_Province"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="省"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:layout_marginTop="10dp">
+
+        <EditText
+            android:id="@+id/add_restaurant_city"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="市"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:layout_marginTop="10dp">
+
+        <EditText
+            android:id="@+id/add_restaurant_block"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="区"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="2"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="5"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="120dp"
+            android:layout_height="100dp"/>
+
+        <ImageButton
+            android:id="@+id/confirm_add_restaurant_info_image_button"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:background="@drawable/ic_confirm"/>
+
+        <TextView
+            android:layout_width="100dp"
+            android:layout_height="100dp"/>
+
+        <ImageButton
+            android:id="@+id/cancel_add_restaurant_info_image_button"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:background="@drawable/ic_cancel"/>
+
+        <TextView
+            android:layout_width="120dp"
+            android:layout_height="100dp"/>
+
+    </LinearLayout>
+
+</LinearLayout>

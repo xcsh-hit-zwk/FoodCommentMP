@@ -1,5 +1,6 @@
 package com.example.foodcommentmp.fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -41,10 +42,10 @@ public class RestaurantInfoAdminFragment extends Fragment {
         // todo RecycleView的临时假数据，到时候要替换成RestaurantInfo列表
         for(int i = 0 ; i < 50; ++i){
             RestaurantOverView restaurantOverView = new RestaurantOverView();
-            restaurantOverView.setRestaurantId("1");
             restaurantOverView.setRestaurantName("相拌一生麻辣拌");
             restaurantOverView.setLikes(i+1);
             restaurantOverView.setRestaurantTag("麻辣拌");
+            restaurantOverView.setRestaurantPosition("山东省威海市环翠区");
             restaurantOverView.setRestaurantImage("/restaurant/test.jpg");
             restaurantOverView.setRestaurantProvince("山东省");
             restaurantOverView.setRestaurantCity("威海市");
@@ -65,6 +66,14 @@ public class RestaurantInfoAdminFragment extends Fragment {
         recyclerView.setAdapter (adminRestaurantInfoAdaptor);
         recyclerView.addItemDecoration (new DividerItemDecoration
                 (getActivity(), DividerItemDecoration.VERTICAL));
+
+        adminRestaurantInfoAdaptor.setOnItemListener(new AdminRestaurantInfoAdaptor.OnItemListener() {
+            @Override
+            public void onClick(View v, int position) {
+                adminRestaurantInfoAdaptor.setDefSelect(position);
+            }
+        });
+
         return view;
     }
 

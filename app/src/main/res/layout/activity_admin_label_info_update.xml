@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"/>
+
+        <ImageView
+            android:id="@+id/food_info_update_image_view"
+            android:layout_width="40dp"
+            android:layout_height="100dp"
+            android:layout_weight="1"
+            android:background="@drawable/ic_label_title_image" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"/>
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"/>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp">
+
+        <EditText
+            android:id="@+id/label_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="标签名称"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:layout_marginTop="30dp">
+
+        <EditText
+            android:id="@+id/label_restaurant_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="所属餐厅名称"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="10"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="5"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="120dp"
+            android:layout_height="100dp"/>
+
+        <ImageButton
+            android:id="@+id/delete_label_image_button"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:background="@drawable/ic_restaurant_delete"/>
+
+        <TextView
+            android:layout_width="100dp"
+            android:layout_height="100dp"/>
+
+        <ImageButton
+            android:id="@+id/update_label_image_button"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:background="@drawable/ic_restaurant_modify"/>
+
+        <TextView
+            android:layout_width="120dp"
+            android:layout_height="100dp"/>
+
+    </LinearLayout>
+
+</LinearLayout>

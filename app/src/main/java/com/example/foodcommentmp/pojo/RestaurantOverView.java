@@ -1,12 +1,16 @@
 package com.example.foodcommentmp.pojo;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import com.example.foodcommentmp.R;
+
 /**
  * @author: zhangweikun
  * @create: 2022-05-05 9:44
  */
-public class RestaurantOverView {
+public class RestaurantOverView implements Parcelable {
 
-    private String restaurantId;
     private String restaurantName;
     private Integer likes;
     private String restaurantTag;
@@ -15,14 +19,6 @@ public class RestaurantOverView {
     private String restaurantProvince;
     private String restaurantCity;
     private String restaurantBlock;
-
-    public String getRestaurantId() {
-        return restaurantId;
-    }
-
-    public void setRestaurantId(String restaurantId) {
-        this.restaurantId = restaurantId;
-    }
 
     public String getRestaurantName() {
         return restaurantName;
@@ -87,4 +83,44 @@ public class RestaurantOverView {
     public void setRestaurantBlock(String restaurantBlock) {
         this.restaurantBlock = restaurantBlock;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(restaurantName);
+        parcel.writeInt(likes);
+        parcel.writeString(restaurantTag);
+        parcel.writeString(restaurantPosition);
+        parcel.writeString(restaurantImage);
+        parcel.writeString(restaurantProvince);
+        parcel.writeString(restaurantCity);
+        parcel.writeString(restaurantBlock);
+    }
+
+    public static final Parcelable.Creator<RestaurantOverView> CREATOR =
+            new Parcelable.Creator<RestaurantOverView>(){
+        @Override
+        public RestaurantOverView createFromParcel(Parcel source){
+            RestaurantOverView restaurantOverView = new RestaurantOverView();
+            restaurantOverView.setRestaurantName(source.readString());
+            restaurantOverView.setLikes(source.readInt());
+            restaurantOverView.setRestaurantTag(source.readString());
+            restaurantOverView.setRestaurantPosition(source.readString());
+            restaurantOverView.setRestaurantImage(source.readString());
+            restaurantOverView.setRestaurantProvince(source.readString());
+            restaurantOverView.setRestaurantCity(source.readString());
+            restaurantOverView.setRestaurantBlock(source.readString());
+
+            return restaurantOverView;
+        }
+
+        @Override
+        public RestaurantOverView[] newArray(int size){
+            return new RestaurantOverView[size];
+        }
+    };
 }

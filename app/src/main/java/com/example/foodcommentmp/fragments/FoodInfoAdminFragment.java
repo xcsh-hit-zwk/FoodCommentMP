@@ -25,6 +25,7 @@ import java.util.List;
 public class FoodInfoAdminFragment extends Fragment {
 
     private FoodInfoAdminViewModel foodInfoAdminViewModel;
+
     private RecyclerView recyclerView;
     private AdminFoodInfoAdapter adminFoodInfoAdapter;
     private List<FoodOverView> foodOverViewList = new ArrayList<>();
@@ -57,6 +58,13 @@ public class FoodInfoAdminFragment extends Fragment {
         recyclerView.setAdapter(adminFoodInfoAdapter);
         recyclerView.addItemDecoration(new DividerItemDecoration
                 (getActivity(), DividerItemDecoration.VERTICAL));
+
+        adminFoodInfoAdapter.setOnItemListener(new AdminFoodInfoAdapter.OnItemListener() {
+            @Override
+            public void onClick(View v, int position) {
+                adminFoodInfoAdapter.setDefSelect(position);
+            }
+        });
 
         return view;
     }
