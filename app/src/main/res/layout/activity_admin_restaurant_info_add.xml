@@ -22,7 +22,7 @@
             android:layout_weight="2"/>
 
         <ImageView
-            android:id="@+id/restaurant_info_update_image_view"
+            android:id="@+id/restaurant_info_add_image_view"
             android:layout_width="40dp"
             android:layout_height="100dp"
             android:layout_weight="1"

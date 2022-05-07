@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel;
 
 import com.example.foodcommentmp.pojo.RestaurantOverView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -18,6 +19,7 @@ public class RestaurantInfoAdminViewModel extends ViewModel {
     public MutableLiveData<List<RestaurantOverView>> getRestaurantOverViewMutableLiveData(){
         if(restaurantOverViewMutableLiveData == null){
             restaurantOverViewMutableLiveData = new MutableLiveData<>();
+            restaurantOverViewMutableLiveData.setValue(new ArrayList<>());
         }
         return restaurantOverViewMutableLiveData;
     }

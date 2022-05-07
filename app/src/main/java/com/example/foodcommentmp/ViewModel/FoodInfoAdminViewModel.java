@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel;
 
 import com.example.foodcommentmp.pojo.FoodOverView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -18,6 +19,7 @@ public class FoodInfoAdminViewModel extends ViewModel {
     public MutableLiveData<List<FoodOverView>> getFoodOverViewMutableLiveData(){
         if(foodOverViewMutableLiveData == null){
             foodOverViewMutableLiveData = new MutableLiveData<>();
+            foodOverViewMutableLiveData.setValue(new ArrayList<>());
         }
         return foodOverViewMutableLiveData;
     }

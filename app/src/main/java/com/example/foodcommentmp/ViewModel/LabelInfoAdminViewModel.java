@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel;
 
 import com.example.foodcommentmp.pojo.LabelOverView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -18,6 +19,7 @@ public class LabelInfoAdminViewModel extends ViewModel {
     public MutableLiveData<List<LabelOverView>> getLabelOverViewMutableLiveData(){
         if(labelOverViewMutableLiveData == null){
             labelOverViewMutableLiveData = new MutableLiveData<>();
+            labelOverViewMutableLiveData.setValue(new ArrayList<>());
         }
         return labelOverViewMutableLiveData;
     }
