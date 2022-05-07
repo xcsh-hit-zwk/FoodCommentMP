@@ -35,12 +35,16 @@ public class AdminLabelInfoAdapter extends RecyclerView.Adapter<AdminLabelInfoAd
     private LabelOverView chosen;
 
     /**
-     * 初始化适配齐的数据集合
+     * 初始化适配器的数据集合
      * @param context
      * @param labelOverViewList 适配器使用的数据集
      */
     public AdminLabelInfoAdapter(Context context, List<LabelOverView> labelOverViewList){
         this.context = context;
+        this.labelOverViewList = labelOverViewList;
+    }
+
+    public void setLabelOverViewList(List<LabelOverView> labelOverViewList){
         this.labelOverViewList = labelOverViewList;
     }
 

@@ -38,12 +38,16 @@ public class AdminFoodInfoAdapter extends RecyclerView.Adapter<AdminFoodInfoAdap
     private FoodOverView chosen;
 
     /**
-     * 初始化适配齐的数据集合
+     * 初始化适配器的数据集合
      * @param context
      * @param foodOverViewList 适配器使用的数据集
      */
     public AdminFoodInfoAdapter(Context context, List<FoodOverView> foodOverViewList){
         this.context = context;
+        this.foodOverViewList = foodOverViewList;
+    }
+
+    public void setFoodOverViewList(List<FoodOverView> foodOverViewList){
         this.foodOverViewList = foodOverViewList;
     }
 

@@ -1,45 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="horizontal">
-
-    <ImageView
-        android:id="@+id/food_info_item_image_view"
-        android:layout_width="80dp"
-        android:layout_height="80dp"/>
-
-    <TextView
-        android:layout_width="15dp"
-        android:layout_height="80dp"/>
+    app:cardElevation="20dp"
+    app:cardCornerRadius="20dp">
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/food_info_item_food_name_text_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="招牌菜名称"/>
+            android:layout_width="15dp"
+            android:layout_height="80dp"/>
+
+        <ImageView
+            android:id="@+id/food_info_item_image_view"
+            android:layout_width="80dp"
+            android:layout_height="80dp"/>
 
         <TextView
-            android:id="@+id/food_info_item_food_like_text_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="招牌菜点赞数"/>
+            android:layout_width="15dp"
+            android:layout_height="80dp"/>
 
-        <TextView
-            android:id="@+id/food_info_item_restaurant_name_text_view"
+        <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="所属餐厅名称"/>
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/food_info_item_food_name_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="招牌菜名称"/>
+
+            <TextView
+                android:id="@+id/food_info_item_food_like_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="招牌菜点赞数"/>
+
+            <TextView
+                android:id="@+id/food_info_item_restaurant_name_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="所属餐厅名称"/>
+
+        </LinearLayout>
 
     </LinearLayout>
 
-</LinearLayout>
+</androidx.cardview.widget.CardView>

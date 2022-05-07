@@ -39,12 +39,16 @@ public class AdminRestaurantInfoAdaptor extends RecyclerView.Adapter<AdminRestau
     private RestaurantOverView chosen;
 
     /**
-     * 初始化适配齐的数据集合
+     * 初始化适配器的数据集合
      * @param context
      * @param restaurantOverViewList 适配器使用的数据集
      */
     public AdminRestaurantInfoAdaptor(Context context, List<RestaurantOverView> restaurantOverViewList){
         this.context = context;
+        this.restaurantOverViewList = restaurantOverViewList;
+    }
+
+    public void setRestaurantOverViewList(List<RestaurantOverView> restaurantOverViewList){
         this.restaurantOverViewList = restaurantOverViewList;
     }
 
@@ -98,7 +102,7 @@ public class AdminRestaurantInfoAdaptor extends RecyclerView.Adapter<AdminRestau
 
                 // 获取选中对象
                 chosen = restaurantOverView;
-                // todo 打印获得对象日志，等开启新界面的时候要删除掉
+                // 打印获得对象日志，
                 Log.i("管理员餐厅信息", "对象为:");
                 Log.i("管理员餐厅信息", chosen.getRestaurantName());
                 Log.i("管理员餐厅信息", String.valueOf(chosen.getLikes()));
