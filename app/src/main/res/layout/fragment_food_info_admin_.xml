@@ -114,10 +114,18 @@
 
     </LinearLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/food_info_recycle_view"
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="8"/>
+        app:cardElevation="30dp"
+        app:cardCornerRadius="30dp">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/food_info_recycle_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="8"/>
+
+    </androidx.cardview.widget.CardView>
 
 </LinearLayout>
