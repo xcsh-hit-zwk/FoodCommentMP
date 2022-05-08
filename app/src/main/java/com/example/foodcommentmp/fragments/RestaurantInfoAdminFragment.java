@@ -1,6 +1,7 @@
 package com.example.foodcommentmp.fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -17,12 +18,15 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.example.foodcommentmp.Activitys.AdminRestaurantInfoAddActivity;
 import com.example.foodcommentmp.Adapters.AdminRestaurantInfoAdaptor;
 import com.example.foodcommentmp.Config.ServerConfig;
 import com.example.foodcommentmp.R;
+import com.example.foodcommentmp.ViewModel.RestaurantInfoAddViewModel;
 import com.example.foodcommentmp.ViewModel.RestaurantInfoAdminViewModel;
 import com.example.foodcommentmp.pojo.RestaurantOverView;
 import com.example.foodcommentmp.retrofit.AdminInfoService;
@@ -45,6 +49,8 @@ public class RestaurantInfoAdminFragment extends Fragment {
     private RecyclerView recyclerView;
     private AdminRestaurantInfoAdaptor adminRestaurantInfoAdaptor;
     private List<RestaurantOverView> restaurantOverViewList = new ArrayList<>();
+
+    private ImageButton addButton;
 
     public static RestaurantInfoAdminFragment newInstance(){
         return new RestaurantInfoAdminFragment();
@@ -132,6 +138,15 @@ public class RestaurantInfoAdminFragment extends Fragment {
             @Override
             public void onClick(View v, int position) {
                 adminRestaurantInfoAdaptor.setDefSelect(position);
+            }
+        });
+
+        // 添加餐厅按钮点击事件
+        addButton = view.findViewById(R.id.admin_restaurant_add_button);
+        addButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getContext(), AdminRestaurantInfoAddActivity.class));
             }
         });
 

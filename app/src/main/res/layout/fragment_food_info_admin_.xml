@@ -118,13 +118,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:cardElevation="30dp"
-        app:cardCornerRadius="30dp">
+        app:cardCornerRadius="30dp"
+        android:layout_weight="15">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/food_info_recycle_view"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="8"/>
+            android:layout_height="wrap_content"/>
 
     </androidx.cardview.widget.CardView>
 

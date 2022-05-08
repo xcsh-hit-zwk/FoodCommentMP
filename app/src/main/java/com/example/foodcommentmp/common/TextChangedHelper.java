@@ -9,27 +9,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * description: 监听多个EditText
  * @author: zhangweikun
- * @create: 2022-04-30 10:21
+ * @create: 2022-05-08 9:57
  */
-public final class TextInputHelper implements TextWatcher {
+public class TextChangedHelper implements TextWatcher {
+
     private View mMainView;//操作按钮的View
     private List<EditText> mViewSet;//TextView集合，子类也可以（EditText、TextView、Button）
     private boolean isAlpha;//是否设置透明度
 
-    public TextInputHelper(View view) {
+    public TextChangedHelper(View view){
         this(view, true);
     }
 
-    /**
-     * 构造函数
-     *
-     * @param view              跟随EditText输入为空来判断启动或者禁用这个View
-     * @param alpha             是否需要设置透明度
-     */
-    public TextInputHelper(View view, boolean alpha) {
-        if (view == null) throw new IllegalArgumentException("The view is empty");
+    public TextChangedHelper(View view, boolean alpha){
+        if(view == null){
+            throw new IllegalArgumentException("The view is empty");
+        }
         mMainView = view;
         isAlpha = alpha;
     }
@@ -39,14 +35,16 @@ public final class TextInputHelper implements TextWatcher {
      *
      * @param views     传入单个或者多个EditText对象
      */
-    public void addViews(EditText... views) {
-        if (views == null) return;
+    public void addViews(EditText... views){
+        if(views == null){
+            return;
+        }
 
-        if (mViewSet == null) {
+        if(mViewSet == null){
             mViewSet = new ArrayList<>(views.length - 1);
         }
 
-        for (EditText view : views) {
+        for(EditText view : views){
             view.addTextChangedListener(this);
             mViewSet.add(view);
         }
@@ -69,20 +67,20 @@ public final class TextInputHelper implements TextWatcher {
     // TextWatcher
 
     @Override
-    public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+        setEnabled(false);
+    }
 
     @Override
-    public void onTextChanged(CharSequence s, int start, int before, int count) {}
+    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+    }
 
     @Override
-    public synchronized void afterTextChanged(Editable s) {
-        if (mViewSet == null) return;
+    public void afterTextChanged(Editable editable) {
 
-        for (EditText view : mViewSet) {
-            if ("".equals(view.getText().toString())) {
-                setEnabled(false);
-                return;
-            }
+        if(mViewSet == null){
+            return;
         }
 
         setEnabled(true);
@@ -112,4 +110,5 @@ public final class TextInputHelper implements TextWatcher {
             }
         }
     }
+
 }

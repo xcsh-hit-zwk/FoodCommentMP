@@ -37,4 +37,22 @@ public interface AdminInfoService {
     @POST("AdminInfo/AddLabel")
     Call<ResponseBody> addLabel(@Body LabelOverView labelOverView);
 
+    @POST("AdminInfo/DeleteRestaurant")
+    Call<ResponseBody> deleteRestaurant(@Body RestaurantOverView restaurantOverView);
+
+    @POST("AdminInfo/DeleteFood")
+    Call<ResponseBody> deleteFood(@Body FoodOverView foodOverView);
+
+    @POST("AdminInfo/DeleteLabel")
+    Call<ResponseBody> deleteLabel(@Body LabelOverView labelOverView);
+
+    @POST("AdminInfo/UpdateRestaurant")
+    Call<ResponseBody> updateRestaurant(@Body RestaurantOverView restaurantOverView);
+
+    @POST("AdminInfo/UpdateFood")
+    Call<ResponseBody> updateFood(@Body FoodOverView foodOverView);
+
+    @POST
+    Call<ResponseBody> updateLabel(@Body LabelOverView labelOverView);
+
 }
