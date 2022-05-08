@@ -20,6 +20,7 @@ import com.example.foodcommentmp.Config.ServerConfig;
 import com.example.foodcommentmp.R;
 import com.example.foodcommentmp.ViewModel.RestaurantInfoUpdateViewModel;
 import com.example.foodcommentmp.pojo.RestaurantOverView;
+import com.example.foodcommentmp.pojo.UpdateRestaurantOverView;
 import com.example.foodcommentmp.retrofit.AdminInfoService;
 
 import okhttp3.ResponseBody;
@@ -129,24 +130,52 @@ public class AdminRestaurantInfoUpdateActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                // 更新对象
-                restaurantOverView.setRestaurantName(restaurantNameEditText.getText().toString());
-                restaurantOverView.setRestaurantTag(restaurantTagEditText.getText().toString());
-                restaurantOverView.setRestaurantPosition(restaurantPositionEditText.getText().toString());
-                restaurantOverView.setRestaurantImage(restaurantImageEditText.getText().toString());
-                restaurantOverView.setRestaurantProvince(restaurantProvinceEditText.getText().toString());
-                restaurantOverView.setRestaurantCity(restaurantCityEditText.getText().toString());
-                restaurantOverView.setRestaurantBlock(restaurantBlockEditText.getText().toString());
+                Retrofit retrofit = new Retrofit.Builder()
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .baseUrl(ServerConfig.BASE_URL)
+                        .build();
+                AdminInfoService adminInfoService = retrofit.create(AdminInfoService.class);
 
-                // todo 这里需要写网络接口，直接更新到数据库中
-                Log.i("餐厅更新信息", "更新后对象:");
-                Log.i("餐厅更新信息", restaurantOverView.getRestaurantName());
-                Log.i("餐厅更新信息", restaurantOverView.getRestaurantTag());
-                Log.i("餐厅更新信息", restaurantOverView.getRestaurantPosition());
-                Log.i("餐厅更新信息", restaurantOverView.getRestaurantImage());
-                Log.i("餐厅更新信息", restaurantOverView.getRestaurantProvince());
-                Log.i("餐厅更新信息", restaurantOverView.getRestaurantCity());
-                Log.i("餐厅更新信息", restaurantOverView.getRestaurantBlock());
+                Call<ResponseBody> call = adminInfoService.getUpdateRestaurantId(restaurantOverView);
+                call.enqueue(new Callback<ResponseBody>() {
+                    @Override
+                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                        try {
+
+                            JSONObject jsonObject = JSON.parseObject(response.body().string());
+                            Boolean success = (Boolean) jsonObject.get("success");
+                            Log.i("获取更新餐厅Id", String.valueOf(jsonObject));
+                            String restaurantId = jsonObject.getString("data");
+                            UpdateRestaurantOverView updateRestaurantOverView = new UpdateRestaurantOverView();
+
+                            // 更新对象
+                            restaurantOverView.setRestaurantName(restaurantNameEditText.getText().toString());
+                            restaurantOverView.setRestaurantTag(restaurantTagEditText.getText().toString());
+                            restaurantOverView.setRestaurantPosition(restaurantPositionEditText.getText().toString());
+                            restaurantOverView.setRestaurantImage(restaurantImageEditText.getText().toString());
+                            restaurantOverView.setRestaurantProvince(restaurantProvinceEditText.getText().toString());
+                            restaurantOverView.setRestaurantCity(restaurantCityEditText.getText().toString());
+                            restaurantOverView.setRestaurantBlock(restaurantBlockEditText.getText().toString());
+
+                            updateRestaurantOverView.setRestaurantId(restaurantId);
+                            updateRestaurantOverView.setRestaurantOverView(restaurantOverView);
+                            restaurantInfoUpdateViewModel.getRestaurantOverViewLiveData()
+                                    .setValue(updateRestaurantOverView);
+
+                        }catch (Exception e){
+                            e.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+                    }
+                });
+
+
+
+
             }
         });
 
@@ -159,8 +188,63 @@ public class AdminRestaurantInfoUpdateActivity extends AppCompatActivity {
                                     AdminMainActivity.class));
                         }
                         else {
-                            Log.i("餐厅更新信息", "网络回调结果为false，跳转失败");
+                            Log.i("餐厅更新信息", "删除网络回调结果为false，跳转失败");
                         }
+                    }
+                });
+
+        restaurantInfoUpdateViewModel.getUpdateSuccessLiveData()
+                .observe(this, new Observer<Boolean>() {
+                    @Override
+                    public void onChanged(Boolean aBoolean) {
+                        if(aBoolean == true){
+                            startActivity(new Intent(AdminRestaurantInfoUpdateActivity.this,
+                                    AdminMainActivity.class));
+                        }
+                        else {
+                            Log.i("餐厅更新信息", "更新网络回调结果为false，跳转失败");
+                        }
+                    }
+                });
+
+        restaurantInfoUpdateViewModel.getRestaurantOverViewLiveData()
+                .observe(this, new Observer<UpdateRestaurantOverView>() {
+                    @Override
+                    public void onChanged(UpdateRestaurantOverView updateRestaurantOverView) {
+
+                        Retrofit retrofit = new Retrofit.Builder()
+                                .addConverterFactory(GsonConverterFactory.create())
+                                .baseUrl(ServerConfig.BASE_URL)
+                                .build();
+                        AdminInfoService adminInfoService = retrofit.create(AdminInfoService.class);
+
+                        Call<ResponseBody> call = adminInfoService.updateRestaurant(updateRestaurantOverView);
+                        call.enqueue(new Callback<ResponseBody>() {
+                            @Override
+                            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                                try {
+
+                                    JSONObject jsonObject = JSON.parseObject(response.body().string());
+                                    Boolean success = (Boolean) jsonObject.get("success");
+                                    Log.i("更新餐厅", String.valueOf(jsonObject));
+                                    if(success == true){
+                                        restaurantInfoUpdateViewModel.getUpdateSuccessLiveData().setValue(true);
+                                    }
+                                    else {
+                                        Toast.makeText(AdminRestaurantInfoUpdateActivity.this, "更新餐厅失败",
+                                                Toast.LENGTH_SHORT).show();
+                                    }
+
+                                }catch (Exception e){
+                                    e.printStackTrace();
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+                            }
+                        });
                     }
                 });
     }

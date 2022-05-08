@@ -3,6 +3,7 @@ package com.example.foodcommentmp.retrofit;
 import com.example.foodcommentmp.pojo.FoodOverView;
 import com.example.foodcommentmp.pojo.LabelOverView;
 import com.example.foodcommentmp.pojo.RestaurantOverView;
+import com.example.foodcommentmp.pojo.UpdateRestaurantOverView;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -46,8 +47,10 @@ public interface AdminInfoService {
     @POST("AdminInfo/DeleteLabel")
     Call<ResponseBody> deleteLabel(@Body LabelOverView labelOverView);
 
+    @POST("AdminInfo/GetUpdateRestaurantId")
+    Call<ResponseBody> getUpdateRestaurantId(@Body RestaurantOverView restaurantOverView);
     @POST("AdminInfo/UpdateRestaurant")
-    Call<ResponseBody> updateRestaurant(@Body RestaurantOverView restaurantOverView);
+    Call<ResponseBody> updateRestaurant(@Body UpdateRestaurantOverView updateRestaurantOverView);
 
     @POST("AdminInfo/UpdateFood")
     Call<ResponseBody> updateFood(@Body FoodOverView foodOverView);
