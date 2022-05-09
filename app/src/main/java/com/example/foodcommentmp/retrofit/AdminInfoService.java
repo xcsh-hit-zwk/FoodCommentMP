@@ -30,7 +30,6 @@ public interface AdminInfoService {
     @GET("AdminInfo/GetTotalLabelOverView")
     Call<ResponseBody> getTotalLabelOverView();
 
-    // todo 这三个接口的前后端还没写
     @POST("AdminInfo/AddRestaurant")
     Call<ResponseBody> addRestaurant(@Body RestaurantOverView restaurantOverView);
 

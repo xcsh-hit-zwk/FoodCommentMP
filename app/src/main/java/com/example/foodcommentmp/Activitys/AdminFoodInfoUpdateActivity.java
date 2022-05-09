@@ -141,18 +141,23 @@ public class AdminFoodInfoUpdateActivity extends AppCompatActivity {
                         try {
                             JSONObject jsonObject = JSON.parseObject(response.body().string());
                             Boolean success = (Boolean) jsonObject.get("success");
-                            Log.i("获取更新餐厅Id", String.valueOf(jsonObject));
-                            String foodId = jsonObject.getString("data");
-                            FLAG = 1;
+                            if (success == true){
+                                Log.i("获取更新招牌菜Id", String.valueOf(jsonObject));
+                                String foodId = jsonObject.getString("data");
+                                FLAG = 1;
 
-                            // 更新对象
-                            foodOverView.setFoodName(foodNameEditText.getText().toString());
-                            foodOverView.setRestaurantName(restaurantNameEditText.getText().toString());
-                            foodOverView.setFoodImage(foodImageEditText.getText().toString());
+                                // 更新对象
+                                foodOverView.setFoodName(foodNameEditText.getText().toString());
+                                foodOverView.setRestaurantName(restaurantNameEditText.getText().toString());
+                                foodOverView.setFoodImage(foodImageEditText.getText().toString());
 
-                            updateFoodOverView.setFoodId(foodId);
-                            updateFoodOverView.setFoodOverView(foodOverView);
-                            foodInfoUpdateViewModel.getShowDialogLiveData().setValue(true);
+                                updateFoodOverView.setFoodId(foodId);
+                                updateFoodOverView.setFoodOverView(foodOverView);
+                                foodInfoUpdateViewModel.getShowDialogLiveData().setValue(true);
+                            }
+                            else {
+                                Log.i("招牌菜更新信息", "获取更新Id网络回调结果为false，跳转失败");
+                            }
 
                         }catch (Exception e){
                             e.printStackTrace();
@@ -279,13 +284,5 @@ public class AdminFoodInfoUpdateActivity extends AppCompatActivity {
                 });
         // 显示
         normalDialog.show();
-    }
-
-    // 测试
-    // 打印UpDateFoodOverView
-    private void Print(UpdateFoodOverView updateFoodOverView){
-        Log.i("打印UpdateFood", "---------------------");
-        Log.i("打印UpdateFood", updateFoodOverView.getFoodId());
-        Log.i("打印UpdateFood", "---------------------");
     }
 }

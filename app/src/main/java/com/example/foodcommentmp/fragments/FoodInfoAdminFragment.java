@@ -1,5 +1,6 @@
 package com.example.foodcommentmp.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -16,9 +17,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.example.foodcommentmp.Activitys.AdminFoodInfoAddActivity;
+import com.example.foodcommentmp.Activitys.AdminRestaurantInfoAddActivity;
 import com.example.foodcommentmp.Adapters.AdminFoodInfoAdapter;
 import com.example.foodcommentmp.Config.ServerConfig;
 import com.example.foodcommentmp.R;
@@ -44,6 +48,8 @@ public class FoodInfoAdminFragment extends Fragment {
     private RecyclerView recyclerView;
     private AdminFoodInfoAdapter adminFoodInfoAdapter;
     private List<FoodOverView> foodOverViewList = new ArrayList<>();
+
+    private ImageButton addButton;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -124,6 +130,15 @@ public class FoodInfoAdminFragment extends Fragment {
             @Override
             public void onClick(View v, int position) {
                 adminFoodInfoAdapter.setDefSelect(position);
+            }
+        });
+
+        // 添加招牌菜按钮点击事件
+        addButton = view.findViewById(R.id.admin_food_add_button);
+        addButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getContext(), AdminFoodInfoAddActivity.class));
             }
         });
 

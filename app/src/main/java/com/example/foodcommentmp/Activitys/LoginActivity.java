@@ -33,7 +33,6 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // todo 取消databinding，取消约束布局
         setContentView(R.layout.activity_login);
 
         confirmButton = (ImageButton) findViewById(R.id.login_confirm_button);

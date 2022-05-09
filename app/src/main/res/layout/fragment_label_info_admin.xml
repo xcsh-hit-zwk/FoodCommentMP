@@ -94,22 +94,6 @@
             android:layout_width="10dp"
             android:layout_height="30dp"/>
 
-        <ImageButton
-            android:id="@+id/admin_label_delete_button"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:background="@drawable/ic_restaurant_delete"/>
-
-        <TextView
-            android:layout_width="10dp"
-            android:layout_height="30dp"/>
-
-        <ImageButton
-            android:id="@+id/admin_label_update_button"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:background="@drawable/ic_restaurant_modify"/>
-
     </LinearLayout>
 
     <androidx.cardview.widget.CardView

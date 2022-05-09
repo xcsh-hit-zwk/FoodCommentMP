@@ -33,7 +33,6 @@ public class RegisterActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // todo 取消databinding，取消约束布局
         setContentView(R.layout.activity_register);
 
         confirmButton = (ImageButton) findViewById(R.id.register_confirm_button);
@@ -69,7 +68,6 @@ public class RegisterActivity extends AppCompatActivity {
                         .baseUrl(ServerConfig.BASE_URL)
                         .build();
                 UserService userService = retrofit.create(UserService.class);
-                // todo 这里需要一个新的给后端传输的实体类
                 Call<ResponseBody> call = userService.checkSignup(registerAccount);
 
                 call.enqueue(new Callback<ResponseBody>() {
