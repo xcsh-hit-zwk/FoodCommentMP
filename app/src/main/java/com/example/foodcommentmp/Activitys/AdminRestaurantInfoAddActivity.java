@@ -46,6 +46,8 @@ public class AdminRestaurantInfoAddActivity extends AppCompatActivity {
 
     private RestaurantInfoAddViewModel restaurantInfoAddViewModel;
 
+    private int FLAG = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -102,6 +104,7 @@ public class AdminRestaurantInfoAddActivity extends AppCompatActivity {
                             JSONObject jsonObject = JSON.parseObject(response.body().string());
                             Boolean success = (Boolean) jsonObject.get("success");
                             Log.i("添加餐厅", String.valueOf(jsonObject));
+                            FLAG = 1;
                             if(success == true){
                                 restaurantInfoAddViewModel.getAddSuccessLiveData().setValue(true);
                             }
@@ -130,7 +133,7 @@ public class AdminRestaurantInfoAddActivity extends AppCompatActivity {
                             startActivity(new Intent(AdminRestaurantInfoAddActivity.this,
                                     AdminMainActivity.class));
                         }
-                        else {
+                        else if(FLAG == 1){
                             Log.i("添加餐厅", "网络回调结果为false，跳转失败");
                         }
                     }

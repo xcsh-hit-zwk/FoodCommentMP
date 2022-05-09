@@ -45,6 +45,8 @@ public class AdminRestaurantInfoUpdateActivity extends AppCompatActivity {
 
     private RestaurantInfoUpdateViewModel restaurantInfoUpdateViewModel;
 
+    private int FLAG = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -104,6 +106,7 @@ public class AdminRestaurantInfoUpdateActivity extends AppCompatActivity {
                             JSONObject jsonObject = JSON.parseObject(response.body().string());
                             Boolean success = (Boolean) jsonObject.get("success");
                             Log.i("删除餐厅", String.valueOf(jsonObject));
+                            FLAG = 1;
                             if(success == true){
                                 restaurantInfoUpdateViewModel.getDeleteSuccessLiveData().setValue(true);
                             }
@@ -147,7 +150,7 @@ public class AdminRestaurantInfoUpdateActivity extends AppCompatActivity {
                             Log.i("获取更新餐厅Id", String.valueOf(jsonObject));
                             String restaurantId = jsonObject.getString("data");
                             UpdateRestaurantOverView updateRestaurantOverView = new UpdateRestaurantOverView();
-
+                            FLAG = 1;
                             // 更新对象
                             restaurantOverView.setRestaurantName(restaurantNameEditText.getText().toString());
                             restaurantOverView.setRestaurantTag(restaurantTagEditText.getText().toString());
@@ -187,7 +190,7 @@ public class AdminRestaurantInfoUpdateActivity extends AppCompatActivity {
                             startActivity(new Intent(AdminRestaurantInfoUpdateActivity.this,
                                     AdminMainActivity.class));
                         }
-                        else {
+                        else if(FLAG == 1){
                             Log.i("餐厅更新信息", "删除网络回调结果为false，跳转失败");
                         }
                     }
@@ -201,7 +204,7 @@ public class AdminRestaurantInfoUpdateActivity extends AppCompatActivity {
                             startActivity(new Intent(AdminRestaurantInfoUpdateActivity.this,
                                     AdminMainActivity.class));
                         }
-                        else {
+                        else if(FLAG == 1){
                             Log.i("餐厅更新信息", "更新网络回调结果为false，跳转失败");
                         }
                     }
@@ -212,39 +215,41 @@ public class AdminRestaurantInfoUpdateActivity extends AppCompatActivity {
                     @Override
                     public void onChanged(UpdateRestaurantOverView updateRestaurantOverView) {
 
-                        Retrofit retrofit = new Retrofit.Builder()
-                                .addConverterFactory(GsonConverterFactory.create())
-                                .baseUrl(ServerConfig.BASE_URL)
-                                .build();
-                        AdminInfoService adminInfoService = retrofit.create(AdminInfoService.class);
+                        if(FLAG == 1){
+                            Retrofit retrofit = new Retrofit.Builder()
+                                    .addConverterFactory(GsonConverterFactory.create())
+                                    .baseUrl(ServerConfig.BASE_URL)
+                                    .build();
+                            AdminInfoService adminInfoService = retrofit.create(AdminInfoService.class);
 
-                        Call<ResponseBody> call = adminInfoService.updateRestaurant(updateRestaurantOverView);
-                        call.enqueue(new Callback<ResponseBody>() {
-                            @Override
-                            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                                try {
+                            Call<ResponseBody> call = adminInfoService.updateRestaurant(updateRestaurantOverView);
+                            call.enqueue(new Callback<ResponseBody>() {
+                                @Override
+                                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                                    try {
 
-                                    JSONObject jsonObject = JSON.parseObject(response.body().string());
-                                    Boolean success = (Boolean) jsonObject.get("success");
-                                    Log.i("更新餐厅", String.valueOf(jsonObject));
-                                    if(success == true){
-                                        restaurantInfoUpdateViewModel.getUpdateSuccessLiveData().setValue(true);
+                                        JSONObject jsonObject = JSON.parseObject(response.body().string());
+                                        Boolean success = (Boolean) jsonObject.get("success");
+                                        Log.i("更新餐厅", String.valueOf(jsonObject));
+                                        if(success == true){
+                                            restaurantInfoUpdateViewModel.getUpdateSuccessLiveData().setValue(true);
+                                        }
+                                        else {
+                                            Toast.makeText(AdminRestaurantInfoUpdateActivity.this, "更新餐厅失败",
+                                                    Toast.LENGTH_SHORT).show();
+                                        }
+
+                                    }catch (Exception e){
+                                        e.printStackTrace();
                                     }
-                                    else {
-                                        Toast.makeText(AdminRestaurantInfoUpdateActivity.this, "更新餐厅失败",
-                                                Toast.LENGTH_SHORT).show();
-                                    }
-
-                                }catch (Exception e){
-                                    e.printStackTrace();
                                 }
-                            }
 
-                            @Override
-                            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                                @Override
+                                public void onFailure(Call<ResponseBody> call, Throwable t) {
 
-                            }
-                        });
+                                }
+                            });
+                        }
                     }
                 });
     }

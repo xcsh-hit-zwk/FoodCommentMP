@@ -3,6 +3,8 @@ package com.example.foodcommentmp.retrofit;
 import com.example.foodcommentmp.pojo.FoodOverView;
 import com.example.foodcommentmp.pojo.LabelOverView;
 import com.example.foodcommentmp.pojo.RestaurantOverView;
+import com.example.foodcommentmp.pojo.UpdateFoodOverView;
+import com.example.foodcommentmp.pojo.UpdateLabelOverView;
 import com.example.foodcommentmp.pojo.UpdateRestaurantOverView;
 
 import okhttp3.ResponseBody;
@@ -52,10 +54,14 @@ public interface AdminInfoService {
     @POST("AdminInfo/UpdateRestaurant")
     Call<ResponseBody> updateRestaurant(@Body UpdateRestaurantOverView updateRestaurantOverView);
 
+    @POST("AdminInfo/GetUpdateFoodId")
+    Call<ResponseBody> getUpdateFoodId(@Body FoodOverView foodOverView);
     @POST("AdminInfo/UpdateFood")
-    Call<ResponseBody> updateFood(@Body FoodOverView foodOverView);
+    Call<ResponseBody> updateFood(@Body UpdateFoodOverView updateFoodOverView);
 
-    @POST
-    Call<ResponseBody> updateLabel(@Body LabelOverView labelOverView);
+    @POST("AdminInfo/GetUpdateLabelId")
+    Call<ResponseBody> getUpdateLabelId(@Body LabelOverView labelOverView);
+    @POST("AdminInfo/UpdateLabel")
+    Call<ResponseBody> updateLabel(@Body UpdateLabelOverView updateLabelOverView);
 
 }
