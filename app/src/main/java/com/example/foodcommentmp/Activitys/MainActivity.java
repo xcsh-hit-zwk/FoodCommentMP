@@ -47,6 +47,8 @@ public class MainActivity extends AppCompatActivity {
 
     private int FLAG = 0;
 
+    private static final int delayTime = 1000;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -141,7 +143,7 @@ public class MainActivity extends AppCompatActivity {
                     Log.i("自动登录", "去登录/注册");
                     startActivity(new Intent(MainActivity.this, LoginActivity.class));
                 }
-            }, 3000);
+            }, delayTime);
 
         }
 
@@ -156,7 +158,7 @@ public class MainActivity extends AppCompatActivity {
                                     startActivity(new Intent(MainActivity.this,
                                             BrowseRestaurantOverViewActivity.class));
                                 }
-                            }, 3000);
+                            }, delayTime);
                         }
                         else if (FLAG == 1){
                             Log.i("自动登录", "自动登录失败1");

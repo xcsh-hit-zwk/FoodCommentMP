@@ -33,7 +33,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class LoginActivity extends AppCompatActivity {
-    private ImageButton confirmButton, toRegisterButton;
+    private ImageButton confirmButton, toRegisterButton, toAdminImageButton;
     private EditText usernameEditText, passwordEditText;
 
     private SharedPreferences sharedPreferences;
@@ -56,15 +56,23 @@ public class LoginActivity extends AppCompatActivity {
         editor = sharedPreferences.edit();
         loginViewModel = new ViewModelProvider(this).get(LoginViewModel.class);
 
-        confirmButton = (ImageButton) findViewById(R.id.login_confirm_button);
-        toRegisterButton = (ImageButton) findViewById(R.id.to_register_button);
+        confirmButton = findViewById(R.id.login_confirm_button);
+        toRegisterButton = findViewById(R.id.to_register_button);
+        toAdminImageButton = findViewById(R.id.to_admin_image_button);
 
-        usernameEditText = (EditText) findViewById(R.id.login_username);
-        passwordEditText = (EditText) findViewById(R.id.login_password);
+        usernameEditText = findViewById(R.id.login_username);
+        passwordEditText = findViewById(R.id.login_password);
 
         // 监听多个输入框
         TextInputHelper textInputHelper = new TextInputHelper(confirmButton, true);
         textInputHelper.addViews(usernameEditText, passwordEditText);
+
+        toAdminImageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(LoginActivity.this, WelcomeAdminActivity.class));
+            }
+        });
 
         // 判断登录信息
         confirmButton.setOnClickListener(new View.OnClickListener() {
@@ -131,7 +139,7 @@ public class LoginActivity extends AppCompatActivity {
                 if(aBoolean == true){
                     startActivity(new Intent(LoginActivity.this, MainActivity.class));
                 }
-                else {
+                else if (FLAG == 1){
                     Log.i("登录界面", "登录状态设置失败");
                 }
             }

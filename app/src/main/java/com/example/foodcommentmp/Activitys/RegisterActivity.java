@@ -29,7 +29,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    private ImageButton confirmButton, toLoginButton;
+    private ImageButton confirmButton, toLoginButton, toAdminButton;
     private EditText usernameEditText, passwordEditText, nicknameEditText;
 
     private RegisterViewModel registerViewModel;
@@ -42,16 +42,24 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        confirmButton = (ImageButton) findViewById(R.id.register_confirm_button);
-        toLoginButton = (ImageButton) findViewById(R.id.to_login_button);
+        confirmButton = findViewById(R.id.register_confirm_button);
+        toLoginButton = findViewById(R.id.to_login_button);
+        toAdminButton = findViewById(R.id.to_admin_image_button);
 
-        usernameEditText = (EditText) findViewById(R.id.register_username);
-        passwordEditText = (EditText) findViewById(R.id.register_password);
-        nicknameEditText = (EditText) findViewById(R.id.register_nickname);
+        usernameEditText = findViewById(R.id.register_username);
+        passwordEditText = findViewById(R.id.register_password);
+        nicknameEditText = findViewById(R.id.register_nickname);
 
         // 监听多个输入框
         TextInputHelper textInputHelper = new TextInputHelper(confirmButton, true);
         textInputHelper.addViews(usernameEditText, passwordEditText);
+
+        toAdminButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(RegisterActivity.this, WelcomeAdminActivity.class));
+            }
+        });
 
         confirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
