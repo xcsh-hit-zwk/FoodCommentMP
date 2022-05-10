@@ -33,6 +33,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class LoginActivity extends AppCompatActivity {
+
     private ImageButton confirmButton, toRegisterButton, toAdminImageButton;
     private EditText usernameEditText, passwordEditText;
 
@@ -62,6 +63,15 @@ public class LoginActivity extends AppCompatActivity {
 
         usernameEditText = findViewById(R.id.login_username);
         passwordEditText = findViewById(R.id.login_password);
+
+        final Intent backIntent = getIntent();
+        Bundle bundle = backIntent.getBundleExtra("data");
+        if (bundle != null){
+            String get = bundle.getString("username");
+            if(get != null){
+                usernameEditText.setText(get);
+            }
+        }
 
         // 监听多个输入框
         TextInputHelper textInputHelper = new TextInputHelper(confirmButton, true);

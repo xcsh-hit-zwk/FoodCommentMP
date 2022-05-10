@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
 
     private int FLAG = 0;
 
-    private static final int delayTime = 1000;
+    private static final int delayTime = 3000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

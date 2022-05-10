@@ -13,6 +13,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FoodCommentMp">
         <activity
+            android:name=".Activitys.WelcomeAdminActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activitys.BrowseRestaurantOverViewActivity"
+            android:exported="false" />
+        <activity
             android:name=".Activitys.AdminLabelInfoAddActivity"
             android:exported="false" />
         <activity
@@ -42,9 +48,6 @@
         <activity
             android:name=".Activitys.LoginActivity"
             android:exported="false" />
-        <activity
-            android:name=".Activitys.LogInMain"
-            android:exported="true" />
         <activity
             android:name=".Activitys.MainActivity"
             android:exported="true">

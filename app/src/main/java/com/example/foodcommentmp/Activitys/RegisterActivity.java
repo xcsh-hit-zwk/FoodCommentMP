@@ -1,9 +1,12 @@
 package com.example.foodcommentmp.Activitys;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -36,11 +39,16 @@ public class RegisterActivity extends AppCompatActivity {
 
     private int FLAG = 0;
 
+    private String username;
+    private String password;
+    private String nickname;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+
+        registerViewModel = new ViewModelProvider(this).get(RegisterViewModel.class);
 
         confirmButton = findViewById(R.id.register_confirm_button);
         toLoginButton = findViewById(R.id.to_login_button);
@@ -64,10 +72,10 @@ public class RegisterActivity extends AppCompatActivity {
         confirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String username = usernameEditText.getText().toString();
-                String password = passwordEditText.getText().toString();
-                password = MD5.string2MD5(password);
-                String nickname = nicknameEditText.getText().toString();
+                username = usernameEditText.getText().toString();
+                password = passwordEditText.getText().toString();
+                String MD5password = MD5.string2MD5(password);
+                nickname = nicknameEditText.getText().toString();
 
                 // 如果未输入昵称
                 if(nickname.equals("")){
@@ -75,7 +83,7 @@ public class RegisterActivity extends AppCompatActivity {
                 }
 
                 // 创建网路传输对象RegisterAccount
-                RegisterAccount registerAccount = new RegisterAccount(username, password, nickname);
+                RegisterAccount registerAccount = new RegisterAccount(username, MD5password, nickname);
 
                 // 网络接口
                 Retrofit retrofit = new Retrofit.Builder()
@@ -93,8 +101,8 @@ public class RegisterActivity extends AppCompatActivity {
                             Boolean success = (Boolean) JSON.parseObject(response.body().string())
                                     .get("success");
                             if(success == true){
-                                Toast.makeText(RegisterActivity.this, "注册成功", Toast.LENGTH_SHORT)
-                                        .show();
+                                registerViewModel.getRegisterSuccessLiveData().setValue(true);
+                                FLAG = 1;
                             }
                             else {
                                 Toast.makeText(RegisterActivity.this, "用户已存在", Toast.LENGTH_SHORT)
@@ -117,10 +125,23 @@ public class RegisterActivity extends AppCompatActivity {
         toLoginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                usernameEditText.setText("");
-                passwordEditText.setText("");
-                nicknameEditText.setText("");
                 startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
+            }
+        });
+
+        registerViewModel.getRegisterSuccessLiveData().observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean aBoolean) {
+                if (aBoolean == true){
+                    Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putString("username", username);
+                    intent.putExtra("data", bundle);
+                    startActivity(intent);
+                }
+                else if (FLAG == 1){
+                    Log.i("注册", "注册状态回调失败");
+                }
             }
         });
 
