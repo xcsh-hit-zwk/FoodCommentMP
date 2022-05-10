@@ -60,4 +60,7 @@ dependencies {
     implementation 'com.android.support:support-v4:23.2.1'
 
     implementation "androidx.cardview:cardview:1.0.0"
+
+    // 第三方Loading圈
+    implementation "com.wang.avi:library:2.1.3"
 }

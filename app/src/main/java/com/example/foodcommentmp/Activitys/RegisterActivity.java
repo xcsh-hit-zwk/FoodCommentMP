@@ -12,6 +12,7 @@ import android.widget.Toast;
 import com.alibaba.fastjson.JSON;
 import com.example.foodcommentmp.Config.ServerConfig;
 import com.example.foodcommentmp.R;
+import com.example.foodcommentmp.ViewModel.RegisterViewModel;
 import com.example.foodcommentmp.common.MD5;
 import com.example.foodcommentmp.common.TextInputHelper;
 import com.example.foodcommentmp.pojo.RegisterAccount;
@@ -27,8 +28,14 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RegisterActivity extends AppCompatActivity {
-    ImageButton confirmButton, toLoginButton;
-    EditText usernameEditText, passwordEditText, nicknameEditText;
+
+    private ImageButton confirmButton, toLoginButton;
+    private EditText usernameEditText, passwordEditText, nicknameEditText;
+
+    private RegisterViewModel registerViewModel;
+
+    private int FLAG = 0;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
