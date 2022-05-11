@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/restaurant_overview"
+        android:icon="@drawable/ic_restaurant_title_image"
+        android:title="餐厅" />
+    <item
+        android:id="@+id/user_info"
+        android:icon="@drawable/ic_user_info"
+        android:title="我的" />
+</menu>

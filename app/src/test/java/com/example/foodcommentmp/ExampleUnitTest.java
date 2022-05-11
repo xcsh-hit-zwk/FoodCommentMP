@@ -4,6 +4,8 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
+import android.content.SharedPreferences;
+
 import com.example.foodcommentmp.common.MD5;
 
 /**
@@ -27,4 +29,5 @@ public class ExampleUnitTest {
         System.out.println(s);
         System.out.println("解密的：" + MD5.convertMD5(MD5.convertMD5(s)));
     }
+
 }

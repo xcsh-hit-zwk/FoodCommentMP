@@ -7,7 +7,6 @@ import androidx.lifecycle.ViewModelProvider;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -47,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
 
     private int FLAG = 0;
 
-    private static final int delayTime = 3000;
+    private static final int delayTime = 1000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -157,6 +156,8 @@ public class MainActivity extends AppCompatActivity {
                                 public void run() {
                                     startActivity(new Intent(MainActivity.this,
                                             BrowseRestaurantOverViewActivity.class));
+//                                    startActivity(new Intent(MainActivity.this,
+//                                            TestBottomNav.class));
                                 }
                             }, delayTime);
                         }

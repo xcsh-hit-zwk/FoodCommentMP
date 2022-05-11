@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/restaurant_navigation"
+    app:startDestination="@id/restaurant_overview">
+
+
+    <fragment
+        android:id="@+id/restaurant_overview"
+        android:name="com.example.foodcommentmp.fragments.RestaurantOverViewFragment"
+        android:label="餐厅"
+        tools:layout="@layout/restaurant_over_view_fragment" />
+    <fragment
+        android:id="@+id/user_info"
+        android:name="com.example.foodcommentmp.fragments.UserInfoFragment"
+        android:label="我的"
+        tools:layout="@layout/user_info_fragment" />
+</navigation>
