@@ -114,7 +114,7 @@ public class RestaurantInfoAdminFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_restaurant_info_admin_, container, false);
         recyclerView = view.findViewById (R.id.restaurant_info_recycle_view);
         recyclerView.setLayoutManager (new LinearLayoutManager
-                (getActivity (),LinearLayoutManager.VERTICAL,false));
+                (getActivity(),LinearLayoutManager.VERTICAL,false));
         recyclerView.setItemAnimator (new DefaultItemAnimator());
         recyclerView.addItemDecoration (new DividerItemDecoration
                 (getActivity(), DividerItemDecoration.VERTICAL));

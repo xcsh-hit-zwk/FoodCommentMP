@@ -41,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
     private Calendar calendar;
 
     private SharedPreferences userAccount;
+    private SharedPreferences.Editor editor;
 
     private MainActivityViewModel mainActivityViewModel;
 
@@ -88,12 +89,16 @@ public class MainActivity extends AppCompatActivity {
                 .into(background);
 
         userAccount = this.getSharedPreferences("user_account", MODE_PRIVATE);
+        editor = userAccount.edit();
 
         // 如果不存在本地账户，则进行登录/注册
         String username = userAccount.getString("username", "");
         String password = userAccount.getString("password", "");
         Log.i("自动登录", username);
         Log.i("自动登录", password);
+//        // 临时清
+//        editor.clear();
+//        editor.commit();
 
         if (!"".equals(username) && !"".equals(password)){
 

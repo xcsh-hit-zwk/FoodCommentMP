@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="search_choice">
+        <item>城市</item>
+        <item>街区</item>
+        <item>招牌菜</item>
+        <item>餐厅类型</item>
+    </string-array>
+
+</resources>

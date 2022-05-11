@@ -19,8 +19,8 @@
             android:layout_height="40dp">
 
             <Spinner
-                android:id="@+id/search_way_spinner"
-                android:layout_width="90dp"
+                android:id="@+id/detail_search_way_spinner"
+                android:layout_width="95dp"
                 android:layout_height="40dp"
                 android:layout_marginLeft="15dp"
                 android:spinnerMode="dropdown"
@@ -38,7 +38,7 @@
             android:layout_height="70dp">
 
             <LinearLayout
-                android:id="@+id/search_background"
+                android:id="@+id/detail_search_background"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_marginTop="20dp"
@@ -57,15 +57,15 @@
                     android:layout_marginTop="25dp"/>
 
                 <EditText
-                    android:id="@+id/search_edit_text"
-                    android:layout_width="280dp"
+                    android:id="@+id/detail_search_edit_text"
+                    android:layout_width="270dp"
                     android:layout_height="43dp"
                     android:layout_marginTop="20dp"
                     android:background="@color/transport"
                     android:hint="请输入"/>
 
                 <ImageButton
-                    android:id="@+id/search_image_button"
+                    android:id="@+id/detail_search_image_button"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_marginTop="30dp"
