@@ -87,6 +87,7 @@ public class RestaurantOverViewAdapter extends RecyclerView.Adapter<RestaurantOv
         Glide.with(context)
                 .load(file)
                 .into(holder.getRestaurantImageView());
+
         holder.getRestaurantNameTextView().setText(restaurantOverView.getRestaurantName());
         holder.getRestaurantLikeTextView().setText(String.valueOf(restaurantOverView.getLikes()));
         holder.getRestaurantLabelTextView().setText(restaurantOverView.getRestaurantTag());
