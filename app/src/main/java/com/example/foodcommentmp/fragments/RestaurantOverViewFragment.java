@@ -176,6 +176,7 @@ public class RestaurantOverViewFragment extends Fragment {
             }
         });
 
+        // 初始化RecycleView
         recyclerView = view.findViewById (R.id.restaurant_overview_recycle_view);
         recyclerView.setLayoutManager (new LinearLayoutManager
                 (getActivity(),LinearLayoutManager.VERTICAL,false));
