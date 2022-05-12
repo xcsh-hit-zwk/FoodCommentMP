@@ -32,12 +32,27 @@
             android:layout_weight="1"
             android:text="餐厅名"/>
 
-        <TextView
-            android:id="@+id/restaurant_info_item_restaurant_like_text_view"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="5.7"/>
+            android:layout_weight="1">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:background="@drawable/ic_liked"/>
+
+            <TextView
+                android:layout_width="5dp"
+                android:layout_height="20dp"/>
+
+            <TextView
+                android:id="@+id/restaurant_info_item_restaurant_like_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="5.7"/>
+
+        </LinearLayout>
 
         <TextView
             android:id="@+id/restaurant_info_item_restaurant_label_text_view"

@@ -77,4 +77,21 @@
 
     </LinearLayout>
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="50dp"/>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="483dp"
+        app:cardElevation="30dp"
+        app:cardCornerRadius="30dp">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/restaurant_overview_recycle_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+    </androidx.cardview.widget.CardView>
+
 </LinearLayout>

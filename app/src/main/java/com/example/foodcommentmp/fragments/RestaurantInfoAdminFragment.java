@@ -127,7 +127,7 @@ public class RestaurantInfoAdminFragment extends Fragment {
                     public void onChanged(List<RestaurantOverView> restaurantOverViews) {
                         restaurantOverViewList = restaurantInfoAdminViewModel
                                 .getRestaurantOverViewMutableLiveData().getValue();
-                        adminRestaurantInfoAdaptor.setRestaurantOverViewList(restaurantOverViews);
+                        adminRestaurantInfoAdaptor.setRestaurantOverViewList(restaurantOverViewList);
                         adminRestaurantInfoAdaptor.notifyDataSetChanged();
                     }
                 });

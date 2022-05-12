@@ -1,6 +1,7 @@
 package com.example.foodcommentmp.fragments;
 
 import androidx.appcompat.widget.SearchView;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
@@ -12,6 +13,10 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -22,12 +27,32 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.example.foodcommentmp.Activitys.RestaurantSearchActivity;
+import com.example.foodcommentmp.Adapters.AdminRestaurantInfoAdaptor;
+import com.example.foodcommentmp.Adapters.RestaurantOverViewAdapter;
 import com.example.foodcommentmp.Adapters.SpinnerAdaptor;
+import com.example.foodcommentmp.Config.ServerConfig;
 import com.example.foodcommentmp.R;
 import com.example.foodcommentmp.ViewModel.RestaurantOverViewViewModel;
+import com.example.foodcommentmp.pojo.RestaurantOverView;
+import com.example.foodcommentmp.retrofit.RestaurantService;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 import javax.xml.transform.Result;
+
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RestaurantOverViewFragment extends Fragment {
 
@@ -36,8 +61,12 @@ public class RestaurantOverViewFragment extends Fragment {
     private Spinner spinner;
     private LinearLayout linearLayout;
     private EditText editText;
+    private RecyclerView recyclerView;
+    private RestaurantOverViewAdapter restaurantOverViewAdapter;
 
     private String chosen;
+
+    private List<RestaurantOverView> restaurantOverViewList = new ArrayList<>();
 
     private static final String[] searchMod = new String[]{"城市", "街区", "招牌菜", "餐厅类型"};
 
@@ -50,6 +79,52 @@ public class RestaurantOverViewFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
 
         mViewModel = new ViewModelProvider(this).get(RestaurantOverViewViewModel.class);
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .addConverterFactory(GsonConverterFactory.create())
+                .baseUrl(ServerConfig.BASE_URL)
+                .build();
+        RestaurantService restaurantService = retrofit.create(RestaurantService.class);
+
+        Map<String, String> cityMap = new HashMap<>();
+        cityMap.put("city", "威海");
+        Call<ResponseBody> call = restaurantService.getCity(cityMap);
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                try {
+                    JSONObject jsonObject = JSON.parseObject(response.body().string());
+                    Boolean success = (Boolean) jsonObject.get("success");
+                    Log.i("用户餐厅信息列表", String.valueOf(jsonObject));
+                    if(success == true){
+                        mViewModel.getRestaurantOverViewLiveData()
+                                .setValue(JSON.parseArray(jsonObject.getString("data"), RestaurantOverView.class));
+                        // 打印数据集
+                        List<RestaurantOverView> temp = mViewModel.getRestaurantOverViewLiveData().getValue();
+                        Iterator<RestaurantOverView> iterator = temp.iterator();
+                        while (iterator.hasNext()){
+                            RestaurantOverView t = iterator.next();
+                            Log.i("用户餐厅信息列表", "------------");
+                            Log.i("用户餐厅信息列表", t.getRestaurantName());
+                            Log.i("用户餐厅信息列表", String.valueOf(t.getLikes()));
+                            Log.i("用户餐厅信息列表", t.getRestaurantTag());
+                            Log.i("用户餐厅信息列表", t.getRestaurantPosition());
+                            Log.i("用户餐厅信息列表", t.getRestaurantImage());
+                            Log.i("用户餐厅信息列表", t.getRestaurantProvince());
+                            Log.i("用户餐厅信息列表", t.getRestaurantCity());
+                            Log.i("用户餐厅信息列表", t.getRestaurantBlock());
+                        }
+                    }
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+            }
+        });
 
         return inflater.inflate(R.layout.restaurant_over_view_fragment, container, false);
     }
@@ -98,6 +173,33 @@ public class RestaurantOverViewFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(getContext(), RestaurantSearchActivity.class));
+            }
+        });
+
+        recyclerView = view.findViewById (R.id.restaurant_overview_recycle_view);
+        recyclerView.setLayoutManager (new LinearLayoutManager
+                (getActivity(),LinearLayoutManager.VERTICAL,false));
+        recyclerView.setItemAnimator (new DefaultItemAnimator());
+        recyclerView.addItemDecoration (new DividerItemDecoration
+                (getActivity(), DividerItemDecoration.VERTICAL));
+        restaurantOverViewAdapter = new RestaurantOverViewAdapter(getActivity(), restaurantOverViewList);
+        recyclerView.setAdapter (restaurantOverViewAdapter);
+
+        mViewModel.getRestaurantOverViewLiveData()
+                .observe(getViewLifecycleOwner(), new Observer<List<RestaurantOverView>>() {
+                    @Override
+                    public void onChanged(List<RestaurantOverView> restaurantOverViews) {
+                        restaurantOverViewList = mViewModel
+                                .getRestaurantOverViewLiveData().getValue();
+                        restaurantOverViewAdapter.setRestaurantOverViewList(restaurantOverViewList);
+                        restaurantOverViewAdapter.notifyDataSetChanged();
+                    }
+                });
+
+        restaurantOverViewAdapter.setOnItemListener(new RestaurantOverViewAdapter.OnItemListener(){
+            @Override
+            public void onClick(View v, int position) {
+                restaurantOverViewAdapter.setDefSelect(position);
             }
         });
 
