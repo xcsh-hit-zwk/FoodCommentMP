@@ -31,6 +31,7 @@
             android:layout_marginLeft="20dp"/>
 
         <TextView
+            android:id="@+id/user_nickname"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginTop="35dp"
@@ -38,10 +39,13 @@
             android:text="昵称"
             android:textSize="24dp"/>
 
-<!--        <ImageButton-->
-<!--            android:id="@+id/modify_user_info"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"/>-->
+        <ImageButton
+            android:id="@+id/modify_user_info"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/ic_comment_mod"
+            android:layout_marginTop="30dp"
+            android:layout_marginLeft="400dp"/>
 
     </androidx.cardview.widget.CardView>
 

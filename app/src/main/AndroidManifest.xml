@@ -13,6 +13,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FoodCommentMp">
         <activity
+            android:name=".Activitys.ModifyUserInfoActivity"
+            android:exported="false" />
+        <activity
             android:name=".Activitys.CommentModifyActivity"
             android:exported="false" />
         <activity
