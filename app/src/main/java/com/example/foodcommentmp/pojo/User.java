@@ -1,5 +1,8 @@
 package com.example.foodcommentmp.pojo;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.Date;
 
 /**

@@ -1,10 +1,16 @@
 package com.example.foodcommentmp.common;
 
+import android.content.Context;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
+import com.example.foodcommentmp.Config.ImageConfig;
+
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,17 +23,19 @@ public class TextChangedHelper implements TextWatcher {
     private View mMainView;//操作按钮的View
     private List<EditText> mViewSet;//TextView集合，子类也可以（EditText、TextView、Button）
     private boolean isAlpha;//是否设置透明度
+    private Context context;
 
-    public TextChangedHelper(View view){
-        this(view, true);
+    public TextChangedHelper(View view, Context context){
+        this(view, true, context);
     }
 
-    public TextChangedHelper(View view, boolean alpha){
+    public TextChangedHelper(View view, boolean alpha, Context context){
         if(view == null){
             throw new IllegalArgumentException("The view is empty");
         }
         mMainView = view;
         isAlpha = alpha;
+        this.context = context;
     }
 
     /**
@@ -67,9 +75,7 @@ public class TextChangedHelper implements TextWatcher {
     // TextWatcher
 
     @Override
-    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-        setEnabled(false);
-    }
+    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
 
     @Override
     public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -83,32 +89,12 @@ public class TextChangedHelper implements TextWatcher {
             return;
         }
 
-        setEnabled(true);
-    }
+        File file = new File(ImageConfig.DIR + mViewSet.get(0).getText().toString());
 
-    /**
-     * 设置View的事件
-     *
-     * @param enabled               启用或者禁用View的事件
-     */
-    public void setEnabled(boolean enabled) {
-        if (enabled == mMainView.isEnabled()) return;
-
-        if (enabled) {
-            //启用View的事件
-            mMainView.setEnabled(true);
-            if (isAlpha) {
-                //设置不透明
-                mMainView.setAlpha(1f);
-            }
-        }else {
-            //禁用View的事件
-            mMainView.setEnabled(false);
-            if (isAlpha) {
-                //设置半透明
-                mMainView.setAlpha(0.5f);
-            }
-        }
+        Glide.with(context)
+                .load(file)
+                .circleCrop()
+                .into((ImageView) mMainView);
     }
 
 }

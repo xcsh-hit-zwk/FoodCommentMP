@@ -3,6 +3,7 @@ package com.example.foodcommentmp.retrofit;
 import com.example.foodcommentmp.pojo.Account;
 import com.example.foodcommentmp.pojo.RegisterAccount;
 import com.example.foodcommentmp.pojo.User;
+import com.example.foodcommentmp.pojo.UserInfo;
 
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
@@ -23,7 +24,10 @@ public interface UserService {
     @POST("User/SignUp")
     Call<ResponseBody> checkSignup(@Body RegisterAccount registerAccount);
 
-    @POST("User/getUser")
+    @POST("User/GetUser")
     Call<ResponseBody> getUser(@Body Account account);
+
+    @POST("User/UpdateUserInfo")
+    Call<ResponseBody> updateUserInfo(@Body UserInfo userInfo);
 
 }

@@ -6,10 +6,25 @@
     android:orientation="vertical"
     android:background="@color/cardback">
 
-    <ImageView
-        android:id="@+id/user_background"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="200dp"/>
+        android:layout_height="200dp">
+
+        <ImageView
+            android:id="@+id/user_background"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"/>
+
+        <ImageButton
+            android:id="@+id/exit_user_button"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginLeft="447dp"
+            android:background="@drawable/ic_exit"/>
+
+    </FrameLayout>
+
 
     <TextView
         android:layout_width="match_parent"

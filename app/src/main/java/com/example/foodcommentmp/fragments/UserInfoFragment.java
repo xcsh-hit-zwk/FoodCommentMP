@@ -27,6 +27,7 @@ import android.widget.TextView;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.bumptech.glide.Glide;
+import com.example.foodcommentmp.Activitys.MainActivity;
 import com.example.foodcommentmp.Adapters.UserInfoCommentAdapter;
 import com.example.foodcommentmp.Config.ImageConfig;
 import com.example.foodcommentmp.Activitys.ModifyUserInfoActivity;
@@ -57,10 +58,12 @@ public class UserInfoFragment extends Fragment {
     private ImageView userImage;
     private ImageButton modifyUserInfoButton;
     private TextView nickname;
+    private ImageButton exitButton;
 
     private RecyclerView recyclerView;
     private UserInfoCommentAdapter userInfoCommentAdapter;
     private SharedPreferences sharedPreferences;
+    private SharedPreferences.Editor editor;
 
     private User user;
 
@@ -85,11 +88,13 @@ public class UserInfoFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         sharedPreferences = getContext().getSharedPreferences("user_account", Context.MODE_PRIVATE);
+        editor = sharedPreferences.edit();
 
         background = view.findViewById(R.id.user_background);
         userImage = view.findViewById(R.id.user_image);
         modifyUserInfoButton = view.findViewById(R.id.modify_user_info);
         nickname = view.findViewById(R.id.user_nickname);
+        exitButton = view.findViewById(R.id.exit_user_button);
 
         Account account = new Account();
         String username = sharedPreferences.getString("username", "");
@@ -170,10 +175,21 @@ public class UserInfoFragment extends Fragment {
             public void onClick(View view) {
                 Intent intent = new Intent(getContext(), ModifyUserInfoActivity.class);
                 Bundle bundle = new Bundle();
-                bundle.putString("head_image", ImageConfig.DIR + user.getUserImage());
+                bundle.putString("username", user.getUserId());
+                bundle.putString("password", user.getPassword());
+                bundle.putString("head_image", user.getUserImage());
                 bundle.putString("nickname", user.getNickname());
                 intent.putExtra("data", bundle);
                 startActivity(intent);
+            }
+        });
+
+        exitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                editor.clear();
+                editor.commit();
+                startActivity(new Intent(getContext(), MainActivity.class));
             }
         });
 
