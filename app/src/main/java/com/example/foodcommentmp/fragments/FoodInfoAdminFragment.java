@@ -1,6 +1,8 @@
 package com.example.foodcommentmp.fragments;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -18,18 +20,23 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.bumptech.glide.Glide;
 import com.example.foodcommentmp.Activitys.AdminFoodInfoAddActivity;
+import com.example.foodcommentmp.Activitys.AdminLoginActivity;
 import com.example.foodcommentmp.Activitys.AdminRestaurantInfoAddActivity;
 import com.example.foodcommentmp.Adapters.AdminFoodInfoAdapter;
+import com.example.foodcommentmp.Config.ImageConfig;
 import com.example.foodcommentmp.Config.ServerConfig;
 import com.example.foodcommentmp.R;
 import com.example.foodcommentmp.ViewModel.FoodInfoAdminViewModel;
 import com.example.foodcommentmp.pojo.FoodOverView;
 import com.example.foodcommentmp.retrofit.AdminInfoService;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -50,6 +57,11 @@ public class FoodInfoAdminFragment extends Fragment {
     private List<FoodOverView> foodOverViewList = new ArrayList<>();
 
     private ImageButton addButton;
+    private ImageButton exitButton;
+    private ImageView background;
+
+    private SharedPreferences sharedPreferences;
+    private SharedPreferences.Editor editor;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -106,6 +118,10 @@ public class FoodInfoAdminFragment extends Fragment {
          * 设置RecycleView
          */
         View view = inflater.inflate(R.layout.fragment_food_info_admin_, container, false);
+
+        sharedPreferences = view.getContext().getSharedPreferences("admin_account", Context.MODE_PRIVATE);
+        editor = sharedPreferences.edit();
+
         recyclerView = view.findViewById(R.id.food_info_recycle_view);
         adminFoodInfoAdapter = new AdminFoodInfoAdapter(getActivity(), foodOverViewList);
         recyclerView.setLayoutManager(new LinearLayoutManager
@@ -125,6 +141,24 @@ public class FoodInfoAdminFragment extends Fragment {
                         adminFoodInfoAdapter.notifyDataSetChanged();
                     }
                 });
+
+        background = view.findViewById(R.id.admin_food_background);
+        exitButton = view.findViewById(R.id.admin_food_exit_button);
+
+        File file = new File(ImageConfig.DIR + "/background/user_background.jpg");
+        Glide.with(view.getContext())
+                .load(file)
+                .centerCrop()
+                .into(background);
+
+        exitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                editor.clear();
+                editor.commit();
+                startActivity(new Intent(getContext(), AdminLoginActivity.class));
+            }
+        });
 
         adminFoodInfoAdapter.setOnItemListener(new AdminFoodInfoAdapter.OnItemListener() {
             @Override

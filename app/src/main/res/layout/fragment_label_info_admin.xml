@@ -5,96 +5,70 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
-    <TextView
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="30dp"/>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="2"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="200dp"
-            android:layout_height="110dp"/>
+        android:layout_height="220dp">
 
         <ImageView
-            android:id="@+id/title_image_view"
-            android:layout_width="90dp"
-            android:layout_height="90dp"
-            android:background="@drawable/ic_label_title_image" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"/>
-
-        <ImageView
-            android:id="@+id/search_edit_head_image_view"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:background="@drawable/ic_search_edit_head" />
-
-        <EditText
-            android:id="@+id/label_search_edit_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:imeOptions="actionSearch"
-            android:hint="请输入标签名称" />
+            android:id="@+id/admin_label_background"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
 
         <ImageButton
-            android:id="@+id/label_search_image_button"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:background="@drawable/ic_enter"/>
+            android:id="@+id/admin_label_exit_button"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginLeft="440dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/ic_exit"/>
 
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <TextView
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"/>
+            android:layout_marginTop="140dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"/>
+
+            <ImageView
+                android:id="@+id/search_edit_head_image_view"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/ic_search_edit_head" />
+
+            <EditText
+                android:id="@+id/label_search_edit_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:imeOptions="actionSearch"
+                android:hint="请输入标签名称" />
+
+            <ImageButton
+                android:id="@+id/label_search_image_button"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/ic_enter"/>
+
+        </LinearLayout>
 
         <ImageButton
             android:id="@+id/admin_label_add_button"
             android:layout_width="30dp"
             android:layout_height="30dp"
+            android:layout_marginLeft="440dp"
+            android:layout_marginTop="190dp"
             android:background="@drawable/ic_restaurant_add"/>
 
-        <TextView
-            android:layout_width="10dp"
-            android:layout_height="30dp"/>
-
-    </LinearLayout>
+    </FrameLayout>
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="400dp"
-        app:cardElevation="30dp"
-        app:cardCornerRadius="30dp">
+        app:cardCornerRadius="30dp"
+        android:layout_margin="5dp">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/label_info_recycle_view"

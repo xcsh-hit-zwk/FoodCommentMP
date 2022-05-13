@@ -2,6 +2,7 @@ package com.example.foodcommentmp.fragments;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -19,11 +20,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.bumptech.glide.Glide;
+import com.example.foodcommentmp.Activitys.AdminLoginActivity;
 import com.example.foodcommentmp.Activitys.AdminRestaurantInfoAddActivity;
 import com.example.foodcommentmp.Adapters.AdminRestaurantInfoAdaptor;
+import com.example.foodcommentmp.Config.ImageConfig;
 import com.example.foodcommentmp.Config.ServerConfig;
 import com.example.foodcommentmp.R;
 import com.example.foodcommentmp.ViewModel.RestaurantInfoAddViewModel;
@@ -31,6 +36,7 @@ import com.example.foodcommentmp.ViewModel.RestaurantInfoAdminViewModel;
 import com.example.foodcommentmp.pojo.RestaurantOverView;
 import com.example.foodcommentmp.retrofit.AdminInfoService;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -51,6 +57,11 @@ public class RestaurantInfoAdminFragment extends Fragment {
     private List<RestaurantOverView> restaurantOverViewList = new ArrayList<>();
 
     private ImageButton addButton;
+    private ImageButton exitButton;
+    private ImageView background;
+
+    private SharedPreferences sharedPreferences;
+    private SharedPreferences.Editor editor;
 
     public static RestaurantInfoAdminFragment newInstance(){
         return new RestaurantInfoAdminFragment();
@@ -112,6 +123,10 @@ public class RestaurantInfoAdminFragment extends Fragment {
          * 设置RecycleView
          */
         View view = inflater.inflate(R.layout.fragment_restaurant_info_admin_, container, false);
+
+        sharedPreferences = view.getContext().getSharedPreferences("admin_account", Context.MODE_PRIVATE);
+        editor = sharedPreferences.edit();
+
         recyclerView = view.findViewById (R.id.restaurant_info_recycle_view);
         recyclerView.setLayoutManager (new LinearLayoutManager
                 (getActivity(),LinearLayoutManager.VERTICAL,false));
@@ -131,8 +146,24 @@ public class RestaurantInfoAdminFragment extends Fragment {
                         adminRestaurantInfoAdaptor.notifyDataSetChanged();
                     }
                 });
-        // Inflate the layout for this fragment
 
+        background = view.findViewById(R.id.admin_restaurant_background);
+        exitButton = view.findViewById(R.id.admin_restaurant_exit_button);
+
+        File file = new File(ImageConfig.DIR + "/background/user_background.jpg");
+        Glide.with(view.getContext())
+                .load(file)
+                .centerCrop()
+                .into(background);
+
+        exitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                editor.clear();
+                editor.commit();
+                startActivity(new Intent(getContext(), AdminLoginActivity.class));
+            }
+        });
 
         adminRestaurantInfoAdaptor.setOnItemListener(new AdminRestaurantInfoAdaptor.OnItemListener() {
             @Override

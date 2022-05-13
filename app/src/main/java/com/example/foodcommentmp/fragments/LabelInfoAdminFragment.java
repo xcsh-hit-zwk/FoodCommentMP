@@ -1,6 +1,8 @@
 package com.example.foodcommentmp.fragments;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -18,19 +20,24 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.bumptech.glide.Glide;
 import com.example.foodcommentmp.Activitys.AdminLabelInfoAddActivity;
+import com.example.foodcommentmp.Activitys.AdminLoginActivity;
 import com.example.foodcommentmp.Activitys.AdminRestaurantInfoAddActivity;
 import com.example.foodcommentmp.Adapters.AdminFoodInfoAdapter;
 import com.example.foodcommentmp.Adapters.AdminLabelInfoAdapter;
+import com.example.foodcommentmp.Config.ImageConfig;
 import com.example.foodcommentmp.Config.ServerConfig;
 import com.example.foodcommentmp.R;
 import com.example.foodcommentmp.ViewModel.LabelInfoAdminViewModel;
 import com.example.foodcommentmp.pojo.LabelOverView;
 import com.example.foodcommentmp.retrofit.AdminInfoService;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -51,6 +58,11 @@ public class LabelInfoAdminFragment extends Fragment {
     private List<LabelOverView> labelOverViewList = new ArrayList<>();
 
     private ImageButton addButton;
+    private ImageButton exitButton;
+    private ImageView background;
+
+    private SharedPreferences sharedPreferences;
+    private SharedPreferences.Editor editor;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -103,6 +115,10 @@ public class LabelInfoAdminFragment extends Fragment {
          * 设置RecycleView
          */
         View view = inflater.inflate(R.layout.fragment_label_info_admin, container, false);
+
+        sharedPreferences = view.getContext().getSharedPreferences("admin_account", Context.MODE_PRIVATE);
+        editor = sharedPreferences.edit();
+
         recyclerView = view.findViewById(R.id.label_info_recycle_view);
         adminLabelInfoAdapter = new AdminLabelInfoAdapter(getActivity(), labelOverViewList);
         recyclerView.setLayoutManager(new LinearLayoutManager
@@ -122,6 +138,24 @@ public class LabelInfoAdminFragment extends Fragment {
                         adminLabelInfoAdapter.notifyDataSetChanged();
                     }
                 });
+
+        background = view.findViewById(R.id.admin_label_background);
+        exitButton = view.findViewById(R.id.admin_label_exit_button);
+
+        File file = new File(ImageConfig.DIR + "/background/user_background.jpg");
+        Glide.with(view.getContext())
+                .load(file)
+                .centerCrop()
+                .into(background);
+
+        exitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                editor.clear();
+                editor.commit();
+                startActivity(new Intent(getContext(), AdminLoginActivity.class));
+            }
+        });
 
         adminLabelInfoAdapter.setOnItemListener(new AdminLabelInfoAdapter.OnItemListener() {
             @Override

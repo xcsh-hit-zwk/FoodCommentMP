@@ -45,7 +45,7 @@ public class WelcomeAdminActivity extends AppCompatActivity {
 
     private int FLAG = 0;
 
-    private static final int delayTime = 3000;
+    private static final int delayTime = 1000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
