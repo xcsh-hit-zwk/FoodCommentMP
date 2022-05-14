@@ -22,9 +22,6 @@
             android:name=".Activitys.RestaurantDetailActivity"
             android:exported="false" />
         <activity
-            android:name=".Activitys.RestaurantSearchActivity"
-            android:exported="false" />
-        <activity
             android:name=".Activitys.WelcomeAdminActivity"
             android:exported="false" />
         <activity
