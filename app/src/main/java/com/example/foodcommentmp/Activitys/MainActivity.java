@@ -96,9 +96,6 @@ public class MainActivity extends AppCompatActivity {
         String password = userAccount.getString("password", "");
         Log.i("自动登录", username);
         Log.i("自动登录", password);
-//        // 临时清
-//        editor.clear();
-//        editor.commit();
 
         if (!"".equals(username) && !"".equals(password)){
 
@@ -134,7 +131,6 @@ public class MainActivity extends AppCompatActivity {
 
                 @Override
                 public void onFailure(Call<ResponseBody> call, Throwable t) {
-
                 }
             });
 
@@ -161,8 +157,6 @@ public class MainActivity extends AppCompatActivity {
                                 public void run() {
                                     startActivity(new Intent(MainActivity.this,
                                             BrowseRestaurantOverViewActivity.class));
-//                                    startActivity(new Intent(MainActivity.this,
-//                                            TestBottomNav.class));
                                 }
                             }, delayTime);
                         }

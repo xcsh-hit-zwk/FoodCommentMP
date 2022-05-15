@@ -67,4 +67,5 @@ dependencies {
 
     // 第三方Loading圈
     implementation "com.wang.avi:library:2.1.3"
+    implementation "org.apache.commons:commons-lang3:3.7"
 }
