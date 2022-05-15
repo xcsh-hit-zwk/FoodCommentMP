@@ -37,6 +37,7 @@ import com.example.foodcommentmp.Config.ServerConfig;
 import com.example.foodcommentmp.R;
 import com.example.foodcommentmp.ViewModel.RestaurantOverViewViewModel;
 import com.example.foodcommentmp.pojo.RestaurantOverView;
+import com.example.foodcommentmp.pojo.SearchInfo;
 import com.example.foodcommentmp.retrofit.RestaurantService;
 
 import java.util.ArrayList;
@@ -58,6 +59,7 @@ public class RestaurantOverViewFragment extends Fragment {
 
     private Spinner spinner;
     private LinearLayout linearLayout;
+    // 搜索框
     private EditText editText;
     private RecyclerView recyclerView;
     private RestaurantOverViewAdapter restaurantOverViewAdapter;
@@ -74,6 +76,7 @@ public class RestaurantOverViewFragment extends Fragment {
     private SharedPreferences.Editor editor;
 
     private static final int SHOW_HISTORY_COUNTS = 5;
+    private static final int MAX_HISTORY = 100;
     private String[] historyList = new String[1];
 
     private static final String[] searchMod = new String[]{"城市", "街区", "招牌菜", "餐厅类型"};
@@ -97,9 +100,7 @@ public class RestaurantOverViewFragment extends Fragment {
                 .build();
         RestaurantService restaurantService = retrofit.create(RestaurantService.class);
 
-        Map<String, String> cityMap = new HashMap<>();
-        cityMap.put("city", "威海");
-        Call<ResponseBody> call = restaurantService.getCity(cityMap);
+        Call<ResponseBody> call = restaurantService.getRestaurantOverView(new SearchInfo("城市", ""));
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -223,13 +224,18 @@ public class RestaurantOverViewFragment extends Fragment {
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // todo 这里要调用各种搜索接口，现在只是临时测试历史记录保存
                 int historyCounts = sharedPreferences.getInt("history_counts", 0);
-                String searchInfo = editText.getText().toString();
-                editor.putString("Key"+String.valueOf(historyCounts+1), searchInfo);
-                editor.remove("history_counts");
-                editor.putInt("history_counts", historyCounts+1);
-                editor.commit();
+                String searchInfoStr = editText.getText().toString();
+                if (!searchInfoStr.equals("")){
+//                    editor.putString("Key"+String.valueOf(historyCounts+1), searchInfoStr);
+//                    editor.remove("history_counts");
+//                    editor.putInt("history_counts", historyCounts+1);
+//                    editor.commit();
+                    checkSearchInfo(searchInfoStr);
+                }
+
+                SearchInfo searchInfo = new SearchInfo(chosen, editText.getText().toString());
+                getRestaurantOverView(searchInfo);
             }
         });
 
@@ -270,6 +276,107 @@ public class RestaurantOverViewFragment extends Fragment {
             }
         });
         listPopupWindow.show();
+
+        mViewModel.getRestaurantOverViewLiveData()
+                .observe(this, new Observer<List<RestaurantOverView>>() {
+            @Override
+            public void onChanged(List<RestaurantOverView> restaurantOverViews) {
+                restaurantOverViewAdapter
+                        .setRestaurantOverViewList(mViewModel.getRestaurantOverViewLiveData().getValue());
+                restaurantOverViewAdapter.notifyDataSetChanged();
+            }
+        });
     }
 
+    private void getRestaurantOverView(SearchInfo searchInfo){
+        RestaurantService restaurantService = setRetrofit();
+
+        Call<ResponseBody> call = restaurantService.getRestaurantOverView(searchInfo);
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                try {
+                    JSONObject jsonObject = JSON.parseObject(response.body().string());
+                    Boolean success = (Boolean) jsonObject.get("success");
+                    Log.i("用户餐厅信息列表", String.valueOf(jsonObject));
+                    if (success == true){
+                        mViewModel.getRestaurantOverViewLiveData()
+                                .setValue( JSON.parseArray(jsonObject.getString("data"), RestaurantOverView.class));
+                    }
+                    else {
+                        Log.i("用户餐厅信息列表", "获取用户餐厅列表失败");
+                    }
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+            }
+        });
+    }
+
+    private RestaurantService setRetrofit(){
+        Retrofit retrofit = new Retrofit.Builder()
+                .addConverterFactory(GsonConverterFactory.create())
+                .baseUrl(ServerConfig.BASE_URL)
+                .build();
+        RestaurantService restaurantService = retrofit.create(RestaurantService.class);
+
+        return restaurantService;
+    }
+
+    // 检查当前历史搜索记录是否在最新五条之内, 并且再检查一下是否超过历史记录最多承载量
+    public void checkSearchInfo(String input){
+        String[] checkList = null;
+        int historyCounts = sharedPreferences.getInt("history_counts", 0);
+        if (historyCounts >= 5){
+            checkList = new String[5];
+        }
+        else {
+            checkList = new String[historyCounts];
+        }
+
+        int position = -1;
+        for (int i = 0; i < checkList.length; i++){
+            checkList[i] = sharedPreferences.getString("Key"+String.valueOf(historyCounts-i), "");
+            if(checkList[i].equals(input)){
+                position = i;
+            }
+            editor.remove("Key"+String.valueOf(historyCounts-i));
+            historyCounts--;
+        }
+        if (historyCounts + checkList.length > MAX_HISTORY){
+            editor.clear();
+            historyCounts = 0;
+        }
+        editor.commit();
+
+        if(position != -1){
+            for(int i = position; i < checkList.length-1; ++i){
+                checkList[i] = checkList[i+1];
+            }
+            checkList[checkList.length-1] = input;
+
+            for(int i = 0; i < checkList.length; ++i){
+                editor.putString("Key"+String.valueOf(historyCounts+1), checkList[i]);
+                historyCounts++;
+            }
+            editor.remove("history_counts");
+            editor.putInt("history_counts", historyCounts);
+        }
+        else {
+            for(int i = 0; i < checkList.length; ++i){
+                editor.putString("Key"+String.valueOf(historyCounts+1), checkList[i]);
+                historyCounts++;
+            }
+            editor.putString("Key"+String.valueOf(historyCounts+1), input);
+            historyCounts++;
+            editor.remove("history_counts");
+            editor.putInt("history_counts", historyCounts);
+        }
+        editor.commit();
+    }
 }

@@ -1,5 +1,7 @@
 package com.example.foodcommentmp.retrofit;
 
+import com.example.foodcommentmp.pojo.SearchInfo;
+
 import java.util.Map;
 
 import okhttp3.ResponseBody;
@@ -14,8 +16,7 @@ import retrofit2.http.POST;
 
 public interface RestaurantService {
 
-    @POST("RestaurantOverView/GetCity")
-    Call<ResponseBody> getCity(@Body Map<String, String> city);
-
+    @POST("RestaurantOverView/GetRestaurantOverView")
+    Call<ResponseBody> getRestaurantOverView(@Body SearchInfo searchInfo);
 
 }
