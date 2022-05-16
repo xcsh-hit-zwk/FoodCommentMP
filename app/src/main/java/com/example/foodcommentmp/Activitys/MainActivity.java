@@ -161,7 +161,7 @@ public class MainActivity extends AppCompatActivity {
                             }, delayTime);
                         }
                         else if (FLAG == 1){
-                            Log.i("自动登录", "自动登录失败1");
+                            Log.i("自动登录", "自动登录失败");
                         }
                     }
                 });

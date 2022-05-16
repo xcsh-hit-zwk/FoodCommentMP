@@ -15,7 +15,7 @@ public class RestaurantDetail {
     private String restaurantBlock;
     private String restaurantPosition;
     private List<FoodOverView> foodList;
-    private List<LabelOverView> labelList;
+    private List<String> labelList;
     private List<RestaurantComment> commentList;
     // 只要6个
     private List<RestaurantOverView> sameTagList;
@@ -76,11 +76,11 @@ public class RestaurantDetail {
         this.foodList = foodList;
     }
 
-    public List<LabelOverView> getLabelList() {
+    public List<String> getLabelList() {
         return labelList;
     }
 
-    public void setLabelList(List<LabelOverView> labelList) {
+    public void setLabelList(List<String> labelList) {
         this.labelList = labelList;
     }
 

@@ -10,7 +10,7 @@ public class RestaurantComment {
     private String userImage;
     private String nickname;
     private String commentInfo;
-    private String commentLike;
+    private Integer commentLike;
 
     public String getUsername() {
         return username;
@@ -44,11 +44,11 @@ public class RestaurantComment {
         this.commentInfo = commentInfo;
     }
 
-    public String getCommentLike() {
+    public Integer getCommentLike() {
         return commentLike;
     }
 
-    public void setCommentLike(String commentLike) {
+    public void setCommentLike(Integer commentLike) {
         this.commentLike = commentLike;
     }
 }
