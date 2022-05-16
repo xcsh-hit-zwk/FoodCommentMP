@@ -117,7 +117,8 @@ public class RestaurantOverViewAdapter extends RecyclerView.Adapter<RestaurantOv
                 Intent intent = new Intent(context, RestaurantDetailActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putString("restaurant_name", chosen.getRestaurantName());
-                intent.putExtra("data", bundle);
+                bundle.putString("restaurant_image", chosen.getRestaurantImage());
+                intent.putExtra("restaurant_detail", bundle);
                 context.startActivity(intent);
             }
         }

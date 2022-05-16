@@ -6,13 +6,14 @@
     android:orientation="vertical">
 
     <ImageView
+        android:id="@+id/restaurant_detail_food_item_food_image"
         android:layout_width="80dp"
         android:layout_height="40dp"
         android:layout_marginTop="10dp"
         android:layout_marginLeft="10dp"/>
 
     <LinearLayout
-        android:layout_width="80dp"
+        android:layout_width="110dp"
         android:layout_height="30dp"
         android:layout_marginTop="5dp"
         android:layout_marginLeft="10dp"
@@ -26,11 +27,19 @@
             android:text="菜品名"/>
 
         <ImageButton
-            android:id="@+id/restaurant_detail_food_item_food_likes"
+            android:id="@+id/restaurant_detail_food_item_food_likes_button"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_marginLeft="5dp"
             android:background="@drawable/ic_before_like"/>
+
+        <TextView
+            android:id="@+id/restaurant_detail_food_item_food_likes"
+            android:layout_width="30dp"
+            android:layout_height="20dp"
+            android:layout_marginLeft="5dp"
+            android:textSize="10dp"
+            android:text="点赞数"/>
 
     </LinearLayout>
 

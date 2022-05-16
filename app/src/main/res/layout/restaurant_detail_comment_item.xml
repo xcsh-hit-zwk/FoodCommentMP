@@ -48,11 +48,20 @@
         android:layout_height="40dp"
         android:orientation="horizontal">
 
-        <ImageButton
+        <TextView
             android:id="@+id/restaurant_detail_comment_item_likes"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_marginTop="17dp"
+            android:layout_marginLeft="320dp"
+            android:textSize="10dp"
+            android:text="点赞数"/>
+
+        <ImageButton
+            android:id="@+id/restaurant_detail_comment_item_likes_button"
             android:layout_width="25dp"
             android:layout_height="25dp"
-            android:layout_marginLeft="350dp"
+            android:layout_marginLeft="5dp"
             android:layout_marginTop="8dp"
             android:background="@drawable/ic_before_like"/>
 
