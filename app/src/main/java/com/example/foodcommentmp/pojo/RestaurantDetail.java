@@ -10,7 +10,7 @@ public class RestaurantDetail {
 
     private String restaurantId;
     private String restaurantName;
-    private String restaurantLikes;
+    private Integer restaurantLikes;
     private String restaurantTag;
     private String restaurantBlock;
     private String restaurantPosition;
@@ -36,11 +36,11 @@ public class RestaurantDetail {
         this.restaurantName = restaurantName;
     }
 
-    public String getRestaurantLikes() {
+    public Integer getRestaurantLikes() {
         return restaurantLikes;
     }
 
-    public void setRestaurantLikes(String restaurantLikes) {
+    public void setRestaurantLikes(Integer restaurantLikes) {
         this.restaurantLikes = restaurantLikes;
     }
 
