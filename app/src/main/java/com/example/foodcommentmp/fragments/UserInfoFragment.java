@@ -136,7 +136,12 @@ public class UserInfoFragment extends Fragment {
             }
         });
 
-        File file = new File(ImageConfig.DIR + "/background/user_background.jpg");
+        File file = null;
+        try {
+            file = new File(ImageConfig.DIR + "/background/user_background.jpg");
+        }catch (Exception e){
+            e.printStackTrace();
+        }
         // Glide加载图片
         Glide.with(getContext())
                 .load(file)
@@ -198,7 +203,13 @@ public class UserInfoFragment extends Fragment {
             public void onChanged(Boolean aBoolean) {
                 if(aBoolean == true){
                     nickname.setText(user.getNickname());
-                    File imageFile = new File(ImageConfig.DIR + user.getUserImage());
+
+                    File imageFile = null;
+                    try {
+                        imageFile = new File(ImageConfig.DIR + user.getUserImage());
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
                     Glide.with(getContext())
                             .load(imageFile)
                             .circleCrop()

@@ -142,7 +142,12 @@ public class LabelInfoAdminFragment extends Fragment {
         background = view.findViewById(R.id.admin_label_background);
         exitButton = view.findViewById(R.id.admin_label_exit_button);
 
-        File file = new File(ImageConfig.DIR + "/background/user_background.jpg");
+        File file = null;
+        try {
+            file = new File(ImageConfig.DIR + "/background/user_background.jpg");
+        }catch (Exception e){
+            e.printStackTrace();
+        }
         Glide.with(view.getContext())
                 .load(file)
                 .centerCrop()

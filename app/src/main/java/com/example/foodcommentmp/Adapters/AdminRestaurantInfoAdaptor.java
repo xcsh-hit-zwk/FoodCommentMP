@@ -82,7 +82,13 @@ public class AdminRestaurantInfoAdaptor extends RecyclerView.Adapter<AdminRestau
     @Override
     public void onBindViewHolder(@NonNull AdminRestaurantInfoHolder holder, int position) {
         RestaurantOverView restaurantOverView = restaurantOverViewList.get(position);
-        File file = new File(ImageConfig.DIR + restaurantOverView.getRestaurantImage());
+
+        File file = null;
+        try {
+            file = new File(ImageConfig.DIR + restaurantOverView.getRestaurantImage());
+        }catch (Exception e){
+            e.printStackTrace();
+        }
         // Glide加载图片
         Glide.with(context)
                 .load(file)

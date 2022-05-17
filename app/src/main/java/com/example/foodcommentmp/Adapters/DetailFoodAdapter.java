@@ -80,7 +80,12 @@ public class DetailFoodAdapter extends RecyclerView.Adapter<DetailFoodAdapter.De
         foodOverView = foodOverViewList.get(position);
         pos = holder.getBindingAdapterPosition();
 
-        File file = new File(ImageConfig.DIR + foodOverView.getFoodImage());
+        File file = null;
+        try {
+            file = new File(ImageConfig.DIR + foodOverView.getFoodImage());
+        }catch (Exception e){
+            e.printStackTrace();
+        }
         Glide.with(context)
                 .load(file)
                 .centerCrop()

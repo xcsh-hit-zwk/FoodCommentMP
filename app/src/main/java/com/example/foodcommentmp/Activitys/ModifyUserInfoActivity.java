@@ -85,7 +85,12 @@ public class ModifyUserInfoActivity extends AppCompatActivity {
             }
         }
 
-        File file = new File(ImageConfig.DIR + userImageUrl.getText().toString());
+        File file = null;
+        try {
+            file = new File(ImageConfig.DIR + userImageUrl.getText().toString());
+        }catch (Exception e){
+            e.printStackTrace();
+        }
 
         Glide.with(this)
                 .load(file)

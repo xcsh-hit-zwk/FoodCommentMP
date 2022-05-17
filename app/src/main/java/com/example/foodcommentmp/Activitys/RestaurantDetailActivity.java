@@ -55,7 +55,12 @@ public class RestaurantDetailActivity extends AppCompatActivity {
             if(restaurantNameStr != null && restaurantImageStr != null){
                 restaurantName.setText(restaurantNameStr);
 
-                File restaurantImageFile = new File(ImageConfig.DIR + restaurantImageStr);
+                File restaurantImageFile = null;
+                try {
+                    restaurantImageFile = new File(ImageConfig.DIR + restaurantImageStr);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
                 Glide.with(this)
                         .load(restaurantImageFile)
                         .centerCrop()

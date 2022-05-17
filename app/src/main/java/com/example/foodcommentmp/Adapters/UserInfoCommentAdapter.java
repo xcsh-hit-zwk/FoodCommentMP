@@ -87,8 +87,19 @@ public class UserInfoCommentAdapter extends RecyclerView.Adapter<UserInfoComment
     public void onBindViewHolder(@NonNull UserInfoCommentHolder holder, int position) {
         userInfoComment = userInfoCommentList.get(position);
 
-        File userImageFile = new File(ImageConfig.DIR + userInfoComment.getUserImage());
-        File restaurantImageFile = new File(ImageConfig.DIR + userInfoComment.getRestaurantImage());
+        File userImageFile = null;
+        try {
+            userImageFile = new File(ImageConfig.DIR + userInfoComment.getUserImage());
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        File restaurantImageFile = null;
+        try {
+            restaurantImageFile = new File(ImageConfig.DIR + userInfoComment.getRestaurantImage());
+        }catch (Exception e){
+            e.printStackTrace();
+        }
 
         // 用户头像
         Glide.with(context)

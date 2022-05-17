@@ -145,7 +145,12 @@ public class FoodInfoAdminFragment extends Fragment {
         background = view.findViewById(R.id.admin_food_background);
         exitButton = view.findViewById(R.id.admin_food_exit_button);
 
-        File file = new File(ImageConfig.DIR + "/background/user_background.jpg");
+        File file = null;
+        try {
+            file = new File(ImageConfig.DIR + "/background/user_background.jpg");
+        }catch (Exception e){
+            e.printStackTrace();
+        }
         Glide.with(view.getContext())
                 .load(file)
                 .centerCrop()

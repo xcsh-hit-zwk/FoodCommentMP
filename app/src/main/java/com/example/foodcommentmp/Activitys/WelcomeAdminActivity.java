@@ -81,8 +81,12 @@ public class WelcomeAdminActivity extends AppCompatActivity {
             greetingsTextView.setText("该休息啦！管理员先生");
         }
 
-
-        File file = new File(ImageConfig.DIR + "/background/tower.jpg");
+        File file = null;
+        try {
+            file = new File(ImageConfig.DIR + "/background/tower.jpg");
+        }catch (Exception e){
+            e.printStackTrace();
+        }
         // Glide加载图片
         Glide.with(this)
                 .load(file)
@@ -93,9 +97,7 @@ public class WelcomeAdminActivity extends AppCompatActivity {
         String password = sharedPreferences.getString("password", "");
         Log.i("管理员自动登录", username);
         Log.i("管理员自动登录", password);
-        // 用于临时清除缓存
-//        editor.clear();
-//        editor.commit();
+
         if (!"".equals(username) && !"".equals(password)){
 
             Retrofit retrofit = new Retrofit.Builder()

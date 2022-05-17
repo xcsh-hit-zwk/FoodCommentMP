@@ -80,8 +80,12 @@ public class MainActivity extends AppCompatActivity {
             greetingsTextView.setText("该休息啦！");
         }
 
-
-        File file = new File(ImageConfig.DIR + "/background/daotian.jpg");
+        File file = null;
+        try {
+            file = new File(ImageConfig.DIR + "/background/daotian.jpg");
+        }catch (Exception e){
+            e.printStackTrace();
+        }
         // Glide加载图片
         Glide.with(this)
                 .load(file)

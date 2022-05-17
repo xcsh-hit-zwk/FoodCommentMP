@@ -81,7 +81,13 @@ public class AdminFoodInfoAdapter extends RecyclerView.Adapter<AdminFoodInfoAdap
     @Override
     public void onBindViewHolder(@NonNull AdminFoodInfoHolder holder, int position){
         FoodOverView foodOverView = foodOverViewList.get(position);
-        File file = new File(ImageConfig.DIR + foodOverView.getFoodImage());
+
+        File file = null;
+        try {
+            file = new File(ImageConfig.DIR + foodOverView.getFoodImage());
+        }catch (Exception e){
+            e.printStackTrace();
+        }
         // Glide加载图片
         Glide.with(context)
                 .load(file)
