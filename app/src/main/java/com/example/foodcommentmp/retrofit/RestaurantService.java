@@ -19,4 +19,13 @@ public interface RestaurantService {
     @POST("RestaurantOverView/GetRestaurantOverView")
     Call<ResponseBody> getRestaurantOverView(@Body SearchInfo searchInfo);
 
+    @POST("RestaurantDetail/GetRestaurantDetail")
+    Call<ResponseBody> getRestaurantDetail(@Body SearchInfo searchInfo);
+
+    @POST("RestaurantDetail/AddFoodLike")
+    Call<ResponseBody> addFoodLike(@Body SearchInfo searchInfo);
+
+    @POST("RestaurantDetail/CancelFoodLike")
+    Call<ResponseBody> cancelFoodLike(@Body SearchInfo searchInfo);
+
 }
