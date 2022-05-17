@@ -6,11 +6,20 @@ package com.example.foodcommentmp.pojo;
  */
 public class RestaurantComment {
 
+    private String commentId;
     private String username;
     private String userImage;
     private String nickname;
     private String commentInfo;
     private Integer commentLike;
+
+    public String getCommentId() {
+        return commentId;
+    }
+
+    public void setCommentId(String commentId) {
+        this.commentId = commentId;
+    }
 
     public String getUsername() {
         return username;

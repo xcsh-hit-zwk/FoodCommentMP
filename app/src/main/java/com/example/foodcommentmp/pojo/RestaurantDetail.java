@@ -19,6 +19,8 @@ public class RestaurantDetail {
     private List<RestaurantComment> commentList;
     // 只要6个
     private List<RestaurantOverView> sameTagList;
+    private List<CommentLiked> likedCommentList;
+    private List<FoodLiked> likedFoodList;
 
     public String getRestaurantId() {
         return restaurantId;
@@ -98,5 +100,21 @@ public class RestaurantDetail {
 
     public void setSameTagList(List<RestaurantOverView> sameTagList) {
         this.sameTagList = sameTagList;
+    }
+
+    public List<CommentLiked> getLikedCommentList() {
+        return likedCommentList;
+    }
+
+    public void setLikedCommentList(List<CommentLiked> likedCommentList) {
+        this.likedCommentList = likedCommentList;
+    }
+
+    public List<FoodLiked> getLikedFoodList() {
+        return likedFoodList;
+    }
+
+    public void setLikedFoodList(List<FoodLiked> likedFoodList) {
+        this.likedFoodList = likedFoodList;
     }
 }
