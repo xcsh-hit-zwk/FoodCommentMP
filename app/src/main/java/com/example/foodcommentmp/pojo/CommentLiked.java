@@ -10,6 +10,8 @@ public class CommentLiked {
     private String commentId;
     private String userId;
     private String restaurantId;
+    private String username;
+    private String restaurantName;
 
     public String getUsercommentlikeId() {
         return usercommentlikeId;
@@ -41,5 +43,21 @@ public class CommentLiked {
 
     public void setRestaurantId(String restaurantId) {
         this.restaurantId = restaurantId;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getRestaurantName() {
+        return restaurantName;
+    }
+
+    public void setRestaurantName(String restaurantName) {
+        this.restaurantName = restaurantName;
     }
 }

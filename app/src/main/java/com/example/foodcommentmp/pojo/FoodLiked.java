@@ -10,6 +10,9 @@ public class FoodLiked {
     private String userId;
     private String foodId;
     private String restaurantId;
+    private String username;
+    private String foodName;
+    private String restaurantName;
 
     public String getUserfoodlikeId() {
         return userfoodlikeId;
@@ -41,5 +44,29 @@ public class FoodLiked {
 
     public void setRestaurantId(String restaurantId) {
         this.restaurantId = restaurantId;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getFoodName() {
+        return foodName;
+    }
+
+    public void setFoodName(String foodName) {
+        this.foodName = foodName;
+    }
+
+    public String getRestaurantName() {
+        return restaurantName;
+    }
+
+    public void setRestaurantName(String restaurantName) {
+        this.restaurantName = restaurantName;
     }
 }
