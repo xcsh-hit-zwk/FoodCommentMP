@@ -11,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.MutableLiveData;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.alibaba.fastjson.JSON;
@@ -19,12 +20,17 @@ import com.bumptech.glide.Glide;
 import com.example.foodcommentmp.Config.ImageConfig;
 import com.example.foodcommentmp.Config.ServerConfig;
 import com.example.foodcommentmp.R;
+import com.example.foodcommentmp.ViewModel.RestaurantDetailViewModel;
+import com.example.foodcommentmp.pojo.FoodLiked;
 import com.example.foodcommentmp.pojo.FoodOverView;
+import com.example.foodcommentmp.pojo.LikeFood;
 import com.example.foodcommentmp.pojo.SearchInfo;
 import com.example.foodcommentmp.retrofit.RestaurantService;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 
 import okhttp3.ResponseBody;
@@ -42,27 +48,46 @@ public class DetailFoodAdapter extends RecyclerView.Adapter<DetailFoodAdapter.De
 
     Context context;
     private List<FoodOverView> foodOverViewList;
+    private List<FoodLiked> foodLikedList;
+
+    private MutableLiveData<Integer> restaurantLikeLiveData;
 
     private FoodOverView foodOverView;
+    private String restaurantName;
+    private String username;
+
+    private int restaurantLike;
 
     private Boolean[] flag;
 
     private int pos;
 
-    /**
-     * 初始化适配器的数据集合
-     * @param context
-     * @param foodOverViewList 适配器使用的数据集
-     */
-    public DetailFoodAdapter(Context context, List<FoodOverView> foodOverViewList) {
+
+    public DetailFoodAdapter(Context context, String restaurantName, String username) {
         this.context = context;
+        this.restaurantName = restaurantName;
+        this.username = username;
+        flag = new Boolean[0];
+        Arrays.fill(flag, Boolean.FALSE);
+    }
+
+    public void setRestaurantLike(int restaurantLike) {
+        this.restaurantLike = restaurantLike;
+    }
+
+    public void setFoodOverViewList(List<FoodOverView> foodOverViewList) {
         this.foodOverViewList = foodOverViewList;
         flag = new Boolean[foodOverViewList.size()];
         Arrays.fill(flag, Boolean.FALSE);
     }
 
-    public void setFoodOverViewList(List<FoodOverView> foodOverViewList) {
-        this.foodOverViewList = foodOverViewList;
+    public void setFoodLikedList(List<FoodLiked> foodLikedList) {
+        this.foodLikedList = foodLikedList;
+    }
+
+    public void setRestaurantLikeLiveData(MutableLiveData<Integer> restaurantLikeLiveData) {
+        this.restaurantLikeLiveData = restaurantLikeLiveData;
+        restaurantLikeLiveData.setValue(restaurantLike);
     }
 
     @NonNull
@@ -94,13 +119,23 @@ public class DetailFoodAdapter extends RecyclerView.Adapter<DetailFoodAdapter.De
         holder.getFoodName().setText(foodOverView.getFoodName());
         holder.getFoodLikes().setText(String.valueOf(foodOverView.getFoodLikes()));
 
+        if (!foodLikedList.isEmpty()){
+            // 初始化点赞记录
+            Iterator<FoodLiked> foodLikedIterator = foodLikedList.iterator();
+            while (foodLikedIterator.hasNext()){
+                FoodLiked foodLiked = foodLikedIterator.next();
+                if (foodOverView.getFoodName().equals(foodLiked.getFoodName())){
+                    holder.likeButton.setBackgroundResource(R.drawable.ic_liked);
+                    flag[pos] = true;
+                }
+            }
+        }
+
         // 响应点赞事件
         holder.likeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (flag[pos] == false){
-                    // 点击变红
-                    holder.likeButton.setBackgroundResource(R.drawable.ic_liked);
 
                     // 添加点赞数
                     Retrofit retrofit = new Retrofit.Builder()
@@ -109,10 +144,11 @@ public class DetailFoodAdapter extends RecyclerView.Adapter<DetailFoodAdapter.De
                             .build();
                     RestaurantService restaurantService = retrofit.create(RestaurantService.class);
 
-                    SearchInfo searchInfo = new SearchInfo();
-                    searchInfo.setSearchWay(foodOverView.getRestaurantName());
-                    searchInfo.setInfo(foodOverView.getFoodName());
-                    Call<ResponseBody> call = restaurantService.addFoodLike(searchInfo);
+                    LikeFood likeFood = new LikeFood();
+                    likeFood.setRestaurantName(restaurantName);
+                    likeFood.setFoodName(foodOverView.getFoodName());
+                    likeFood.setUsername(username);
+                    Call<ResponseBody> call = restaurantService.addFoodLike(likeFood);
                     call.enqueue(new Callback<ResponseBody>() {
                         @Override
                         public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -122,7 +158,12 @@ public class DetailFoodAdapter extends RecyclerView.Adapter<DetailFoodAdapter.De
                                 Log.i("点赞招牌菜", String.valueOf(jsonObject));
                                 if(success == true){
                                     int likes = foodOverView.getFoodLikes();
+                                    Log.i("点赞招牌菜", "点赞后:" + String.valueOf(likes));
                                     holder.foodLikes.setText(String.valueOf(likes+1));
+                                    restaurantLikeLiveData.setValue(likes+1);
+                                    flag[pos] = true;
+                                    // 点击变红
+                                    holder.likeButton.setBackgroundResource(R.drawable.ic_liked);
                                 }
                                 else {
                                     Toast.makeText(context, "点赞失败", Toast.LENGTH_SHORT).show();
@@ -150,10 +191,11 @@ public class DetailFoodAdapter extends RecyclerView.Adapter<DetailFoodAdapter.De
                             .build();
                     RestaurantService restaurantService = retrofit.create(RestaurantService.class);
 
-                    SearchInfo searchInfo = new SearchInfo();
-                    searchInfo.setSearchWay(foodOverView.getRestaurantName());
-                    searchInfo.setInfo(foodOverView.getFoodName());
-                    Call<ResponseBody> call = restaurantService.cancelFoodLike(searchInfo);
+                    LikeFood likeFood = new LikeFood();
+                    likeFood.setRestaurantName(restaurantName);
+                    likeFood.setFoodName(foodOverView.getFoodName());
+                    likeFood.setUsername(username);
+                    Call<ResponseBody> call = restaurantService.cancelFoodLike(likeFood);
                     call.enqueue(new Callback<ResponseBody>() {
                         @Override
                         public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -162,12 +204,17 @@ public class DetailFoodAdapter extends RecyclerView.Adapter<DetailFoodAdapter.De
                                 Boolean success = (Boolean) jsonObject.get("success");
                                 Log.i("点赞招牌菜", String.valueOf(jsonObject));
                                 if(success == true){
-                                    int likes = foodOverView.getFoodLikes();
+//                                    int likes = foodOverView.getFoodLikes();
+                                    int likes = Integer.parseInt(holder.foodLikes.getText().toString());
+                                    // 虽然没搞明白但是这里不写-1就没问题
+                                    Log.i("点赞招牌菜", "取消点赞后:" + String.valueOf(likes));
                                     holder.foodLikes.setText(String.valueOf(likes-1));
+                                    restaurantLikeLiveData.setValue(likes-1);
                                 }
                                 else {
-                                    Toast.makeText(context, "点赞失败", Toast.LENGTH_SHORT).show();
+                                    Log.i("点赞招牌菜", "未点赞过");
                                 }
+                                flag[pos] = false;
                             }catch (Exception e){
                                 e.printStackTrace();
                             }
@@ -186,7 +233,10 @@ public class DetailFoodAdapter extends RecyclerView.Adapter<DetailFoodAdapter.De
 
     @Override
     public int getItemCount() {
-        return 0;
+        if (this.foodLikedList == null){
+            return 0;
+        }
+        return this.foodOverViewList.size();
     }
 
     class DetailFoodHolder extends RecyclerView.ViewHolder {

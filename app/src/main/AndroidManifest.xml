@@ -17,19 +17,19 @@
         android:theme="@style/Theme.FoodCommentMp">
         <activity
             android:name=".Activitys.ModifyUserInfoActivity"
-            android:exported="false" />
+            android:exported="false"/>
         <activity
             android:name=".Activitys.CommentModifyActivity"
-            android:exported="false" />
+            android:exported="false"/>
         <activity
             android:name=".Activitys.RestaurantDetailActivity"
-            android:exported="false" />
+            android:exported="false"/>
         <activity
             android:name=".Activitys.WelcomeAdminActivity"
-            android:exported="false" />
+            android:exported="false"/>
         <activity
             android:name=".Activitys.BrowseRestaurantOverViewActivity"
-            android:exported="false" />
+            android:exported="false"/>
         <activity
             android:name=".Activitys.AdminLabelInfoAddActivity"
             android:exported="false" />

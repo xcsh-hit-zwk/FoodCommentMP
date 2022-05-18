@@ -50,7 +50,7 @@
     </LinearLayout>
 
     <TextView
-        android:id="@+id/restaurant_detail_same_tag_item_restaurant_position"
+        android:id="@+id/restaurant_detail_same_tag_item_restaurant_block"
         android:layout_width="120dp"
         android:layout_height="20dp"
         android:layout_marginLeft="10dp"

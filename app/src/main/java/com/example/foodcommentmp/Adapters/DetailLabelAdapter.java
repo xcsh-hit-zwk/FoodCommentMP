@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.foodcommentmp.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -24,14 +25,8 @@ public class DetailLabelAdapter extends RecyclerView.Adapter<DetailLabelAdapter.
 
     private String label;
 
-    /**
-     * 初始化适配器的数据集合
-     * @param context
-     * @param labelList 适配器使用的数据集
-     */
-    public DetailLabelAdapter(Context context, List<String> labelList) {
+    public DetailLabelAdapter(Context context) {
         this.context = context;
-        this.labelList = labelList;
     }
 
     public void setLabelList(List<String> labelList) {
@@ -56,7 +51,10 @@ public class DetailLabelAdapter extends RecyclerView.Adapter<DetailLabelAdapter.
 
     @Override
     public int getItemCount() {
-        return 0;
+        if (this.labelList == null){
+            return 0;
+        }
+        return this.labelList.size();
     }
 
     class DetailLabelHolder extends RecyclerView.ViewHolder{

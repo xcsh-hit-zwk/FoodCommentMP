@@ -1,5 +1,7 @@
 package com.example.foodcommentmp.retrofit;
 
+import com.example.foodcommentmp.pojo.LikeComment;
+import com.example.foodcommentmp.pojo.LikeFood;
 import com.example.foodcommentmp.pojo.SearchInfo;
 
 import java.util.Map;
@@ -23,9 +25,15 @@ public interface RestaurantService {
     Call<ResponseBody> getRestaurantDetail(@Body SearchInfo searchInfo);
 
     @POST("RestaurantDetail/AddFoodLike")
-    Call<ResponseBody> addFoodLike(@Body SearchInfo searchInfo);
+    Call<ResponseBody> addFoodLike(@Body LikeFood likeFood);
 
     @POST("RestaurantDetail/CancelFoodLike")
-    Call<ResponseBody> cancelFoodLike(@Body SearchInfo searchInfo);
+    Call<ResponseBody> cancelFoodLike(@Body LikeFood likeFood);
+
+    @POST("RestaurantDetail/AddCommentLike")
+    Call<ResponseBody> addCommentLike(@Body LikeComment likeComment);
+
+    @POST("RestaurantDetail/CancelCommentLike")
+    Call<ResponseBody> cancelCommentLike(@Body LikeComment likeComment);
 
 }
