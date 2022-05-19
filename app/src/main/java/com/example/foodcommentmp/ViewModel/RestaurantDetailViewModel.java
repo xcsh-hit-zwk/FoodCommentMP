@@ -11,6 +11,7 @@ public class RestaurantDetailViewModel extends ViewModel {
 
     private MutableLiveData<Boolean> getInfoSuccessLiveData;
     private MutableLiveData<Integer> restaurantLikeLiveData;
+    private MutableLiveData<Boolean> commentAddSuccessLiveData;
 
     public MutableLiveData<Boolean> getGetInfoSuccessLiveData() {
         if (getInfoSuccessLiveData == null){
@@ -29,13 +30,12 @@ public class RestaurantDetailViewModel extends ViewModel {
         return restaurantLikeLiveData;
     }
 
-    public void addFoodLike(){
-        int likes = restaurantLikeLiveData.getValue();
-        restaurantLikeLiveData.setValue(likes+1);
-    }
-
-    public void cancelFoodLile(){
-        int likes = restaurantLikeLiveData.getValue();
-        restaurantLikeLiveData.setValue(likes-1);
+    public MutableLiveData<Boolean> getCommentAddSuccessLiveData() {
+        if (commentAddSuccessLiveData == null){
+            commentAddSuccessLiveData = new MutableLiveData<>();
+            commentAddSuccessLiveData.setValue(false);
+            return commentAddSuccessLiveData;
+        }
+        return commentAddSuccessLiveData;
     }
 }

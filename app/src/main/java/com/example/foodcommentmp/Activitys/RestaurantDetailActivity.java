@@ -1,11 +1,11 @@
 package com.example.foodcommentmp.Activitys;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -37,10 +37,11 @@ import com.example.foodcommentmp.pojo.RestaurantComment;
 import com.example.foodcommentmp.pojo.RestaurantDetail;
 import com.example.foodcommentmp.pojo.RestaurantOverView;
 import com.example.foodcommentmp.pojo.SearchInfo;
+import com.example.foodcommentmp.retrofit.CommentService;
 import com.example.foodcommentmp.retrofit.RestaurantService;
 
 import java.io.File;
-import java.sql.RowId;
+import java.util.List;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -49,8 +50,6 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-
-// todo 还有一堆bug要改
 public class RestaurantDetailActivity extends AppCompatActivity {
 
     private ImageView restaurantImage;
@@ -63,6 +62,7 @@ public class RestaurantDetailActivity extends AppCompatActivity {
     private RecyclerView labelRecycleView;
     private RecyclerView commentRecycleView;
     private RecyclerView sameTagRecycleView;
+    private ImageButton addCommentButton;
 
     private RestaurantDetailViewModel mViewModel;
     private SharedPreferences sharedPreferences;
@@ -77,11 +77,15 @@ public class RestaurantDetailActivity extends AppCompatActivity {
 
     private int FLAG = 0;
     private int likeFLAG = 0;
+    private int commentFLAG = 0;
 
     private String username;
 
     private String restaurantNameStr;
     private String restaurantImageStr;
+    private String commentId;
+
+    private RestaurantComment restaurantComment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,6 +111,7 @@ public class RestaurantDetailActivity extends AppCompatActivity {
         labelRecycleView = findViewById(R.id.restaurant_detail_restaurant_label_recycle_view);
         commentRecycleView = findViewById(R.id.restaurant_detail_comment_recycle_view);
         sameTagRecycleView = findViewById(R.id.restaurant_detail_same_tag_recycle_view);
+        addCommentButton = findViewById(R.id.restaurant_detail_add_comment);
 
         final Intent getIntent = getIntent();
         Bundle bundle = getIntent.getBundleExtra("restaurant_detail");
@@ -126,6 +131,32 @@ public class RestaurantDetailActivity extends AppCompatActivity {
                         .load(restaurantImageFile)
                         .centerCrop()
                         .into(restaurantImage);
+            }
+        }
+
+        // 添加完评论以后
+        final Intent commentAddedIntent = getIntent();
+        Bundle commentBundle = commentAddedIntent.getBundleExtra("comment_added");
+        if (commentBundle != null){
+            restaurantNameStr = commentBundle.getString("restaurant_name");
+            restaurantImageStr = commentBundle.getString("restaurant_image");
+            Log.i("新增评论", restaurantNameStr);
+            commentId = commentBundle.getString("comment_id");
+            if (restaurantNameStr != null && restaurantImageStr  != null && commentId  != null){
+                restaurantName.setText(restaurantNameStr);
+
+                File restaurantImageFile = null;
+                try {
+                    restaurantImageFile = new File(ImageConfig.DIR + restaurantImageStr);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+                Glide.with(this)
+                        .load(restaurantImageFile)
+                        .centerCrop()
+                        .into(restaurantImage);
+
+                mViewModel.getCommentAddSuccessLiveData().setValue(true);
             }
         }
 
@@ -220,6 +251,9 @@ public class RestaurantDetailActivity extends AppCompatActivity {
                     detailLabelAdapter.setLabelList(restaurantDetail.getLabelList());
                     detailLabelAdapter.notifyDataSetChanged();
 
+                    if (commentFLAG == 1){
+                        restaurantDetail.getCommentList().add(0, restaurantComment);
+                    }
                     detailCommentAdapter.setRestaurantCommentList(restaurantDetail.getCommentList());
                     detailCommentAdapter.setCommentLikedList(restaurantDetail.getLikedCommentList());
                     detailCommentAdapter.notifyDataSetChanged();
@@ -238,19 +272,69 @@ public class RestaurantDetailActivity extends AppCompatActivity {
             }
         });
 
-        mViewModel.getRestaurantLikeLiveData()
-                .observe(this, new Observer<Integer>() {
-                    @Override
-                    public void onChanged(Integer integer) {
-                        if (likeFLAG == 1){
-                            String temp = String.valueOf(mViewModel.getRestaurantLikeLiveData().getValue());
-                            restaurantLikes.setText(temp);
+        addCommentButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(RestaurantDetailActivity.this, CommentAddActivity.class);
+                intent.putExtra("restaurant_name", restaurantNameStr);
+                intent.putExtra("restaurant_image", restaurantImageStr);
+                startActivity(intent);
+            }
+        });
+
+        mViewModel.getRestaurantLikeLiveData().observe(this, new Observer<Integer>() {
+            @Override
+            public void onChanged(Integer integer) {
+                if (likeFLAG == 1){
+                    String temp = String.valueOf(mViewModel.getRestaurantLikeLiveData().getValue());
+                    restaurantLikes.setText(temp);
+                }
+                else {
+                    likeFLAG = 1;
+                }
+            }
+        });
+
+        // 新增评论置顶
+        mViewModel.getCommentAddSuccessLiveData().observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean aBoolean) {
+                if (aBoolean == true){
+                    Retrofit commentRetrofit = new Retrofit.Builder()
+                            .addConverterFactory(GsonConverterFactory.create())
+                            .baseUrl(ServerConfig.BASE_URL)
+                            .build();
+                    CommentService commentService = commentRetrofit.create(CommentService.class);
+
+                    SearchInfo commentSearchInfo = new SearchInfo();
+                    commentSearchInfo.setSearchWay("GetComment");
+                    commentSearchInfo.setInfo(commentId);
+                    Call<ResponseBody> commentCall = commentService.getComment(commentSearchInfo);
+                    commentCall.enqueue(new Callback<ResponseBody>() {
+                        @Override
+                        public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                            try {
+                                JSONObject jsonObject = JSON.parseObject(response.body().string());
+                                Boolean success = (Boolean) jsonObject.get("success");
+                                Log.i("新增评论置顶", String.valueOf(jsonObject));
+                                if (success == true){
+                                    restaurantComment = jsonObject
+                                            .getObject("data", RestaurantComment.class);
+                                    commentFLAG = 1;
+                                }
+                            }catch (Exception e){
+                                e.printStackTrace();
+                            }
                         }
-                        else {
-                            likeFLAG = 1;
+
+                        @Override
+                        public void onFailure(Call<ResponseBody> call, Throwable t) {
+
                         }
-                    }
-                });
+                    });
+                }
+            }
+        });
     }
 
     private RestaurantDetail fillRestaurantDetail(JSONObject jsonObject){

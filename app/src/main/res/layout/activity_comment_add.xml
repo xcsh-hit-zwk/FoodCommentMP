@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginLeft="150dp"
+        android:layout_marginTop="60dp"
+        android:background="@drawable/ic_comment_restaurant"/>
+
+    <TextView
+        android:id="@+id/comment_add_restaurant_name"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="20dp"
+        android:textSize="24dp"
+        android:text="餐厅名"/>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp">
+
+        <EditText
+            android:id="@+id/comment_add_comment_edit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="评价" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_marginTop="200dp">
+
+        <ImageButton
+            android:id="@+id/comment_add_confirm_button"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginLeft="150dp"
+            android:background="@drawable/ic_confirm"/>
+
+        <ImageButton
+            android:id="@+id/comment_add_cancel_button"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginLeft="50dp"
+            android:background="@drawable/ic_cancel"/>
+
+    </LinearLayout>
+
+</LinearLayout>

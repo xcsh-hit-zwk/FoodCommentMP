@@ -56,6 +56,9 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+// todo 点击回车按钮会跳转进界面
+// todo 连续返回到欢迎页会卡死
+// todo 评论点赞会出现问题
 public class RestaurantOverViewFragment extends Fragment {
 
     private RestaurantOverViewViewModel mViewModel;

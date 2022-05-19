@@ -5,8 +5,9 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> <!-- 请求访问使用照相设备 -->
     <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -16,20 +17,23 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FoodCommentMp">
         <activity
+            android:name=".Activitys.CommentAddActivity"
+            android:exported="false" />
+        <activity
             android:name=".Activitys.ModifyUserInfoActivity"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".Activitys.CommentModifyActivity"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".Activitys.RestaurantDetailActivity"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".Activitys.WelcomeAdminActivity"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".Activitys.BrowseRestaurantOverViewActivity"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".Activitys.AdminLabelInfoAddActivity"
             android:exported="false" />
