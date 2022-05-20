@@ -5,6 +5,80 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
+    <ImageButton
+        android:id="@+id/comment_modify_exit_button"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/ic_back"/>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:orientation="horizontal"
+        android:layout_marginTop="60dp">
+
+        <ImageView
+            android:id="@+id/comment_modify_user_image"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"/>
+
+        <TextView
+            android:id="@+id/comment_modify_nickname"
+            android:layout_width="wrap_content"
+            android:layout_height="60dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:textSize="24dp"
+            android:text="用户昵称"/>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/comment_modify_restaurant_name"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="20dp"
+        android:textSize="24dp"
+        android:text="餐厅名"/>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp">
+
+        <EditText
+            android:id="@+id/comment_modify_comment_edit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="评价" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_marginTop="170dp">
+
+        <ImageButton
+            android:id="@+id/comment_modify_modify_button"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginLeft="150dp"
+            android:background="@drawable/ic_restaurant_modify"/>
+
+        <ImageButton
+            android:id="@+id/comment_modify_delete_button"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginLeft="50dp"
+            android:background="@drawable/ic_restaurant_delete"/>
+
+    </LinearLayout>
 
 </LinearLayout>

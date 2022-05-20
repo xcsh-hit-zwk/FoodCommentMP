@@ -18,8 +18,15 @@ public interface CommentService {
     @POST("Comment/AddComment")
     Call<ResponseBody> addComment(@Body CommentAddEntity commentAddEntity);
 
-    // searchWay = "GetComment" searchInfo = "%comment_id"
+    // searchWay = "GetComment" info = "%comment_id"
     @POST("Comment/GetComment")
     Call<ResponseBody> getComment(@Body SearchInfo searchInfo);
 
+    // searchWay = "%comment_id" info = "%comment_info"
+    @POST("Comment/ModifyComment")
+    Call<ResponseBody> modifyComment(@Body SearchInfo searchInfo);
+
+    // searchWay = "DeleteComment" info = "%comment_id"
+    @POST("Comment/DeleteComment")
+    Call<ResponseBody> deleteComment(@Body SearchInfo searchInfo);
 }

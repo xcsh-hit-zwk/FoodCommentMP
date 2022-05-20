@@ -6,6 +6,7 @@ package com.example.foodcommentmp.pojo;
  */
 public class UserInfoComment {
 
+    private String commentId;
     private String username;
     private String userImage;
     private String nickname;
@@ -14,6 +15,14 @@ public class UserInfoComment {
     private String restaurantName;
     private String restaurantPosition;
     private String restaurantTag;
+
+    public String getCommentId() {
+        return commentId;
+    }
+
+    public void setCommentId(String commentId) {
+        this.commentId = commentId;
+    }
 
     public String getUsername() {
         return username;

@@ -133,8 +133,9 @@ public class UserInfoCommentAdapter extends RecyclerView.Adapter<UserInfoComment
                 bundle.putString("comment_info", userInfoComment.getCommentInfo());
                 bundle.putString("nick_name", userInfoComment.getNickname());
                 bundle.putString("head_image", userInfoComment.getUserImage());
-                bundle.putString("username", userInfoComment.getUsername());
-                intent.putExtra("data", bundle);
+                bundle.putString("comment_id", userInfoComment.getCommentId());
+                bundle.putString("restaurant_name", userInfoComment.getRestaurantName());
+                intent.putExtra("modify_comment", bundle);
                 context.startActivity(intent);
             }
         });
