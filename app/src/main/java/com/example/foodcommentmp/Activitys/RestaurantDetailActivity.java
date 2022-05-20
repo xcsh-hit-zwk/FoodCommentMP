@@ -41,7 +41,6 @@ import com.example.foodcommentmp.retrofit.CommentService;
 import com.example.foodcommentmp.retrofit.RestaurantService;
 
 import java.io.File;
-import java.util.List;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -63,6 +62,7 @@ public class RestaurantDetailActivity extends AppCompatActivity {
     private RecyclerView commentRecycleView;
     private RecyclerView sameTagRecycleView;
     private ImageButton addCommentButton;
+    private ImageButton exitButton;
 
     private RestaurantDetailViewModel mViewModel;
     private SharedPreferences sharedPreferences;
@@ -112,6 +112,7 @@ public class RestaurantDetailActivity extends AppCompatActivity {
         commentRecycleView = findViewById(R.id.restaurant_detail_comment_recycle_view);
         sameTagRecycleView = findViewById(R.id.restaurant_detail_same_tag_recycle_view);
         addCommentButton = findViewById(R.id.restaurant_detail_add_comment);
+        exitButton = findViewById(R.id.restaurant_detail_exit_button);
 
         final Intent getIntent = getIntent();
         Bundle bundle = getIntent.getBundleExtra("restaurant_detail");
@@ -269,6 +270,13 @@ public class RestaurantDetailActivity extends AppCompatActivity {
                         }
                     });
                 }
+            }
+        });
+
+        exitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(RestaurantDetailActivity.this, BrowseRestaurantOverViewActivity.class));
             }
         });
 
