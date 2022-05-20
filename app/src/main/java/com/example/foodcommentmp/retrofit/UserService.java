@@ -2,6 +2,7 @@ package com.example.foodcommentmp.retrofit;
 
 import com.example.foodcommentmp.pojo.Account;
 import com.example.foodcommentmp.pojo.RegisterAccount;
+import com.example.foodcommentmp.pojo.SearchInfo;
 import com.example.foodcommentmp.pojo.User;
 import com.example.foodcommentmp.pojo.UserInfo;
 
@@ -29,5 +30,9 @@ public interface UserService {
 
     @POST("User/UpdateUserInfo")
     Call<ResponseBody> updateUserInfo(@Body UserInfo userInfo);
+
+    // searchWay = "ModifyUserComment", info = "%username"
+   @POST("User/ModifyUserComment")
+    Call<ResponseBody> getUserComment(@Body SearchInfo searchInfo);
 
 }

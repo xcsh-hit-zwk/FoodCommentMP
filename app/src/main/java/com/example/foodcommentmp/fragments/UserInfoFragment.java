@@ -36,6 +36,7 @@ import com.example.foodcommentmp.R;
 import com.example.foodcommentmp.ViewModel.UserInfoViewModel;
 import com.example.foodcommentmp.common.MD5;
 import com.example.foodcommentmp.pojo.Account;
+import com.example.foodcommentmp.pojo.SearchInfo;
 import com.example.foodcommentmp.pojo.User;
 import com.example.foodcommentmp.pojo.UserInfoComment;
 import com.example.foodcommentmp.retrofit.UserService;
@@ -65,10 +66,14 @@ public class UserInfoFragment extends Fragment {
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
 
+    private String username;
+    private String password;
+
     private User user;
 
     private List<UserInfoComment> userInfoCommentList = new ArrayList<>();
     private int FLAG = 0;
+    private int commentFLAG = 0;
 
     public static UserInfoFragment newInstance() {
         return new UserInfoFragment();
@@ -97,8 +102,8 @@ public class UserInfoFragment extends Fragment {
         exitButton = view.findViewById(R.id.exit_user_button);
 
         Account account = new Account();
-        String username = sharedPreferences.getString("username", "");
-        String password = sharedPreferences.getString("password", "");
+        username = sharedPreferences.getString("username", "");
+        password = sharedPreferences.getString("password", "");
         account.setUsername(username);
         account.setPassword(MD5.string2MD5(password));
 
@@ -148,21 +153,35 @@ public class UserInfoFragment extends Fragment {
                 .centerCrop()
                 .into(background);
 
+        UserService commentUserService = getUserService();
 
-        // todo 这里是假数据
-        for(int i = 0; i < 6; ++i){
-            UserInfoComment userInfoComment = new UserInfoComment();
-            userInfoComment.setUsername("1");
-            userInfoComment.setCommentInfo("评论内容");
-            userInfoComment.setUserImage("/head_image/yuguigou.jpg");
-            userInfoComment.setRestaurantImage("/restaurant/test.jpg");
-            userInfoComment.setNickname("新茶试火");
-            userInfoComment.setRestaurantName("相伴一生麻辣拌");
-            userInfoComment.setRestaurantPosition("山东省 威海市 环翠区  ");
-            userInfoComment.setRestaurantTag("麻辣拌");
+        SearchInfo searchInfo = new SearchInfo();
+        searchInfo.setSearchWay("ModifyUserComment");
+        searchInfo.setInfo(username);
+        Call<ResponseBody> commentCall = commentUserService.getUserComment(searchInfo);
+        commentCall.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                try {
+                    JSONObject jsonObject = JSON.parseObject(response.body().string());
+                    Boolean success = (Boolean) jsonObject.get("success");
+                    Log.i("当前用户评论列表", String.valueOf(jsonObject));
+                    if (success == true){
+                        List<UserInfoComment> userInfoCommentList =
+                                JSON.parseArray(jsonObject.getString("data"), UserInfoComment.class);
+                        mViewModel.getUserInfoCommentLiveData().setValue(userInfoCommentList);
+                        commentFLAG = 1;
+                    }
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
 
-            userInfoCommentList.add(userInfoComment);
-        }
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+            }
+        });
 
         // 初始化RecycleView
         recyclerView = view.findViewById(R.id.user_info_comment_recycle_view);
@@ -173,7 +192,6 @@ public class UserInfoFragment extends Fragment {
                 (getActivity(), DividerItemDecoration.VERTICAL));
         userInfoCommentAdapter = new UserInfoCommentAdapter(getActivity(), userInfoCommentList);
         recyclerView.setAdapter(userInfoCommentAdapter);
-        userInfoCommentAdapter.notifyDataSetChanged();
 
         modifyUserInfoButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -217,6 +235,29 @@ public class UserInfoFragment extends Fragment {
                 }
             }
         });
+        mViewModel.getUserInfoCommentLiveData().observe(getViewLifecycleOwner(), new Observer<List<UserInfoComment>>() {
+            @Override
+            public void onChanged(List<UserInfoComment> userInfoComments) {
+                userInfoCommentList = mViewModel.getUserInfoCommentLiveData().getValue();
+                if (userInfoCommentList != null){
+                    userInfoCommentAdapter.setUserInfoCommentList(userInfoCommentList);
+                    userInfoCommentAdapter.notifyDataSetChanged();
+                }
+                else if (commentFLAG == 1){
+                    Log.i("当前用户评论列表", "获取评论列表的LiveData出现问题");
+                }
+            }
+        });
+    }
+
+    private UserService getUserService(){
+        Retrofit retrofit = new Retrofit.Builder()
+                .addConverterFactory(GsonConverterFactory.create())
+                .baseUrl(ServerConfig.BASE_URL)
+                .build();
+        UserService userService = retrofit.create(UserService.class);
+
+        return userService;
     }
 
 }

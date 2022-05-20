@@ -142,7 +142,8 @@ public class UserInfoCommentAdapter extends RecyclerView.Adapter<UserInfoComment
         Intent intent = new Intent(context, RestaurantDetailActivity.class);
         Bundle bundle = new Bundle();
         bundle.putString("restaurant_name", userInfoComment.getRestaurantName());
-        intent.putExtra("data", bundle);
+        bundle.putString("restaurant_image", userInfoComment.getRestaurantImage());
+        intent.putExtra("restaurant_detail", bundle);
         // 点击餐厅
         holder.getCommentBackground().setOnClickListener(new View.OnClickListener() {
             @Override
