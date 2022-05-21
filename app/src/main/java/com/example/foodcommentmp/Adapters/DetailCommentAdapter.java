@@ -125,6 +125,7 @@ public class DetailCommentAdapter extends RecyclerView.Adapter<DetailCommentAdap
             while (commentLikedIterator.hasNext()){
                 CommentLiked commentLiked = commentLikedIterator.next();
                 if (restaurantComment.getCommentId().equals(commentLiked.getCommentId())){
+                    Log.i("初始化点赞记录测试", restaurantComment.getCommentInfo());
                     holder.likeButton.setBackgroundResource(R.drawable.ic_liked);
                     flag[pos] = true;
                 }
@@ -158,7 +159,6 @@ public class DetailCommentAdapter extends RecyclerView.Adapter<DetailCommentAdap
                                 Boolean success = (Boolean) jsonObject.get("success");
                                 Log.i("点赞评论", String.valueOf(jsonObject));
                                 if (success == true){
-//                                    int likes = restaurantComment.getCommentLike();
                                     int likes = Integer.parseInt(holder.commentLikes.getText().toString());
                                     Log.i("点赞评论", "点赞后:" + String.valueOf(likes));
                                     holder.commentLikes.setText(String.valueOf(likes+1));
@@ -204,7 +204,6 @@ public class DetailCommentAdapter extends RecyclerView.Adapter<DetailCommentAdap
                                 Boolean success = (Boolean) jsonObject.get("success");
                                 Log.i("取消点赞评论", String.valueOf(jsonObject));
                                 if (success == true){
-//                                    int likes = restaurantComment.getCommentLike();
                                     int likes = Integer.parseInt(holder.commentLikes.getText().toString());
                                     Log.i("点赞评论", "取消点赞后:" + String.valueOf(likes));
                                     holder.commentLikes.setText(String.valueOf(likes-1));
