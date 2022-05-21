@@ -4,6 +4,7 @@ import com.example.foodcommentmp.pojo.LikeComment;
 import com.example.foodcommentmp.pojo.LikeFood;
 import com.example.foodcommentmp.pojo.SearchInfo;
 
+import java.util.List;
 import java.util.Map;
 
 import okhttp3.ResponseBody;
@@ -25,10 +26,7 @@ public interface RestaurantService {
     Call<ResponseBody> getRestaurantDetail(@Body SearchInfo searchInfo);
 
     @POST("RestaurantDetail/AddFoodLike")
-    Call<ResponseBody> addFoodLike(@Body LikeFood likeFood);
-
-    @POST("RestaurantDetail/CancelFoodLike")
-    Call<ResponseBody> cancelFoodLike(@Body LikeFood likeFood);
+    Call<ResponseBody> addFoodLike(@Body List<LikeFood> likeFoodList);
 
     @POST("RestaurantDetail/AddCommentLike")
     Call<ResponseBody> addCommentLike(@Body LikeComment likeComment);

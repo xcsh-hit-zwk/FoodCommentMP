@@ -33,6 +33,8 @@ import com.example.foodcommentmp.ViewModel.RestaurantDetailViewModel;
 import com.example.foodcommentmp.pojo.CommentLiked;
 import com.example.foodcommentmp.pojo.FoodLiked;
 import com.example.foodcommentmp.pojo.FoodOverView;
+import com.example.foodcommentmp.pojo.LikeComment;
+import com.example.foodcommentmp.pojo.LikeFood;
 import com.example.foodcommentmp.pojo.RestaurantComment;
 import com.example.foodcommentmp.pojo.RestaurantDetail;
 import com.example.foodcommentmp.pojo.RestaurantOverView;
@@ -41,6 +43,8 @@ import com.example.foodcommentmp.retrofit.CommentService;
 import com.example.foodcommentmp.retrofit.RestaurantService;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -86,6 +90,9 @@ public class RestaurantDetailActivity extends AppCompatActivity {
     private String commentId;
 
     private RestaurantComment restaurantComment;
+
+    private List<LikeFood> likeFoodList = new ArrayList<>();
+    private List<LikeComment> likeCommentList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -247,6 +254,7 @@ public class RestaurantDetailActivity extends AppCompatActivity {
                     detailFoodAdapter.setFoodLikedList(restaurantDetail.getLikedFoodList());
                     detailFoodAdapter.setRestaurantLike(restaurantDetail.getRestaurantLikes());
                     detailFoodAdapter.setRestaurantLikeLiveData(mViewModel.getRestaurantLikeLiveData());
+                    detailFoodAdapter.setLikeFoodList(likeFoodList);
                     detailFoodAdapter.notifyDataSetChanged();
 
                     detailLabelAdapter.setLabelList(restaurantDetail.getLabelList());
@@ -299,21 +307,21 @@ public class RestaurantDetailActivity extends AppCompatActivity {
             }
         });
 
-//        mViewModel.getRestaurantLikeLiveData().observe(this, new Observer<Integer>() {
-//            @Override
-//            public void onChanged(Integer integer) {
-//                if (likeFLAG == 1){
-//                    int addLike = mViewModel.getRestaurantLikeLiveData().getValue();
-//                    int currentLike = Integer.parseInt(restaurantLikes.getText().toString());
-//                    currentLike += addLike;
-//                    String temp = String.valueOf(currentLike);
-//                    restaurantLikes.setText(temp);
-//                }
-//                else {
-//                    likeFLAG = 1;
-//                }
-//            }
-//        });
+        mViewModel.getRestaurantLikeLiveData().observe(this, new Observer<Integer>() {
+            @Override
+            public void onChanged(Integer integer) {
+                if (likeFLAG == 1){
+                    int addLike = mViewModel.getRestaurantLikeLiveData().getValue();
+                    int currentLike = Integer.parseInt(restaurantLikes.getText().toString());
+                    currentLike += addLike;
+                    String temp = String.valueOf(currentLike);
+                    restaurantLikes.setText(temp);
+                }
+                else {
+                    likeFLAG = 1;
+                }
+            }
+        });
 
         // 新增评论置顶
         mViewModel.getCommentAddSuccessLiveData().observe(this, new Observer<Boolean>() {
@@ -356,6 +364,43 @@ public class RestaurantDetailActivity extends AppCompatActivity {
             }
         });
     }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .addConverterFactory(GsonConverterFactory.create())
+                .baseUrl(ServerConfig.BASE_URL)
+                .build();
+        RestaurantService restaurantService = retrofit.create(RestaurantService.class);
+
+        Call<ResponseBody> call = restaurantService.addFoodLike(likeFoodList);
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                try {
+                    JSONObject jsonObject = JSON.parseObject(response.body().string());
+                    Boolean success = (Boolean) jsonObject.get("success");
+                    Log.i("招牌菜点赞列表提交", String.valueOf(jsonObject));
+                    if (success == true){
+                        Log.i("招牌菜点赞列表提交", "onResponse: 提交成功");
+                    }
+                    else {
+                        Log.i("招牌菜点赞列表提交", "onResponse: 提交失败");
+                    }
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+            }
+        });
+    }
+
 
     private RestaurantDetail fillRestaurantDetail(JSONObject jsonObject){
         RestaurantDetail restaurantDetail = new RestaurantDetail();

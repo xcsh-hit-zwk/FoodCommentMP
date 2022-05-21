@@ -116,21 +116,6 @@ public class RestaurantOverViewFragment extends Fragment {
                     if(success == true){
                         mViewModel.getRestaurantOverViewLiveData()
                                 .setValue(JSON.parseArray(jsonObject.getString("data"), RestaurantOverView.class));
-                        // 打印数据集
-                        List<RestaurantOverView> temp = mViewModel.getRestaurantOverViewLiveData().getValue();
-                        Iterator<RestaurantOverView> iterator = temp.iterator();
-                        while (iterator.hasNext()){
-                            RestaurantOverView t = iterator.next();
-                            Log.i("用户餐厅信息列表", "------------");
-                            Log.i("用户餐厅信息列表", t.getRestaurantName());
-                            Log.i("用户餐厅信息列表", String.valueOf(t.getLikes()));
-                            Log.i("用户餐厅信息列表", t.getRestaurantTag());
-                            Log.i("用户餐厅信息列表", t.getRestaurantPosition());
-                            Log.i("用户餐厅信息列表", t.getRestaurantImage());
-                            Log.i("用户餐厅信息列表", t.getRestaurantProvince());
-                            Log.i("用户餐厅信息列表", t.getRestaurantCity());
-                            Log.i("用户餐厅信息列表", t.getRestaurantBlock());
-                        }
                     }
                 }catch (Exception e){
                     e.printStackTrace();

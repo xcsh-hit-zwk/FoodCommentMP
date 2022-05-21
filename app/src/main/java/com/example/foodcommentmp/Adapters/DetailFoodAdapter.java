@@ -1,6 +1,7 @@
 package com.example.foodcommentmp.Adapters;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -53,11 +54,12 @@ public class DetailFoodAdapter extends RecyclerView.Adapter<DetailFoodAdapter.De
 
     private MutableLiveData<Integer> restaurantLikeLiveData;
 
-    private FoodOverView foodOverView;
     private String restaurantName;
     private String username;
 
     private int restaurantLike;
+
+    private List<LikeFood> likeFoodList;
 
     private Boolean[] flag;
 
@@ -86,7 +88,11 @@ public class DetailFoodAdapter extends RecyclerView.Adapter<DetailFoodAdapter.De
 
     public void setRestaurantLikeLiveData(MutableLiveData<Integer> restaurantLikeLiveData) {
         this.restaurantLikeLiveData = restaurantLikeLiveData;
-        restaurantLikeLiveData.setValue(restaurantLike);
+//        restaurantLikeLiveData.setValue(restaurantLike);
+    }
+
+    public void setLikeFoodList(List<LikeFood> likeFoodList) {
+        this.likeFoodList = likeFoodList;
     }
 
     @NonNull
@@ -101,7 +107,7 @@ public class DetailFoodAdapter extends RecyclerView.Adapter<DetailFoodAdapter.De
 
     @Override
     public void onBindViewHolder(@NonNull DetailFoodHolder holder, int position) {
-        foodOverView = foodOverViewList.get(position);
+        FoodOverView foodOverView = foodOverViewList.get(position);
         int pos = position;
 
         File file = null;
@@ -125,120 +131,157 @@ public class DetailFoodAdapter extends RecyclerView.Adapter<DetailFoodAdapter.De
                 FoodLiked foodLiked = foodLikedIterator.next();
                 if (foodOverView.getFoodName().equals(foodLiked.getFoodName())){
                     holder.likeButton.setBackgroundResource(R.drawable.ic_liked);
+                    LikeFood likeFood = new LikeFood();
+                    likeFood.setUsername(username);
+                    likeFood.setFoodName(foodOverView.getFoodName());
+                    likeFood.setRestaurantName(restaurantName);
+                    likeFoodList.add(likeFood);
                     flag[pos] = true;
                 }
             }
         }
+
 
         // 响应点赞事件
         holder.likeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (flag[pos] == false){
-
+                    flag[pos] = true;
                     holder.likeButton.setBackgroundResource(R.drawable.ic_liked);
                     int likes = Integer.parseInt(holder.foodLikes.getText().toString());
-                    Log.i("对招牌菜点赞", "点赞");
-                    Log.i("对招牌菜点赞", holder.foodName.getText().toString());
-                    Log.i("对招牌菜点赞", String.valueOf(likes));
-                    holder.foodLikes.setText(String.valueOf(likes+1));
-                    flag[pos] = true;
-
-                    // 添加点赞数
-                    Retrofit retrofit = new Retrofit.Builder()
-                            .addConverterFactory(GsonConverterFactory.create())
-                            .baseUrl(ServerConfig.BASE_URL)
-                            .build();
-                    RestaurantService restaurantService = retrofit.create(RestaurantService.class);
-
+                    likes += 1;
+                    holder.foodLikes.setText(String.valueOf(likes));
                     LikeFood likeFood = new LikeFood();
-                    likeFood.setRestaurantName(restaurantName);
                     likeFood.setFoodName(foodOverView.getFoodName());
+                    likeFood.setRestaurantName(restaurantName);
                     likeFood.setUsername(username);
-                    Call<ResponseBody> call = restaurantService.addFoodLike(likeFood);
-                    call.enqueue(new Callback<ResponseBody>() {
-                        @Override
-                        public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                            try {
-                                JSONObject jsonObject = JSON.parseObject(response.body().string());
-                                Boolean success = (Boolean) jsonObject.get("success");
-                                Log.i("点赞招牌菜", String.valueOf(jsonObject));
-                                if(success == true){
-//                                    int likes = Integer.parseInt(holder.foodLikes.getText().toString());
-//                                    holder.foodLikes.setText(String.valueOf(likes+1));
-                                    //restaurantLikeLiveData.setValue(1);
-//                                    flag[pos] = true;
-                                    // 点击变红
-//                                    holder.likeButton.setBackgroundResource(R.drawable.ic_liked);
-                                }
-                                else {
-                                    Toast.makeText(context, "点赞失败", Toast.LENGTH_SHORT).show();
-                                }
-                            }catch (Exception e){
-                                e.printStackTrace();
-                            }
-                        }
+                    likeFoodList.add(likeFood);
 
-                        @Override
-                        public void onFailure(Call<ResponseBody> call, Throwable t) {
-
-                        }
-                    });
+                    restaurantLikeLiveData.setValue(1);
                 }
                 // 取消点赞
                 else {
-                    // 点击变灰
+                    flag[pos] = false;
                     holder.likeButton.setBackgroundResource(R.drawable.ic_before_like);
                     int likes = Integer.parseInt(holder.foodLikes.getText().toString());
-                    Log.i("对招牌菜点赞", "取消点赞");
-                    Log.i("对招牌菜点赞", holder.foodName.getText().toString());
-                    Log.i("对招牌菜点赞", String.valueOf(likes));
-                    holder.foodLikes.setText(String.valueOf(likes-1));
-                    flag[pos] = false;
-
-                    // 减少点赞数
-                    Retrofit retrofit = new Retrofit.Builder()
-                            .addConverterFactory(GsonConverterFactory.create())
-                            .baseUrl(ServerConfig.BASE_URL)
-                            .build();
-                    RestaurantService restaurantService = retrofit.create(RestaurantService.class);
-
+                    likes -= 1;
+                    holder.foodLikes.setText(String.valueOf(likes));
                     LikeFood likeFood = new LikeFood();
-                    likeFood.setRestaurantName(restaurantName);
                     likeFood.setFoodName(foodOverView.getFoodName());
+                    likeFood.setRestaurantName(foodOverView.getRestaurantName());
                     likeFood.setUsername(username);
-                    Call<ResponseBody> call = restaurantService.cancelFoodLike(likeFood);
-                    call.enqueue(new Callback<ResponseBody>() {
-                        @Override
-                        public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                            try {
-                                JSONObject jsonObject = JSON.parseObject(response.body().string());
-                                Boolean success = (Boolean) jsonObject.get("success");
-                                Log.i("点赞招牌菜", String.valueOf(jsonObject));
-                                if(success == true){
-//                                    int likes = Integer.parseInt(holder.foodLikes.getText().toString());
-                                    // 虽然没搞明白但是这里不写-1就没问题
-//                                    holder.foodLikes.setText(String.valueOf(likes-1));
-                                    //restaurantLikeLiveData.setValue(-1);
-//                                    flag[pos] = false;
-                                }
-                                else {
-                                    Log.i("点赞招牌菜", "未点赞过");
-                                }
-                            }catch (Exception e){
-                                e.printStackTrace();
-                            }
-                        }
+                    if (likeFoodList.remove(likeFood)){
+                        Log.i("取消点赞招牌菜", "移除点赞成功");
+                    }
 
-                        @Override
-                        public void onFailure(Call<ResponseBody> call, Throwable t) {
-
-                        }
-                    });
+                    restaurantLikeLiveData.setValue(-1);
                 }
-
             }
         });
+
+//        // 响应点赞事件
+//        holder.likeButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                if (flag[pos] == false){
+//
+//                    holder.likeButton.setBackgroundResource(R.drawable.ic_liked);
+//                    int likes = Integer.parseInt(holder.foodLikes.getText().toString());
+//                    Log.i("对招牌菜点赞", "点赞");
+//                    Log.i("对招牌菜点赞", holder.foodName.getText().toString());
+//                    Log.i("对招牌菜点赞", String.valueOf(likes));
+//                    holder.foodLikes.setText(String.valueOf(likes+1));
+//                    flag[pos] = true;
+//
+//                    // 添加点赞数
+//                    Retrofit retrofit = new Retrofit.Builder()
+//                            .addConverterFactory(GsonConverterFactory.create())
+//                            .baseUrl(ServerConfig.BASE_URL)
+//                            .build();
+//                    RestaurantService restaurantService = retrofit.create(RestaurantService.class);
+//
+//                    LikeFood likeFood = new LikeFood();
+//                    likeFood.setRestaurantName(restaurantName);
+//                    likeFood.setFoodName(foodOverView.getFoodName());
+//                    likeFood.setUsername(username);
+//                    Call<ResponseBody> call = restaurantService.addFoodLike(likeFood);
+//                    call.enqueue(new Callback<ResponseBody>() {
+//                        @Override
+//                        public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+//                            try {
+//                                JSONObject jsonObject = JSON.parseObject(response.body().string());
+//                                Boolean success = (Boolean) jsonObject.get("success");
+//                                Log.i("点赞招牌菜", String.valueOf(jsonObject));
+//                                if(success == true){
+//                                    Log.i("点赞招牌菜", "点赞成功");
+//                                    restaurantLikeLiveData.setValue(1);
+//                                }
+//                                else {
+//                                    Toast.makeText(context, "点赞失败", Toast.LENGTH_SHORT).show();
+//                                }
+//                            }catch (Exception e){
+//                                e.printStackTrace();
+//                            }
+//                        }
+//
+//                        @Override
+//                        public void onFailure(Call<ResponseBody> call, Throwable t) {
+//
+//                        }
+//                    });
+//                }
+//                // 取消点赞
+//                else {
+//                    // 点击变灰
+//                    holder.likeButton.setBackgroundResource(R.drawable.ic_before_like);
+//                    int likes = Integer.parseInt(holder.foodLikes.getText().toString());
+//                    Log.i("对招牌菜点赞", "取消点赞");
+//                    Log.i("对招牌菜点赞", holder.foodName.getText().toString());
+//                    Log.i("对招牌菜点赞", String.valueOf(likes));
+//                    holder.foodLikes.setText(String.valueOf(likes-1));
+//                    flag[pos] = false;
+//
+//                    // 减少点赞数
+//                    Retrofit retrofit = new Retrofit.Builder()
+//                            .addConverterFactory(GsonConverterFactory.create())
+//                            .baseUrl(ServerConfig.BASE_URL)
+//                            .build();
+//                    RestaurantService restaurantService = retrofit.create(RestaurantService.class);
+//
+//                    LikeFood likeFood = new LikeFood();
+//                    likeFood.setRestaurantName(restaurantName);
+//                    likeFood.setFoodName(foodOverView.getFoodName());
+//                    likeFood.setUsername(username);
+//                    Call<ResponseBody> call = restaurantService.cancelFoodLike(likeFood);
+//                    call.enqueue(new Callback<ResponseBody>() {
+//                        @Override
+//                        public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+//                            try {
+//                                JSONObject jsonObject = JSON.parseObject(response.body().string());
+//                                Boolean success = (Boolean) jsonObject.get("success");
+//                                Log.i("点赞招牌菜", String.valueOf(jsonObject));
+//                                if(success == true){
+//                                    Log.i("点赞招牌菜", "取消点赞");
+//                                    restaurantLikeLiveData.setValue(-1);
+//                                }
+//                                else {
+//                                    Log.i("点赞招牌菜", "未点赞过");
+//                                }
+//                            }catch (Exception e){
+//                                e.printStackTrace();
+//                            }
+//                        }
+//
+//                        @Override
+//                        public void onFailure(Call<ResponseBody> call, Throwable t) {
+//
+//                        }
+//                    });
+//                }
+//
+//            }
+//        });
     }
 
     @Override
