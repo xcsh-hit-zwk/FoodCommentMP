@@ -109,7 +109,7 @@ public class DetailCommentAdapter extends RecyclerView.Adapter<DetailCommentAdap
         restaurantComment = restaurantCommentList.get(position);
         pos = holder.getBindingAdapterPosition();
 
-        File file = new File(ImageConfig.DIR + restaurantComment.getUserImage());
+        File file = new File(restaurantComment.getUserImage());
         Glide.with(context)
                 .load(file)
                 .circleCrop()

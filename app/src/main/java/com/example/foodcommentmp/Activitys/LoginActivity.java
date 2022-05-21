@@ -1,9 +1,5 @@
 package com.example.foodcommentmp.Activitys;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
-
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -11,19 +7,26 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+
 import com.alibaba.fastjson.JSON;
+import com.bumptech.glide.Glide;
 import com.example.foodcommentmp.Config.ServerConfig;
 import com.example.foodcommentmp.R;
 import com.example.foodcommentmp.ViewModel.LoginViewModel;
+import com.example.foodcommentmp.common.ImageUpdateHelper;
 import com.example.foodcommentmp.common.MD5;
 import com.example.foodcommentmp.common.TextInputHelper;
 import com.example.foodcommentmp.pojo.Account;
 import com.example.foodcommentmp.retrofit.UserService;
 
+import java.io.File;
 import java.io.IOException;
-import java.util.PrimitiveIterator;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -36,6 +39,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private ImageButton confirmButton, toRegisterButton, toAdminImageButton;
     private EditText usernameEditText, passwordEditText;
+    private ImageView userImage;
 
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
@@ -47,6 +51,7 @@ public class LoginActivity extends AppCompatActivity {
     private String username;
     private String MD5password;
     private String password;
+    private String userImageUrl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +66,8 @@ public class LoginActivity extends AppCompatActivity {
         toRegisterButton = findViewById(R.id.to_register_button);
         toAdminImageButton = findViewById(R.id.to_admin_image_button);
 
+        userImage = findViewById(R.id.login_user_image);
+
         usernameEditText = findViewById(R.id.login_username);
         passwordEditText = findViewById(R.id.login_password);
 
@@ -68,10 +75,20 @@ public class LoginActivity extends AppCompatActivity {
         Bundle bundle = backIntent.getBundleExtra("data");
         if (bundle != null){
             String get = bundle.getString("username");
-            if(get != null){
+            userImageUrl = bundle.getString("user_image");
+            if(get != null && userImageUrl != null){
                 usernameEditText.setText(get);
+                File file = new File(userImageUrl);
+                Glide.with(this)
+                        .load(file)
+                        .circleCrop()
+                        .into(userImage);
             }
         }
+
+        // 头像实时更新
+        ImageUpdateHelper imageUpdateHelper = new ImageUpdateHelper(this, userImage);
+        imageUpdateHelper.addViews(usernameEditText);
 
         // 监听多个输入框
         TextInputHelper textInputHelper = new TextInputHelper(confirmButton, true);

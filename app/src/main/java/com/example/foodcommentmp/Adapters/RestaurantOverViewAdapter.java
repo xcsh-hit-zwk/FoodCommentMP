@@ -85,7 +85,7 @@ public class RestaurantOverViewAdapter extends RecyclerView.Adapter<RestaurantOv
 
         File file = null;
         try {
-            file = new File(ImageConfig.DIR + restaurantOverView.getRestaurantImage());
+            file = new File(restaurantOverView.getRestaurantImage());
         }catch (Exception e){
             e.printStackTrace();
         }

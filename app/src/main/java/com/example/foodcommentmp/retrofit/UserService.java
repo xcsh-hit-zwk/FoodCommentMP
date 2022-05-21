@@ -32,7 +32,11 @@ public interface UserService {
     Call<ResponseBody> updateUserInfo(@Body UserInfo userInfo);
 
     // searchWay = "ModifyUserComment", info = "%username"
-   @POST("User/ModifyUserComment")
+    @POST("User/ModifyUserComment")
     Call<ResponseBody> getUserComment(@Body SearchInfo searchInfo);
+
+    // searchWay = "GetUserImage", info = "%username"
+    @POST("User/GetUserImage")
+    Call<ResponseBody> getUserImage(@Body SearchInfo searchInfo);
 
 }

@@ -89,14 +89,14 @@ public class UserInfoCommentAdapter extends RecyclerView.Adapter<UserInfoComment
 
         File userImageFile = null;
         try {
-            userImageFile = new File(ImageConfig.DIR + userInfoComment.getUserImage());
+            userImageFile = new File(userInfoComment.getUserImage());
         }catch (Exception e){
             e.printStackTrace();
         }
 
         File restaurantImageFile = null;
         try {
-            restaurantImageFile = new File(ImageConfig.DIR + userInfoComment.getRestaurantImage());
+            restaurantImageFile = new File( userInfoComment.getRestaurantImage());
         }catch (Exception e){
             e.printStackTrace();
         }

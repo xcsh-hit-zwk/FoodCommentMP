@@ -224,7 +224,7 @@ public class UserInfoFragment extends Fragment {
 
                     File imageFile = null;
                     try {
-                        imageFile = new File(ImageConfig.DIR + user.getUserImage());
+                        imageFile = new File(user.getUserImage());
                     }catch (Exception e){
                         e.printStackTrace();
                     }

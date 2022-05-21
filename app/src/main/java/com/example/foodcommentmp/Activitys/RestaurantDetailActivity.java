@@ -124,7 +124,7 @@ public class RestaurantDetailActivity extends AppCompatActivity {
 
                 File restaurantImageFile = null;
                 try {
-                    restaurantImageFile = new File(ImageConfig.DIR + restaurantImageStr);
+                    restaurantImageFile = new File(restaurantImageStr);
                 }catch (Exception e){
                     e.printStackTrace();
                 }

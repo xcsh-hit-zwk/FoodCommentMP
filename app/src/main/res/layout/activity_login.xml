@@ -32,9 +32,10 @@
             android:layout_height="100dp"/>
 
         <ImageView
+            android:id="@+id/login_user_image"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:background="@drawable/ic_user" />
+            android:background="@drawable/ic_default_head_image" />
 
         <TextView
             android:layout_width="180dp"

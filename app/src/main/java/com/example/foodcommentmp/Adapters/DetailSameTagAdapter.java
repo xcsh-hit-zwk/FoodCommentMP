@@ -81,7 +81,7 @@ public class DetailSameTagAdapter extends RecyclerView.Adapter<DetailSameTagAdap
 
         File file = null;
         try {
-            file = new File(ImageConfig.DIR + restaurantOverView.getRestaurantImage());
+            file = new File(restaurantOverView.getRestaurantImage());
         }catch (Exception e){
             e.printStackTrace();
         }

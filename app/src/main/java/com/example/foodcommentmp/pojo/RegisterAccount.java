@@ -9,14 +9,24 @@ public class RegisterAccount {
     private String username;
     private String password;
     private String nickname;
+    private String imageUrl;
 
     public RegisterAccount() {
     }
 
-    public RegisterAccount(String username, String password, String nickname) {
+    public RegisterAccount(String username, String password, String nickname, String imageUrl) {
         this.username = username;
         this.password = password;
         this.nickname = nickname;
+        this.imageUrl = imageUrl;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
     public String getUsername() {
