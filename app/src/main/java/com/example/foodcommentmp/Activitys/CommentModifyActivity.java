@@ -198,7 +198,7 @@ public class CommentModifyActivity extends AppCompatActivity {
             public void onChanged(Boolean aBoolean) {
                 if (aBoolean == true){
 
-                    File file = new File(ImageConfig.DIR + headImage);
+                    File file = new File(headImage);
                     Glide.with(CommentModifyActivity.this)
                             .load(file)
                             .circleCrop()
