@@ -29,9 +29,6 @@ public interface RestaurantService {
     Call<ResponseBody> addFoodLike(@Body List<LikeFood> likeFoodList);
 
     @POST("RestaurantDetail/AddCommentLike")
-    Call<ResponseBody> addCommentLike(@Body LikeComment likeComment);
-
-    @POST("RestaurantDetail/CancelCommentLike")
-    Call<ResponseBody> cancelCommentLike(@Body LikeComment likeComment);
+    Call<ResponseBody> addCommentLike(@Body List<LikeComment> likeCommentList);
 
 }

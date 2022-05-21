@@ -21,6 +21,7 @@ import com.example.foodcommentmp.Config.ServerConfig;
 import com.example.foodcommentmp.R;
 import com.example.foodcommentmp.pojo.CommentLiked;
 import com.example.foodcommentmp.pojo.LikeComment;
+import com.example.foodcommentmp.pojo.LikeFood;
 import com.example.foodcommentmp.pojo.RestaurantComment;
 import com.example.foodcommentmp.retrofit.RestaurantService;
 
@@ -46,8 +47,8 @@ public class DetailCommentAdapter extends RecyclerView.Adapter<DetailCommentAdap
     Context context;
     private List<RestaurantComment> restaurantCommentList;
     private List<CommentLiked> commentLikedList;
+    private List<LikeComment> likeCommentList;
 
-    private RestaurantComment restaurantComment;
     private String restaurantName;
     private String username;
 
@@ -71,9 +72,8 @@ public class DetailCommentAdapter extends RecyclerView.Adapter<DetailCommentAdap
     public void setCommentLikedList(List<CommentLiked> commentLikedList) {
         this.commentLikedList = commentLikedList;
     }
-
-    public void setRestaurantComment(RestaurantComment restaurantComment) {
-        this.restaurantComment = restaurantComment;
+    public void setLikeCommentList(List<LikeComment> likeCommentList) {
+        this.likeCommentList = likeCommentList;
     }
 
     public void setRestaurantName(String restaurantName) {
@@ -100,7 +100,7 @@ public class DetailCommentAdapter extends RecyclerView.Adapter<DetailCommentAdap
 
     @Override
     public void onBindViewHolder(@NonNull DetailCommentHolder holder, int position) {
-        restaurantComment = restaurantCommentList.get(position);
+        RestaurantComment restaurantComment = restaurantCommentList.get(position);
         int pos = position;
 
         File file = new File(restaurantComment.getUserImage());
@@ -119,106 +119,144 @@ public class DetailCommentAdapter extends RecyclerView.Adapter<DetailCommentAdap
             while (commentLikedIterator.hasNext()){
                 CommentLiked commentLiked = commentLikedIterator.next();
                 if (restaurantComment.getCommentId().equals(commentLiked.getCommentId())){
-                    Log.i("初始化点赞记录测试", restaurantComment.getCommentInfo());
                     holder.likeButton.setBackgroundResource(R.drawable.ic_liked);
+                    LikeComment likeComment = new LikeComment();
+                    likeComment.setUsername(username);
+                    likeComment.setCommentId(restaurantComment.getCommentId());
+                    likeComment.setRestaurantName(restaurantName);
+                    likeCommentList.add(likeComment);
                     flag[pos] = true;
                 }
             }
         }
 
-        // 响应点赞事件
         holder.likeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 if (flag[pos] == false){
-
-                    // 添加点赞数
-                    Retrofit retrofit = new Retrofit.Builder()
-                            .addConverterFactory(GsonConverterFactory.create())
-                            .baseUrl(ServerConfig.BASE_URL)
-                            .build();
-                    RestaurantService restaurantService = retrofit.create(RestaurantService.class);
-
+                    flag[pos] = true;
+                    holder.likeButton.setBackgroundResource(R.drawable.ic_liked);
+                    int likes = Integer.parseInt(holder.commentLikes.getText().toString());
+                    likes += 1;
+                    holder.commentLikes.setText(String.valueOf(likes));
                     LikeComment likeComment = new LikeComment();
                     likeComment.setCommentId(restaurantComment.getCommentId());
-                    likeComment.setRestaurantName(restaurantName);
                     likeComment.setUsername(username);
-                    Call<ResponseBody> call = restaurantService.addCommentLike(likeComment);
-                    call.enqueue(new Callback<ResponseBody>() {
-                        @Override
-                        public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                            try{
-                                JSONObject jsonObject = JSON.parseObject(response.body().string());
-                                Boolean success = (Boolean) jsonObject.get("success");
-                                Log.i("点赞评论", String.valueOf(jsonObject));
-                                if (success == true){
-                                    int likes = Integer.parseInt(holder.commentLikes.getText().toString());
-                                    Log.i("点赞评论", "点赞后:" + String.valueOf(likes));
-                                    holder.commentLikes.setText(String.valueOf(likes+1));
-                                    flag[pos] = true;
-                                    // 点击变红
-                                    holder.likeButton.setBackgroundResource(R.drawable.ic_liked);
-                                }
-                                else {
-                                    Toast.makeText(context, "点赞失败", Toast.LENGTH_SHORT).show();
-                                }
-                            }catch (Exception e){
-
-                            }
-                        }
-
-                        @Override
-                        public void onFailure(Call<ResponseBody> call, Throwable t) {
-
-                        }
-                    });
+                    likeComment.setRestaurantName(restaurantName);
+                    likeCommentList.add(likeComment);
                 }
+                // 取消点赞
                 else {
-                    // 点击变灰
+                    flag[pos] = false;
                     holder.likeButton.setBackgroundResource(R.drawable.ic_before_like);
-
-                    // 减少点赞数
-                    Retrofit retrofit = new Retrofit.Builder()
-                            .addConverterFactory(GsonConverterFactory.create())
-                            .baseUrl(ServerConfig.BASE_URL)
-                            .build();
-                    RestaurantService restaurantService = retrofit.create(RestaurantService.class);
-
+                    int likes = Integer.parseInt(holder.commentLikes.getText().toString());
+                    likes -= 1;
+                    holder.commentLikes.setText(String.valueOf(likes));
                     LikeComment likeComment = new LikeComment();
                     likeComment.setCommentId(restaurantComment.getCommentId());
-                    likeComment.setRestaurantName(restaurantName);
                     likeComment.setUsername(username);
-                    Call<ResponseBody> call = restaurantService.cancelCommentLike(likeComment);
-                    call.enqueue(new Callback<ResponseBody>() {
-                        @Override
-                        public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                            try{
-                                JSONObject jsonObject = JSON.parseObject(response.body().string());
-                                Boolean success = (Boolean) jsonObject.get("success");
-                                Log.i("取消点赞评论", String.valueOf(jsonObject));
-                                if (success == true){
-                                    int likes = Integer.parseInt(holder.commentLikes.getText().toString());
-                                    Log.i("点赞评论", "取消点赞后:" + String.valueOf(likes));
-                                    holder.commentLikes.setText(String.valueOf(likes-1));
-                                    flag[pos] = false;
-                                }
-                                else {
-                                    Log.i("取消点赞失败", String.valueOf(jsonObject));
-                                }
-                            }catch (Exception e){
+                    likeComment.setRestaurantName(restaurantName);
+                    if (likeCommentList.remove(likeComment)){
+                        Log.i("评论点赞", "onClick: 取消评论点赞成功");
+                    }
 
-                            }
-                        }
-
-                        @Override
-                        public void onFailure(Call<ResponseBody> call, Throwable t) {
-
-                        }
-                    });
                 }
             }
         });
+
+//        // 响应点赞事件
+//        holder.likeButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//
+//                if (flag[pos] == false){
+//
+//                    // 添加点赞数
+//                    Retrofit retrofit = new Retrofit.Builder()
+//                            .addConverterFactory(GsonConverterFactory.create())
+//                            .baseUrl(ServerConfig.BASE_URL)
+//                            .build();
+//                    RestaurantService restaurantService = retrofit.create(RestaurantService.class);
+//
+//                    LikeComment likeComment = new LikeComment();
+//                    likeComment.setCommentId(restaurantComment.getCommentId());
+//                    likeComment.setRestaurantName(restaurantName);
+//                    likeComment.setUsername(username);
+//                    Call<ResponseBody> call = restaurantService.addCommentLike(likeComment);
+//                    call.enqueue(new Callback<ResponseBody>() {
+//                        @Override
+//                        public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+//                            try{
+//                                JSONObject jsonObject = JSON.parseObject(response.body().string());
+//                                Boolean success = (Boolean) jsonObject.get("success");
+//                                Log.i("点赞评论", String.valueOf(jsonObject));
+//                                if (success == true){
+//                                    int likes = Integer.parseInt(holder.commentLikes.getText().toString());
+//                                    Log.i("点赞评论", "点赞后:" + String.valueOf(likes));
+//                                    holder.commentLikes.setText(String.valueOf(likes+1));
+//                                    flag[pos] = true;
+//                                    // 点击变红
+//                                    holder.likeButton.setBackgroundResource(R.drawable.ic_liked);
+//                                }
+//                                else {
+//                                    Toast.makeText(context, "点赞失败", Toast.LENGTH_SHORT).show();
+//                                }
+//                            }catch (Exception e){
+//
+//                            }
+//                        }
+//
+//                        @Override
+//                        public void onFailure(Call<ResponseBody> call, Throwable t) {
+//
+//                        }
+//                    });
+//                }
+//                else {
+//                    // 点击变灰
+//                    holder.likeButton.setBackgroundResource(R.drawable.ic_before_like);
+//
+//                    // 减少点赞数
+//                    Retrofit retrofit = new Retrofit.Builder()
+//                            .addConverterFactory(GsonConverterFactory.create())
+//                            .baseUrl(ServerConfig.BASE_URL)
+//                            .build();
+//                    RestaurantService restaurantService = retrofit.create(RestaurantService.class);
+//
+//                    LikeComment likeComment = new LikeComment();
+//                    likeComment.setCommentId(restaurantComment.getCommentId());
+//                    likeComment.setRestaurantName(restaurantName);
+//                    likeComment.setUsername(username);
+//                    Call<ResponseBody> call = restaurantService.cancelCommentLike(likeComment);
+//                    call.enqueue(new Callback<ResponseBody>() {
+//                        @Override
+//                        public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+//                            try{
+//                                JSONObject jsonObject = JSON.parseObject(response.body().string());
+//                                Boolean success = (Boolean) jsonObject.get("success");
+//                                Log.i("取消点赞评论", String.valueOf(jsonObject));
+//                                if (success == true){
+//                                    int likes = Integer.parseInt(holder.commentLikes.getText().toString());
+//                                    Log.i("点赞评论", "取消点赞后:" + String.valueOf(likes));
+//                                    holder.commentLikes.setText(String.valueOf(likes-1));
+//                                    flag[pos] = false;
+//                                }
+//                                else {
+//                                    Log.i("取消点赞失败", String.valueOf(jsonObject));
+//                                }
+//                            }catch (Exception e){
+//
+//                            }
+//                        }
+//
+//                        @Override
+//                        public void onFailure(Call<ResponseBody> call, Throwable t) {
+//
+//                        }
+//                    });
+//                }
+//            }
+//        });
     }
 
     @Override

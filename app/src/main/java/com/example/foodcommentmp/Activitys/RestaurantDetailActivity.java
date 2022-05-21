@@ -26,7 +26,6 @@ import com.example.foodcommentmp.Adapters.DetailCommentAdapter;
 import com.example.foodcommentmp.Adapters.DetailFoodAdapter;
 import com.example.foodcommentmp.Adapters.DetailLabelAdapter;
 import com.example.foodcommentmp.Adapters.DetailSameTagAdapter;
-import com.example.foodcommentmp.Config.ImageConfig;
 import com.example.foodcommentmp.Config.ServerConfig;
 import com.example.foodcommentmp.R;
 import com.example.foodcommentmp.ViewModel.RestaurantDetailViewModel;
@@ -260,6 +259,9 @@ public class RestaurantDetailActivity extends AppCompatActivity {
                     detailLabelAdapter.setLabelList(restaurantDetail.getLabelList());
                     detailLabelAdapter.notifyDataSetChanged();
 
+                    detailCommentAdapter.setLikeCommentList(likeCommentList);
+                    detailLabelAdapter.notifyDataSetChanged();
+
                     if (commentFLAG == 1){
                         int storage = 0;
                         // 去重
@@ -388,6 +390,31 @@ public class RestaurantDetailActivity extends AppCompatActivity {
                     }
                     else {
                         Log.i("招牌菜点赞列表提交", "onResponse: 提交失败");
+                    }
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+            }
+        });
+
+        Call<ResponseBody> call1 = restaurantService.addCommentLike(likeCommentList);
+        call1.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                try {
+                    JSONObject jsonObject = JSON.parseObject(response.body().string());
+                    Boolean success = (Boolean) jsonObject.get("success");
+                    Log.i("评论点赞列表提交", String.valueOf(jsonObject));
+                    if (success == true){
+                        Log.i("评论点赞列表提交", "onResponse: 提交成功");
+                    }
+                    else {
+                        Log.i("评论点赞列表提交", "onResponse: 提交失败");
                     }
                 }catch (Exception e){
                     e.printStackTrace();
