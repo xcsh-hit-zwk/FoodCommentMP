@@ -133,7 +133,7 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/restaurant_detail_food_recycle_view"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="170dp"
             android:layout_marginLeft="10dp" />
 
 

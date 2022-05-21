@@ -148,7 +148,7 @@ public class RestaurantDetailActivity extends AppCompatActivity {
 
                 File restaurantImageFile = null;
                 try {
-                    restaurantImageFile = new File(ImageConfig.DIR + restaurantImageStr);
+                    restaurantImageFile = new File(restaurantImageStr);
                 }catch (Exception e){
                     e.printStackTrace();
                 }
@@ -253,6 +253,15 @@ public class RestaurantDetailActivity extends AppCompatActivity {
                     detailLabelAdapter.notifyDataSetChanged();
 
                     if (commentFLAG == 1){
+                        int storage = 0;
+                        // 去重
+                        for(int i = 0; i < restaurantDetail.getCommentList().size(); ++i){
+                            if (restaurantComment.getCommentId().equals(restaurantDetail.getCommentList().get(i).getCommentId())){
+                                storage = i;
+                                break;
+                            }
+                        }
+                        restaurantDetail.getCommentList().remove(storage);
                         restaurantDetail.getCommentList().add(0, restaurantComment);
                     }
                     detailCommentAdapter.setRestaurantCommentList(restaurantDetail.getCommentList());
