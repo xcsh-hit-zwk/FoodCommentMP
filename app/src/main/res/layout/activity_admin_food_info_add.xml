@@ -5,46 +5,26 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"/>
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
         android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="2"/>
 
         <ImageView
             android:id="@+id/food_info_update_image_view"
-            android:layout_width="40dp"
+            android:layout_width="100dp"
             android:layout_height="100dp"
-            android:layout_weight="1"
-            android:background="@drawable/ic_food_title_image" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="2"/>
+            android:layout_marginLeft="190dp"
+            android:layout_marginTop="50dp"/>
 
     </LinearLayout>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"/>
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="40dp"
-        android:layout_marginRight="40dp">
+        android:layout_marginRight="40dp"
+        android:layout_marginTop="40dp">
 
         <EditText
             android:id="@+id/add_food_name"
@@ -59,7 +39,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="40dp"
         android:layout_marginRight="40dp"
-        android:layout_marginTop="20dp">
+        android:layout_marginTop="70dp">
 
         <EditText
             android:id="@+id/add_food_restaurant_name"
@@ -69,55 +49,25 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="40dp"
-        android:layout_marginRight="40dp"
-        android:layout_marginTop="20dp">
-
-        <EditText
-            android:id="@+id/add_food_image"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="招牌菜图片路径"/>
-
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="8"/>
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="5"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="120dp"
-            android:layout_height="100dp"/>
+        android:orientation="horizontal"
+        android:layout_marginTop="100dp">
 
         <ImageButton
             android:id="@+id/confirm_add_food_image_button"
             android:layout_width="60dp"
             android:layout_height="60dp"
+            android:layout_marginLeft="150dp"
             android:background="@drawable/ic_confirm"/>
-
-        <TextView
-            android:layout_width="100dp"
-            android:layout_height="100dp"/>
 
         <ImageButton
             android:id="@+id/cancel_add_food_image_button"
             android:layout_width="60dp"
             android:layout_height="60dp"
+            android:layout_marginLeft="60dp"
             android:background="@drawable/ic_cancel"/>
-
-        <TextView
-            android:layout_width="120dp"
-            android:layout_height="100dp"/>
 
     </LinearLayout>
 

@@ -85,7 +85,7 @@ public class AdminRestaurantInfoAdaptor extends RecyclerView.Adapter<AdminRestau
 
         File file = null;
         try {
-            file = new File(ImageConfig.DIR + restaurantOverView.getRestaurantImage());
+            file = new File(restaurantOverView.getRestaurantImage());
         }catch (Exception e){
             e.printStackTrace();
         }

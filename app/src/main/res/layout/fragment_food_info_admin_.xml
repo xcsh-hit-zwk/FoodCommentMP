@@ -22,38 +22,6 @@
             android:layout_marginTop="5dp"
             android:background="@drawable/ic_exit"/>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="140dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"/>
-
-            <ImageView
-                android:id="@+id/search_edit_head_image_view"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:background="@drawable/ic_search_edit_head" />
-
-            <EditText
-                android:id="@+id/food_search_edit_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:imeOptions="actionSearch"
-                android:hint="请输入招牌菜名称" />
-
-            <ImageButton
-                android:id="@+id/food_search_image_button"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:background="@drawable/ic_enter"/>
-
-        </LinearLayout>
-
         <ImageButton
             android:id="@+id/admin_food_add_button"
             android:layout_width="30dp"
@@ -73,7 +41,9 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/food_info_recycle_view"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"/>
 
     </androidx.cardview.widget.CardView>
 

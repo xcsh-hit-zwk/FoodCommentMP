@@ -84,7 +84,7 @@ public class AdminFoodInfoAdapter extends RecyclerView.Adapter<AdminFoodInfoAdap
 
         File file = null;
         try {
-            file = new File(ImageConfig.DIR + foodOverView.getFoodImage());
+            file = new File(foodOverView.getFoodImage());
         }catch (Exception e){
             e.printStackTrace();
         }

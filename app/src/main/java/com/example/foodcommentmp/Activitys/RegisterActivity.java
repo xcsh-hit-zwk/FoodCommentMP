@@ -24,6 +24,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.alibaba.fastjson.JSON;
 import com.bumptech.glide.Glide;
+import com.example.foodcommentmp.Config.ImageConfig;
 import com.example.foodcommentmp.Config.ServerConfig;
 import com.example.foodcommentmp.R;
 import com.example.foodcommentmp.ViewModel.RegisterViewModel;
@@ -59,7 +60,7 @@ public class RegisterActivity extends AppCompatActivity {
     private String password;
     private String secondPassword;
     private String nickname;
-    private String userImageUrl;
+    private String userImageUrl = ImageConfig.DIR + "/head_image/default.png";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

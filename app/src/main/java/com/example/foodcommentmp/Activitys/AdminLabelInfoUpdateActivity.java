@@ -37,6 +37,8 @@ public class AdminLabelInfoUpdateActivity extends AppCompatActivity {
     private EditText labelNameEditText;
     private EditText restaurantNameEditText;
 
+    private ImageButton exitButton;
+
     private LabelInfoUpdateViewModel labelInfoUpdateViewModel;
 
     private LabelOverView labelOverView;
@@ -58,6 +60,7 @@ public class AdminLabelInfoUpdateActivity extends AppCompatActivity {
 
         deleteButton = findViewById(R.id.delete_label_image_button);
         updateButton = findViewById(R.id.update_label_image_button);
+        exitButton = findViewById(R.id.label_info_update_exit_button);
 
         labelNameEditText = findViewById(R.id.label_name);
         restaurantNameEditText = findViewById(R.id.label_restaurant_name);
@@ -65,6 +68,13 @@ public class AdminLabelInfoUpdateActivity extends AppCompatActivity {
         // 填写传递过来的信息
         labelNameEditText.setText(labelOverView.getLabelName());
         restaurantNameEditText.setText(labelOverView.getRestaurantName());
+
+        exitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(AdminLabelInfoUpdateActivity.this, AdminMainActivity.class));
+            }
+        });
 
         // 删除
         deleteButton.setOnClickListener(new View.OnClickListener() {
