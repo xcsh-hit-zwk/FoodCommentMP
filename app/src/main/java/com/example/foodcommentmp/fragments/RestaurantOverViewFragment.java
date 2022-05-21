@@ -22,6 +22,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -70,7 +71,7 @@ public class RestaurantOverViewFragment extends Fragment {
     private RecyclerView recyclerView;
     private RestaurantOverViewAdapter restaurantOverViewAdapter;
     private ImageView searchIcon;
-    private ImageButton searchButton;
+    private Button searchButton;
 
     private ListPopupWindow listPopupWindow;
 
@@ -141,7 +142,7 @@ public class RestaurantOverViewFragment extends Fragment {
         spinner.setAdapter(new SpinnerAdaptor(searchMod, getContext()));
         linearLayout = getView().findViewById(R.id.search_background);
         searchIcon = getView().findViewById(R.id.search_icon);
-        searchButton = getView().findViewById(R.id.search_image_button);
+        searchButton = getView().findViewById(R.id.rov_search_button);
 
         GradientDrawable background = new GradientDrawable();
         background.setColor(getContext().getResources().getColor(R.color.lightgray));

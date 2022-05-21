@@ -59,18 +59,21 @@
 
                 <EditText
                     android:id="@+id/search_edit_text"
-                    android:layout_width="280dp"
+                    android:layout_width="230dp"
                     android:layout_height="43dp"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="10dp"
                     android:background="@color/transport"
                     android:hint="请输入"/>
 
-                <ImageButton
-                    android:id="@+id/search_image_button"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_marginTop="30dp"
-                    android:background="@drawable/ic_right_arrow"/>
+                <Button
+                    android:id="@+id/rov_search_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="60dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@color/transport"
+                    android:text="搜索"
+                    android:textSize="18dp"
+                    android:textColor="@color/blue"/>
 
             </LinearLayout>
 
