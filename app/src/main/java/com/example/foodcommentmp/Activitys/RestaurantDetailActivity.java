@@ -299,18 +299,21 @@ public class RestaurantDetailActivity extends AppCompatActivity {
             }
         });
 
-        mViewModel.getRestaurantLikeLiveData().observe(this, new Observer<Integer>() {
-            @Override
-            public void onChanged(Integer integer) {
-                if (likeFLAG == 1){
-                    String temp = String.valueOf(mViewModel.getRestaurantLikeLiveData().getValue());
-                    restaurantLikes.setText(temp);
-                }
-                else {
-                    likeFLAG = 1;
-                }
-            }
-        });
+//        mViewModel.getRestaurantLikeLiveData().observe(this, new Observer<Integer>() {
+//            @Override
+//            public void onChanged(Integer integer) {
+//                if (likeFLAG == 1){
+//                    int addLike = mViewModel.getRestaurantLikeLiveData().getValue();
+//                    int currentLike = Integer.parseInt(restaurantLikes.getText().toString());
+//                    currentLike += addLike;
+//                    String temp = String.valueOf(currentLike);
+//                    restaurantLikes.setText(temp);
+//                }
+//                else {
+//                    likeFLAG = 1;
+//                }
+//            }
+//        });
 
         // 新增评论置顶
         mViewModel.getCommentAddSuccessLiveData().observe(this, new Observer<Boolean>() {

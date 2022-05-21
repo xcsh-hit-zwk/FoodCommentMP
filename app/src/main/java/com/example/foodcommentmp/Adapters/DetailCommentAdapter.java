@@ -53,8 +53,6 @@ public class DetailCommentAdapter extends RecyclerView.Adapter<DetailCommentAdap
 
     private Boolean[] flag;
 
-    private int pos;
-
     public DetailCommentAdapter(Context context, String restaurantName, String username) {
         this.context = context;
         this.restaurantName = restaurantName;
@@ -90,10 +88,6 @@ public class DetailCommentAdapter extends RecyclerView.Adapter<DetailCommentAdap
         this.flag = flag;
     }
 
-    public void setPos(int pos) {
-        this.pos = pos;
-    }
-
     @NonNull
     @Override
     public DetailCommentHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -107,7 +101,7 @@ public class DetailCommentAdapter extends RecyclerView.Adapter<DetailCommentAdap
     @Override
     public void onBindViewHolder(@NonNull DetailCommentHolder holder, int position) {
         restaurantComment = restaurantCommentList.get(position);
-        pos = holder.getBindingAdapterPosition();
+        int pos = position;
 
         File file = new File(restaurantComment.getUserImage());
         Glide.with(context)

@@ -44,6 +44,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * @author: zhangweikun
  * @create: 2022-05-16 16:45
  */
+// todo 招牌菜点赞数反馈给餐厅点赞还是有问题，并且招牌菜点赞也有问题
 public class DetailFoodAdapter extends RecyclerView.Adapter<DetailFoodAdapter.DetailFoodHolder> {
 
     Context context;
@@ -59,8 +60,6 @@ public class DetailFoodAdapter extends RecyclerView.Adapter<DetailFoodAdapter.De
     private int restaurantLike;
 
     private Boolean[] flag;
-
-    private int pos;
 
 
     public DetailFoodAdapter(Context context, String restaurantName, String username) {
@@ -103,7 +102,7 @@ public class DetailFoodAdapter extends RecyclerView.Adapter<DetailFoodAdapter.De
     @Override
     public void onBindViewHolder(@NonNull DetailFoodHolder holder, int position) {
         foodOverView = foodOverViewList.get(position);
-        pos = holder.getBindingAdapterPosition();
+        int pos = position;
 
         File file = null;
         try {
@@ -137,6 +136,14 @@ public class DetailFoodAdapter extends RecyclerView.Adapter<DetailFoodAdapter.De
             public void onClick(View view) {
                 if (flag[pos] == false){
 
+                    holder.likeButton.setBackgroundResource(R.drawable.ic_liked);
+                    int likes = Integer.parseInt(holder.foodLikes.getText().toString());
+                    Log.i("对招牌菜点赞", "点赞");
+                    Log.i("对招牌菜点赞", holder.foodName.getText().toString());
+                    Log.i("对招牌菜点赞", String.valueOf(likes));
+                    holder.foodLikes.setText(String.valueOf(likes+1));
+                    flag[pos] = true;
+
                     // 添加点赞数
                     Retrofit retrofit = new Retrofit.Builder()
                             .addConverterFactory(GsonConverterFactory.create())
@@ -157,13 +164,12 @@ public class DetailFoodAdapter extends RecyclerView.Adapter<DetailFoodAdapter.De
                                 Boolean success = (Boolean) jsonObject.get("success");
                                 Log.i("点赞招牌菜", String.valueOf(jsonObject));
                                 if(success == true){
-                                    int likes = foodOverView.getFoodLikes();
-                                    Log.i("点赞招牌菜", "点赞后:" + String.valueOf(likes));
-                                    holder.foodLikes.setText(String.valueOf(likes+1));
-                                    restaurantLikeLiveData.setValue(likes+1);
-                                    flag[pos] = true;
+//                                    int likes = Integer.parseInt(holder.foodLikes.getText().toString());
+//                                    holder.foodLikes.setText(String.valueOf(likes+1));
+                                    //restaurantLikeLiveData.setValue(1);
+//                                    flag[pos] = true;
                                     // 点击变红
-                                    holder.likeButton.setBackgroundResource(R.drawable.ic_liked);
+//                                    holder.likeButton.setBackgroundResource(R.drawable.ic_liked);
                                 }
                                 else {
                                     Toast.makeText(context, "点赞失败", Toast.LENGTH_SHORT).show();
@@ -183,6 +189,12 @@ public class DetailFoodAdapter extends RecyclerView.Adapter<DetailFoodAdapter.De
                 else {
                     // 点击变灰
                     holder.likeButton.setBackgroundResource(R.drawable.ic_before_like);
+                    int likes = Integer.parseInt(holder.foodLikes.getText().toString());
+                    Log.i("对招牌菜点赞", "取消点赞");
+                    Log.i("对招牌菜点赞", holder.foodName.getText().toString());
+                    Log.i("对招牌菜点赞", String.valueOf(likes));
+                    holder.foodLikes.setText(String.valueOf(likes-1));
+                    flag[pos] = false;
 
                     // 减少点赞数
                     Retrofit retrofit = new Retrofit.Builder()
@@ -204,17 +216,15 @@ public class DetailFoodAdapter extends RecyclerView.Adapter<DetailFoodAdapter.De
                                 Boolean success = (Boolean) jsonObject.get("success");
                                 Log.i("点赞招牌菜", String.valueOf(jsonObject));
                                 if(success == true){
-//                                    int likes = foodOverView.getFoodLikes();
-                                    int likes = Integer.parseInt(holder.foodLikes.getText().toString());
+//                                    int likes = Integer.parseInt(holder.foodLikes.getText().toString());
                                     // 虽然没搞明白但是这里不写-1就没问题
-                                    Log.i("点赞招牌菜", "取消点赞后:" + String.valueOf(likes));
-                                    holder.foodLikes.setText(String.valueOf(likes-1));
-                                    restaurantLikeLiveData.setValue(likes-1);
+//                                    holder.foodLikes.setText(String.valueOf(likes-1));
+                                    //restaurantLikeLiveData.setValue(-1);
+//                                    flag[pos] = false;
                                 }
                                 else {
                                     Log.i("点赞招牌菜", "未点赞过");
                                 }
-                                flag[pos] = false;
                             }catch (Exception e){
                                 e.printStackTrace();
                             }
