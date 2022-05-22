@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
+    android:layout_height="200dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
@@ -21,9 +21,9 @@
 
         <TextView
             android:id="@+id/restaurant_detail_food_item_food_name"
-            android:layout_width="wrap_content"
-            android:layout_height="20dp"
-            android:textSize="15dp"
+            android:layout_width="50dp"
+            android:layout_height="100dp"
+            android:textSize="10dp"
             android:text="菜品名"/>
 
         <ImageButton
@@ -38,7 +38,8 @@
             android:layout_width="30dp"
             android:layout_height="20dp"
             android:layout_marginLeft="5dp"
-            android:textSize="15dp"
+            android:layout_marginTop="5dp"
+            android:textSize="10dp"
             android:text="点赞数"/>
 
     </LinearLayout>

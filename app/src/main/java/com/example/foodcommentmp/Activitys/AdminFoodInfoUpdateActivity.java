@@ -83,6 +83,7 @@ public class AdminFoodInfoUpdateActivity extends AppCompatActivity {
 
         deleteButton = findViewById(R.id.delete_food_image_button);
         updateButton = findViewById(R.id.update_food_image_button);
+        exitButton = findViewById(R.id.food_info_update_exit_button);
 
         foodNameEditText = findViewById(R.id.food_name);
         restaurantNameEditText = findViewById(R.id.food_restaurant_name);
